@@ -1,8 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.VERCEL_URL
-	? `https://${process.env.VERCEL_URL}`
-	: "http://localhost:3000";
+const BASE_URL = "https://job-networking.vercel.app";
 
 // CREATE USER
 export const createUser = async (userData) => {
