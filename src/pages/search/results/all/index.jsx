@@ -18,7 +18,7 @@ const AllResults = () => {
 	const user = useLoggedUserQuery();
 	const randomUsers = useRandomUsersQuery();
 
-	if (search.isLoading || user.isLoading || randomUsers.isLoading)
+	if (search.isLoading || randomUsers.isLoading)
 		return (
 			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
 				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
@@ -26,7 +26,7 @@ const AllResults = () => {
 			</div>
 		);
 
-	if (search.data)
+	if (search.data && randomUsers.data)
 		return (
 			<div className="max-w-screen-xl flex flex-col md:flex-row gap-5 mx-auto py-20 md:px-5">
 				<Head>
@@ -338,7 +338,7 @@ const AllResults = () => {
 						<div className="w-full lg:w-[300px]">
 							<People
 								randomUsers={randomUsers.data}
-								userEmail={user.data.email}
+								userEmail={user.data ? user.data.email : null}
 							/>
 						</div>
 					</div>
