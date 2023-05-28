@@ -7,7 +7,9 @@ export default async function handler(req, res) {
 
 	try {
 		if (req.method !== "PUT") {
-			return res.status(405).send({ error: "Method not allowed" });
+			return res
+				.status(405)
+				.send({ error: `Method ${req.method} not allowed` });
 		}
 
 		await connectMongo();
@@ -33,7 +35,6 @@ export default async function handler(req, res) {
 			return res.status(404).send({ error: "Missing data" });
 		}
 	} catch (error) {
-		console.error("Error updating user: ", error);
 		return res.status(500).send({ error: "Internal server error" });
 	}
 }

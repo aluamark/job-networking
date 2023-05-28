@@ -8,7 +8,7 @@ import { PuffLoader } from "react-spinners";
 import { createUser } from "@/lib/helper";
 import { FaSpinner } from "react-icons/fa";
 
-const Login = () => {
+const SignUp = () => {
 	const router = useRouter();
 	const { status } = useSession();
 	const [formData, setFormData] = useState({
@@ -170,4 +170,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default SignUp;

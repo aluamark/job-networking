@@ -1,20 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Navbar from "@/components/navbar/Navbar";
 import Sidebar from "@/components/navbar/Sidebar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "@/components/footer/Footer";
+import { PuffLoader } from "react-spinners";
 
 const Layout = ({ children }) => {
 	const openModal = useSelector((state) => state.openModal);
+
+	const router = useRouter();
+	const [isLoading, setIsLoading] = useState(false);
+
+	useEffect(() => {
+		const handleStart = () => setIsLoading(true);
+		const handleComplete = () => {
+			setTimeout(() => {
+				setIsLoading(false);
+			}, 0);
+		};
+
+		router.events.on("routeChangeStart", handleStart);
+		router.events.on("routeChangeComplete", handleComplete);
+		router.events.on("routeChangeError", handleComplete);
+
+		return () => {
+			router.events.off("routeChangeStart", handleStart);
+			router.events.off("routeChangeComplete", handleComplete);
+			router.events.off("routeChangeError", handleComplete);
+		};
+	}, [router]);
 
 	return (
 		<div className="drawer scroll-smooth">
 			<input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content flex flex-col">
 				<Navbar />
-				<main className="min-h-screen bg-base-200">{children}</main>
-
+				{/* {isLoading && (
+					<div className="min-h-screen flex flex-col justify-center items-center gap-10">
+						<span className="text-5xl font-extrabold text-blue-600">
+							GetHired
+						</span>
+						<PuffLoader />
+					</div>
+				)} */}
+				{/* className={`bg-base-200 ${isLoading ? "hidden" : "block"}`} */}
+				<main>{children}</main>
 				{/* prevent toast from rendering behind the modal if a modal is open */}
 				{!openModal && (
 					<ToastContainer

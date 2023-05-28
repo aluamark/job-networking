@@ -1,5 +1,6 @@
 import connectMongo from "@/utils/connectMongo";
 import User from "@/models/User";
+import Company from "@/models/Company";
 
 export default async function handler(req, res) {
 	const { email } = req.query;
@@ -11,14 +12,26 @@ export default async function handler(req, res) {
 
 		await connectMongo();
 
-		const user = await User.findOne({ email });
+		const user = await User.findOne({ email })
+			.populate({
+				path: "savedJobs",
+				populate: {
+					path: "company",
+					model: "Company",
+				},
+			})
+			.populate({
+				path: "adminPages",
+				select: "uniqueAddress name picturePath",
+			});
+
 		if (!user) {
 			return res.status(404).send({ error: "No user found" });
 		}
 
-		res.status(200).send(user);
+		return res.status(200).send(user);
 	} catch (error) {
-		console.error("Error logging in user: ", error);
+		console.log(error);
 		return res.status(500).send({ error: "Internal server error" });
 	}
 }

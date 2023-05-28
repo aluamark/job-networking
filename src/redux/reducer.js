@@ -2,12 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 	openModal: false,
-	user: null,
 	tableData: { employees: [] },
 };
 
 export const reducerSlice = createSlice({
-	name: "emsSlice",
+	name: "stateManager",
 	initialState,
 	reducers: {
 		resetState: (state) => {
@@ -15,9 +14,6 @@ export const reducerSlice = createSlice({
 		},
 		setOpenModal: (state, action) => {
 			state.openModal = action.payload;
-		},
-		setLoggedUser: (state, action) => {
-			state.user = action.payload;
 		},
 		setSearch: (state, action) => {
 			state.tableData.employees = state.tableData.employees.filter(
@@ -48,7 +44,6 @@ export const reducerSlice = createSlice({
 export const {
 	resetState,
 	setOpenModal,
-	setLoggedUser,
 	setSearch,
 	setTableData,
 	setCreateEmployee,

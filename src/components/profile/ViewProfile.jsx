@@ -1,175 +1,266 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
 import { getRandomUsers } from "@/lib/helper";
 import { getUser } from "@/lib/helper";
 import { PuffLoader } from "react-spinners";
-import ContactInfoModal from "../widgets/ContactInfoModal";
+import ContactInfoModal from "./modals/ContactInfoModal";
+import People from "../widgets/People";
+import { BsArrowRightShort, BsArrowUpShort } from "react-icons/bs";
+import { useRef } from "react";
+import { useSession } from "next-auth/react";
 
 const ViewProfile = () => {
 	const router = useRouter();
 	const { email } = router.query;
-	const { data, status } = useSession();
-	const [loading, setLoading] = useState(false);
-	const [user, setUser] = useState({});
-	const fullName = user?.firstName + " " + user?.lastName;
+	const { data } = useSession();
+
+	const user = useQuery({
+		queryKey: ["userProfile", email],
+		queryFn: () => getUser(email),
+		enabled: !!email,
+		retry: false,
+	});
+
+	const randomUsers = useQuery({
+		queryKey: ["people", email],
+		queryFn: getRandomUsers,
+		refetchOnWindowFocus: false,
+	});
+
+	const experienceRef = useRef(null);
+	const handleScrollToExperience = () => {
+		if (experienceRef.current) {
+			experienceRef.current.scrollIntoView({ behavior: "smooth" });
+		}
+	};
+
 	const [contactInfoModal, setContactInfoModal] = useState(false);
-	const [randomUsers, setRandomUsers] = useState([]);
+	const [showAllSkills, setShowAllSkills] = useState(false);
 
-	const fetchUser = async (email) => {
-		setLoading(true);
-		const userData = await getUser(email);
-
-		setUser(userData);
-		setLoading(false);
-	};
-
-	const fetchRandomUsers = async (userEmail, email) => {
-		const users = await getRandomUsers();
-		const filteredUsers = users.filter(
-			(user) => user.email !== userEmail && user.email !== email
-		);
-
-		setRandomUsers(filteredUsers);
-	};
-
-	useEffect(() => {
-		if (status === "authenticated" && data.user.email) {
-			fetchRandomUsers(data.user.email, email);
-		}
-
-		if (status === "unauthenticated") {
-			fetchRandomUsers(email);
-		}
-
-		fetchUser(email);
-	}, [status, email]);
-
-	if (loading) {
+	if (user.isLoading || randomUsers.isLoading) {
 		return (
-			<div className="min-h-screen flex justify-center items-center">
+			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
+				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
 				<PuffLoader />
 			</div>
 		);
 	}
 
-	return (
-		<div className="max-w-screen-xl mx-auto pt-20 md:pt-24 md:px-5">
-			<Head>
-				<title>{user ? `${fullName} | GetHired` : "GetHired"}</title>
-			</Head>
-			<div className="flex flex-col md:flex-row gap-5">
-				<div className="w-full flex flex-col gap-5">
-					<div className="relative">
-						<div className="absolute left-7 top-5 md:top-24 rounded-full p-1 bg-base-100">
-							<img
-								src={user.picturePath ? user.picturePath : "/default.png"}
-								alt="profile-picture"
-								className="rounded-full w-40 h-40 object-cover"
-							/>
-						</div>
-						<figure>
-							<img
-								src="/banner.jpg"
-								alt="banner"
-								className="rounded-t-lg h-32 md:h-52 w-full object-cover"
-							/>
-						</figure>
+	if (user.isError || randomUsers.isError) {
+		return (
+			<div className="min-h-screen flex flex-col justify-center items-center gap-3">
+				<h2 className="text-3xl font-bold flex gap-1">
+					<span className="text-error">Error:</span>
+					{user.error.response.data.error}
+				</h2>
+				<p>Please check your URL or return to Jobs.</p>
+				<Link href="/jobs">
+					<button className="box-border border border-blue-500 text-blue-500 px-4 py-1 transition duration-300 hover:bg-blue-100 hover:border-2 rounded-full h-10 mt-2">
+						Go to Jobs
+					</button>
+				</Link>
+			</div>
+		);
+	}
 
-						<div className="bg-base-100 rounded-b-lg pb-7">
-							<div className="flex flex-col lg:flex-row justify-between gap-1 lg:gap-5 px-7 pt-[72px]">
-								<div className="flex flex-col">
-									<h1 className="text-xl font-semibold">{fullName}</h1>
-									<span>
-										{user.headline ||
-											"Bachelor of Science in Information Technology Graduate"}
-									</span>
-									<div className="pt-1">
+	if (user.data)
+		return (
+			<div className="max-w-screen-xl mx-auto py-20 md:px-5">
+				<Head>
+					<title>
+						{user
+							? `${user.data.firstName} ${user.data.lastName} | GetHired`
+							: "GetHired"}
+					</title>
+				</Head>
+				<div className="flex flex-col md:flex-row gap-1.5 md:gap-5">
+					<div className="w-full flex flex-col gap-1.5">
+						<div className="relative">
+							<div className="absolute left-5 top-5 md:top-24 rounded-full p-1 bg-base-100">
+								<img
+									src={
+										user.data.picturePath
+											? user.data.picturePath
+											: "/default.png"
+									}
+									alt="profile-picture"
+									className="rounded-full w-40 h-40 object-cover"
+								/>
+							</div>
+							<figure>
+								<img
+									src="/banner.jpg"
+									alt="banner"
+									className="rounded-t-lg h-32 md:h-52 w-full object-cover border-t border-base-300"
+								/>
+							</figure>
+
+							<div className="bg-base-100 rounded-b-lg border border-base-300 pb-5">
+								<div className="flex flex-col md:flex-row justify-between pt-[72px]">
+									<div className="flex flex-col px-5">
+										<h1 className="text-xl font-semibold">
+											{user.data.firstName} {user.data.lastName}
+											{user.data.pronoun && (
+												<span className="text-zinc-500 text-sm pl-1">
+													({user.data.pronoun})
+												</span>
+											)}
+										</h1>
+										<span>{user.data.headline}</span>
+										<div className="pt-1 text-sm hidden md:block">
+											<span className="text-zinc-500">
+												{user.data.city && user.data.country
+													? `${user.data.city}, ${user.data.country} · `
+													: user.data.country
+													? `${user.data.country} · `
+													: null}
+											</span>
+											<span
+												onClick={() => setContactInfoModal(true)}
+												className="link link-hover text-blue-600 font-semibold"
+											>
+												Contact info
+											</span>
+										</div>
+									</div>
+									<div className="flex pt-1 flex-col px-5 text-zinc-500 md:text-current">
+										{user.data.experiences.length !== 0 && (
+											<span
+												onClick={handleScrollToExperience}
+												className="link link-hover text-sm hover:text-blue-500 md:font-semibold"
+											>
+												{user.data.experiences[0]?.title}
+											</span>
+										)}
+									</div>
+									<div className="pt-1 text-sm px-5 md:hidden">
 										<span className="text-zinc-500">
-											{user?.city && user?.country
-												? `${user.city}, ${user.country} · `
+											{user.data.city && user.data.country
+												? `${user.data.city}, ${user.data.country} · `
+												: user.data.country
+												? `${user.data.country} · `
 												: null}
 										</span>
 										<span
 											onClick={() => setContactInfoModal(true)}
-											className="link link-hover text-blue-600"
+											className="link link-hover text-blue-500 font-semibold"
 										>
 											Contact info
 										</span>
 									</div>
 								</div>
-								<div>
-									<span className="link link-hover hover:text-blue-600 lg:font-semibold">
-										College of San Benildo - Rizal
-									</span>
-								</div>
 							</div>
 						</div>
-					</div>
 
-					<div className="bg-base-100 rounded-lg p-5">
-						<span className="text-lg font-semibold">Skills</span>
-						<ul className="flex flex-col divide-y divide-base-300 gap-y-3 font-semibold">
-							<li className="pt-3">NextJS</li>
-							<li className="pt-3">JavaScript</li>
-							<li className="pt-3">React</li>
-						</ul>
-					</div>
-				</div>
-
-				<div className="flex flex-col gap-3 w-full md:flex-none md:w-1/3 lg:w-1/4">
-					<div className="bg-base-100 border border-base-300 rounded-lg py-3 px-5">
-						<h3 className="font-semibold">People you may know</h3>
-						{/* <p className="text-zinc-500 text-sm">From your school</p> */}
-						<div className="flex flex-col divide-y divide-base-300 text-sm">
-							{randomUsers?.map((user) => {
-								return (
-									<Link href={`/gh/${user.email}`} key={user._id}>
-										<div className="flex gap-3 w-full py-3">
-											<img
-												src={
-													user.picturePath ? user.picturePath : "/default.png"
-												}
-												alt="picture"
-												className="w-14 h-14 rounded-full object-cover"
-											/>
-											<div>
-												<div>
-													<span className="font-semibold">
-														{user.firstName} {user.lastName}
-													</span>
-												</div>
-												<div>
-													<span className="text-zinc-500 text-xs">
-														{user.headline}
-													</span>
-												</div>
-
-												<div className="pt-2">
-													<button className="btn btn-outline btn-sm rounded-full">
-														Connect
-													</button>
-												</div>
-											</div>
+						{user.data.experiences.length !== 0 && (
+							<div
+								ref={experienceRef}
+								className="bg-base-100 border border-base-300 rounded-lg p-5"
+							>
+								<span className="text-lg font-semibold">Experience</span>
+								<div className="flex flex-col divide-y divide-base-300">
+									{user.data?.experiences?.map((experience) => (
+										<div
+											key={experience}
+											className="flex flex-col text-sm py-3"
+										>
+											<span className="font-semibold">{experience.title}</span>
+											<span className="text-xs">
+												{experience.company} · {experience.location} ·{" "}
+												{experience.employmentType}
+											</span>
+											<span className="text-zinc-500 text-xs">
+												{experience.startDateMonth} {experience.startDateYear}{" "}
+												{experience.endDateMonth
+													? `- ${experience.endDateMonth} ${experience.endDateYear}`
+													: null}
+											</span>
 										</div>
-									</Link>
-								);
-							})}
-						</div>
+									))}
+								</div>
+							</div>
+						)}
+
+						{user.data.skills.length !== 0 && (
+							<div className="bg-base-100 border border-base-300 rounded-lg">
+								<div
+									className={`flex items-center px-5 pt-5 ${
+										user.data.skills.length === 0 ? "pb-5" : "pb-0"
+									}`}
+								>
+									<span className="text-lg font-semibold">Skills</span>
+								</div>
+
+								<div
+									className={`flex flex-col divide-y divide-base-300 px-5 ${
+										user.data.skills.length > 3 || user.data.skills.length === 0
+											? "pb-0"
+											: "pb-5"
+									}`}
+								>
+									{!showAllSkills
+										? user.data.skills?.slice(0, 3).map((skill, index) => (
+												<div
+													key={index}
+													className="flex flex-col text-sm py-2.5"
+												>
+													<span className="font-semibold">{skill}</span>
+												</div>
+										  ))
+										: user.data.skills?.map((skill, index) => (
+												<div
+													key={index}
+													className="flex flex-col text-sm py-2.5"
+												>
+													<span className="font-semibold">{skill}</span>
+												</div>
+										  ))}
+								</div>
+
+								{user.data.skills.length > 3 ? (
+									<>
+										{!showAllSkills ? (
+											<div
+												onClick={() => setShowAllSkills(true)}
+												className="flex justify-center items-center py-1.5 hover:bg-base-300 rounded-b border-t border-base-300 cursor-pointer text-sm"
+											>
+												Show all {user.data.skills.length} skills
+												<BsArrowRightShort className="w-6 h-6" />
+											</div>
+										) : (
+											<div
+												onClick={() => setShowAllSkills(false)}
+												className="flex justify-center items-center py-1.5 hover:bg-base-300 rounded-b border-t border-base-300 cursor-pointer text-sm"
+											>
+												Collapse
+												<BsArrowUpShort className="w-6 h-6" />
+											</div>
+										)}
+									</>
+								) : null}
+							</div>
+						)}
+					</div>
+
+					<div className="flex flex-col gap-3 w-full md:flex-none md:w-1/3 lg:w-1/4">
+						<People
+							randomUsers={randomUsers.data}
+							userEmail={data?.user?.email}
+						/>
 					</div>
 				</div>
-			</div>
 
-			<ContactInfoModal
-				user={user}
-				ownProfile={false}
-				isOpen={contactInfoModal}
-				setIsOpen={setContactInfoModal}
-			/>
-		</div>
-	);
+				<ContactInfoModal
+					user={user.data}
+					ownProfile={false}
+					isOpen={contactInfoModal}
+					setIsOpen={setContactInfoModal}
+				/>
+			</div>
+		);
 };
 
 export default ViewProfile;

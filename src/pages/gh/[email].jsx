@@ -12,7 +12,8 @@ const Profile = () => {
 
 	if (status === "loading") {
 		return (
-			<div className="min-h-screen flex justify-center items-center">
+			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
+				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
 				<PuffLoader />
 			</div>
 		);

@@ -17,8 +17,6 @@ export default async function handler(req, res) {
 			return res.status(404).send({ error: "No user found" });
 		}
 
-		console.log(user);
-
 		const isMatch = await bcrypt.compare(password, user.password);
 		if (!isMatch) {
 			return res.status(401).send({ error: "Invalid credentials" });
@@ -27,11 +25,10 @@ export default async function handler(req, res) {
 		const userObject = user.toObject();
 		delete userObject.password;
 
-		res
+		return res
 			.status(200)
 			.send({ message: "Logged in successfully", user: userObject });
 	} catch (error) {
-		console.error("Error logging in user: ", error);
 		return res.status(500).send({ error: "Internal server error" });
 	}
 }

@@ -11,10 +11,11 @@ const FormInput = ({
 	error,
 	autoFocus,
 	size,
+	disabled,
 }) => {
 	return (
 		<div className="form-control w-full">
-			<label className="label">
+			<label className="label px-0">
 				<span className="label-text">{title}</span>
 			</label>
 			<div
@@ -34,6 +35,7 @@ const FormInput = ({
 					value={value}
 					defaultValue={defaultValue}
 					autoFocus={autoFocus}
+					disabled={disabled}
 				/>
 			</div>
 		</div>

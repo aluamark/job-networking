@@ -37,7 +37,6 @@ export default async function handler(req, res) {
 			return res.status(404).send({ error: "Missing data" });
 		}
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: "Something went wrong" });
+		return res.status(500).json({ error: "Something went wrong" });
 	}
 }

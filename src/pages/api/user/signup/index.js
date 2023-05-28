@@ -38,7 +38,6 @@ export default async function handler(req, res) {
 			.status(201)
 			.send({ message: "User registered successfully", user: savedUserObject });
 	} catch (error) {
-		console.error("Error registering user: ", error);
 		return res.status(500).send({ error: "Internal server error" });
 	}
 }

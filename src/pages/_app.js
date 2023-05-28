@@ -3,7 +3,11 @@ import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Provider } from "react-redux";
 import { store } from "@/redux/store";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Layout from "./layout";
+
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }) {
 	return (
@@ -11,13 +15,16 @@ function MyApp({ Component, pageProps }) {
 			<Head>
 				<title>CRUD</title>
 			</Head>
-			<Provider store={store}>
-				<SessionProvider session={pageProps.session}>
-					<Layout>
-						<Component {...pageProps} />
-					</Layout>
-				</SessionProvider>
-			</Provider>
+			<QueryClientProvider client={queryClient}>
+				<Provider store={store}>
+					<SessionProvider session={pageProps.session}>
+						<Layout>
+							<Component {...pageProps} />
+							<ReactQueryDevtools initialIsOpen={false} />
+						</Layout>
+					</SessionProvider>
+				</Provider>
+			</QueryClientProvider>
 		</>
 	);
 }

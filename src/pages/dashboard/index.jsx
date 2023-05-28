@@ -48,7 +48,7 @@ const Dashboard = () => {
 	}
 
 	return (
-		<div className="pt-24 px-5">
+		<div className="pt-20 px-5">
 			<Head>
 				<title>Dashboard</title>
 			</Head>

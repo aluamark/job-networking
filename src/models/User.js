@@ -2,12 +2,6 @@ import { Schema, model, models } from "mongoose";
 
 const userSchema = Schema(
 	{
-		employer: {
-			type: Boolean,
-			required: true,
-			default: false,
-			select: true,
-		},
 		email: {
 			type: String,
 			required: true,
@@ -109,6 +103,10 @@ const userSchema = Schema(
 					required: true,
 					select: true,
 				},
+				employmentType: {
+					type: String,
+					select: true,
+				},
 				company: {
 					type: String,
 					required: true,
@@ -116,16 +114,28 @@ const userSchema = Schema(
 				},
 				location: {
 					type: String,
+					select: true,
+				},
+				locationType: {
+					type: String,
+					select: true,
+				},
+				startDateMonth: {
+					type: String,
 					required: true,
 					select: true,
 				},
-				startDate: {
-					type: Date,
-					required: true,
+				startDateYear: {
+					type: String,
+					required: String,
 					select: true,
 				},
-				endDate: {
-					type: Date,
+				endDateMonth: {
+					type: String,
+					select: true,
+				},
+				endDateYear: {
+					type: String,
 					select: true,
 				},
 				description: {
@@ -134,16 +144,57 @@ const userSchema = Schema(
 				},
 			},
 		],
-		connections: {
-			type: [Schema.Types.ObjectId],
-			ref: "User",
-			select: true,
-		},
+		connections: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "User",
+				select: true,
+			},
+		],
 		picturePath: {
 			type: String,
 			default: "",
 			select: true,
 		},
+		adminPages: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "Company",
+				select: true,
+			},
+		],
+		postedJobs: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "Job",
+				select: true,
+			},
+		],
+		savedJobs: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "Job",
+				select: true,
+			},
+		],
+		searchHistory: {
+			type: [String],
+			select: true,
+		},
+		adminRequests: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "Company",
+				select: true,
+			},
+		],
+		jobApplications: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "JobApplication",
+				select: true,
+			},
+		],
 	},
 	{ timestamps: true }
 );

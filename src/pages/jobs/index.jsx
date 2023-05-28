@@ -1,17 +1,23 @@
 import React from "react";
-import Head from "next/head";
+import { useSession } from "next-auth/react";
+import { PuffLoader } from "react-spinners";
+import GuestJobs from "@/components/jobs/GuestJobs";
+import UserJobs from "@/components/jobs/UserJobs";
 
 const index = () => {
-	return (
-		<div className="max-w-screen-xl mx-auto pt-24 px-5 bg-red-500">
-			<Head>
-				<title>Jobs | GetHired</title>
-			</Head>
-			<div>
-				<h1 className="text-xl">Jobs</h1>
+	const { status } = useSession();
+
+	if (status === "loading")
+		return (
+			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
+				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
+				<PuffLoader />
 			</div>
-		</div>
-	);
+		);
+
+	if (status === "unauthenticated") return <GuestJobs />;
+
+	if (status === "authenticated") return <UserJobs />;
 };
 
 export default index;
