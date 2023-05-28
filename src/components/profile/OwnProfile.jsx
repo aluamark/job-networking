@@ -4,7 +4,6 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
-import { useDispatch, useSelector } from "react-redux";
 import { setOpenModal } from "@/redux/reducer";
 import { getRandomUsers } from "@/lib/helper";
 import { MdAdd } from "react-icons/md";
@@ -23,7 +22,6 @@ import AddSkillModal from "./modals/AddSkillModal";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
 
 const OwnProfile = () => {
-	const dispatch = useDispatch();
 	const router = useRouter();
 	const { email } = router.query;
 	const user = useLoggedUserQuery();

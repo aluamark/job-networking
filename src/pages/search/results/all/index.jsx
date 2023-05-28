@@ -10,12 +10,11 @@ import { PuffLoader } from "react-spinners";
 import People from "@/components/widgets/People";
 import { RiBriefcase4Line } from "react-icons/ri";
 
-const index = () => {
+const AllResults = () => {
 	const router = useRouter();
 	const { keywords } = router.query;
 
 	const search = useSearchQuery(keywords);
-	console.log(search);
 	const user = useLoggedUserQuery();
 	const randomUsers = useRandomUsersQuery();
 
@@ -31,7 +30,7 @@ const index = () => {
 		return (
 			<div className="max-w-screen-xl flex flex-col md:flex-row gap-5 mx-auto py-20 md:px-5">
 				<Head>
-					<title>"{keywords}" | Search | GetHired</title>
+					<title>&quot;{keywords}&quot; | Search | GetHired</title>
 				</Head>
 				<div className="flex flex-col flex-none w-full md:w-[225px]">
 					<div className="md:fixed md:w-[225px] flex flex-col gap-3 bg-base-100 border border-base-300 rounded-lg p-5 font-semibold text-sm">
@@ -68,6 +67,7 @@ const index = () => {
 									src={search.data.companies[0].picturePath}
 									width={88}
 									height={88}
+									alt={search.data.companies[0].name}
 								/>
 								<div className="flex flex-col">
 									<span className="text-xl font-semibold">
@@ -100,6 +100,7 @@ const index = () => {
 										>
 											<Image
 												src={company.picturePath}
+												alt={company.name}
 												width={48}
 												height={48}
 												className="w-[48px] h-[48px] object-cover"
@@ -171,6 +172,7 @@ const index = () => {
 													>
 														<Image
 															src={job.company.picturePath}
+															alt={job.company.name}
 															width={48}
 															height={48}
 															className="w-[48px] h-[48px] object-cover"
@@ -227,6 +229,7 @@ const index = () => {
 											<Link href={`/gh/${person.email}`} className="flex-none">
 												<Image
 													src={person.picturePath}
+													alt={person.name}
 													width={48}
 													height={48}
 													className="rounded-full w-[48px] h-[48px] object-cover"
@@ -264,6 +267,7 @@ const index = () => {
 											<Link href="" className="flex-none">
 												<Image
 													src={job.company.picturePath}
+													alt={job.company.name}
 													width={48}
 													height={48}
 													className="w-[48px] h-[48px] object-cover"
@@ -301,6 +305,7 @@ const index = () => {
 											<Link href="" className="flex-none">
 												<Image
 													src={job.company.picturePath}
+													alt={job.company.name}
 													width={48}
 													height={48}
 													className="w-[48px] h-[48px] object-cover"
@@ -342,4 +347,4 @@ const index = () => {
 		);
 };
 
-export default index;
+export default AllResults;

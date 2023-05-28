@@ -8,7 +8,7 @@ import { PuffLoader } from "react-spinners";
 import People from "@/components/widgets/People";
 import { useRandomUsersQuery } from "@/lib/react-query-hooks/useRandomUsersQuery";
 
-const index = () => {
+const SavedJobs = () => {
 	const user = useLoggedUserQuery();
 	const randomUsers = useRandomUsersQuery();
 
@@ -54,6 +54,7 @@ const index = () => {
 													<div className="flex-none">
 														<Image
 															src={job.company.picturePath}
+															alt={job.company.name}
 															width={56}
 															height={56}
 														/>
@@ -90,4 +91,4 @@ const index = () => {
 		);
 };
 
-export default index;
+export default SavedJobs;

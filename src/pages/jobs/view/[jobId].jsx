@@ -86,6 +86,7 @@ const View = () => {
 								? job.data.company.picturePath
 								: "/company.png"
 						}
+						alt="company-logo"
 						width={48}
 						height={48}
 					/>

@@ -4,7 +4,7 @@ import { PuffLoader } from "react-spinners";
 import GuestJobs from "@/components/jobs/GuestJobs";
 import UserJobs from "@/components/jobs/UserJobs";
 
-const index = () => {
+const Jobs = () => {
 	const { status } = useSession();
 
 	if (status === "loading")
@@ -20,4 +20,4 @@ const index = () => {
 	if (status === "authenticated") return <UserJobs />;
 };
 
-export default index;
+export default Jobs;

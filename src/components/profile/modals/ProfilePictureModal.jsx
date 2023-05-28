@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { setOpenModal } from "@/redux/reducer";
 import { updateUserPicture } from "@/lib/helper";
@@ -89,10 +90,12 @@ const ProfilePictureModal = ({ userId, picturePath, isOpen, setIsOpen }) => {
 				</div>
 
 				<div className="flex p-7">
-					<img
+					<Image
 						src={previewUrl ? previewUrl : picturePath}
 						alt="profile-photo"
 						className="w-64 h-64 object-cover rounded-full mx-auto overflow-y-auto"
+						width={256}
+						height={256}
 					/>
 				</div>
 

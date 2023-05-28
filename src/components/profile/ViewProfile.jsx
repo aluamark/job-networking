@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
-import { getRandomUsers } from "@/lib/helper";
-import { getUser } from "@/lib/helper";
+import { getUser, getRandomUsers } from "@/lib/helper";
 import { PuffLoader } from "react-spinners";
+import { BsArrowRightShort, BsArrowUpShort } from "react-icons/bs";
+import { useSession } from "next-auth/react";
 import ContactInfoModal from "./modals/ContactInfoModal";
 import People from "../widgets/People";
-import { BsArrowRightShort, BsArrowUpShort } from "react-icons/bs";
-import { useRef } from "react";
-import { useSession } from "next-auth/react";
 
 const ViewProfile = () => {
 	const router = useRouter();
@@ -80,7 +79,7 @@ const ViewProfile = () => {
 					<div className="w-full flex flex-col gap-1.5">
 						<div className="relative">
 							<div className="absolute left-5 top-5 md:top-24 rounded-full p-1 bg-base-100">
-								<img
+								<Image
 									src={
 										user.data.picturePath
 											? user.data.picturePath
@@ -88,13 +87,18 @@ const ViewProfile = () => {
 									}
 									alt="profile-picture"
 									className="rounded-full w-40 h-40 object-cover"
+									width={160}
+									height={160}
 								/>
 							</div>
 							<figure>
-								<img
+								<Image
 									src="/banner.jpg"
 									alt="banner"
 									className="rounded-t-lg h-32 md:h-52 w-full object-cover border-t border-base-300"
+									width={910}
+									height={208}
+									priority
 								/>
 							</figure>
 

@@ -8,7 +8,7 @@ import JobView from "@/components/job/JobView";
 import JobViewModal from "@/components/job/JobViewModal";
 import { PuffLoader } from "react-spinners";
 
-const index = () => {
+const Recommended = () => {
 	const router = useRouter();
 	const { currentJobId } = router.query;
 	const [recommendedJobs, setRecommendedJobs] = useState(null);
@@ -74,6 +74,7 @@ const index = () => {
 														? job.company.picturePath
 														: "/company.png"
 												}
+												alt="company-logo"
 												width={56}
 												height={56}
 											/>
@@ -113,4 +114,4 @@ const index = () => {
 		);
 };
 
-export default index;
+export default Recommended;

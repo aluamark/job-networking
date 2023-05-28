@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
@@ -248,10 +249,12 @@ const NewCompany = () => {
 						</div>
 						<div class="bg-base-100 w-11/12 mx-auto my-auto rounded-lg p-5">
 							<div className="flex flex-col gap-1.5">
-								<img
+								<Image
 									src="/company.png"
 									alt="company-logo"
 									className="h-28 w-28"
+									width={112}
+									height={112}
 								/>
 								<h3 className="text-xl font-semibold">
 									{formData.name || "Company name"}
