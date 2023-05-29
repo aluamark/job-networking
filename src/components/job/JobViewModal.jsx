@@ -3,15 +3,37 @@ import Link from "next/link";
 import Image from "next/image";
 import Modal from "react-modal";
 import { signIn } from "next-auth/react";
-import { getTimeDifference, renderDescription } from "@/lib/helper";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+	getMonthYear,
+	getTimeDifference,
+	renderDescription,
+	saveJob,
+} from "@/lib/helper";
 import { BsBriefcaseFill, BsListCheck, BsArrowLeftShort } from "react-icons/bs";
 import SkillsModal from "./JobSkillsModal";
 
 Modal.setAppElement("#root");
 
 const JobViewModal = ({ isOpen, setIsOpen, selectedJob, user }) => {
-	const [skillsModal, setSkillsModal] = useState(false);
+	const queryClient = useQueryClient();
+	const createUpdateMutation = useMutation({
+		mutationFn: saveJob,
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ["loggedUser"],
+			});
+		},
+	});
 
+	const handleSaveJob = async () => {
+		createUpdateMutation.mutate({
+			userId: user._id,
+			jobId: selectedJob._id,
+		});
+	};
+
+	const [skillsModal, setSkillsModal] = useState(false);
 	const [isExpanded, setIsExpanded] = useState(false);
 	const toggleExpand = () => {
 		setIsExpanded(!isExpanded);
@@ -87,12 +109,23 @@ const JobViewModal = ({ isOpen, setIsOpen, selectedJob, user }) => {
 					<button className="bg-blue-700 hover:bg-blue-800 duration-300 text-white px-5 rounded-full font-semibold">
 						Apply
 					</button>
-					<button
-						onClick={() => signIn()}
-						className="h-10 w-20 box-border hover:box-border border border-blue-600 hover:bg-blue-50 duration-300 hover:border-2 text-blue-600 px-5 rounded-full font-semibold"
-					>
-						Save
-					</button>
+					{user?.savedJobs.some(
+						(savedJob) => savedJob._id === selectedJob._id
+					) ? (
+						<button
+							onClick={handleSaveJob}
+							className="h-10 w-24 box-border hover:box-border border border-blue-600 hover:bg-blue-50 duration-300 hover:border-2 text-blue-600 px-5 rounded-full font-semibold"
+						>
+							Saved
+						</button>
+					) : (
+						<button
+							onClick={user ? handleSaveJob : () => signIn()}
+							className="h-10 w-20 box-border hover:box-border border border-blue-600 hover:bg-blue-50 duration-300 hover:border-2 text-blue-600 px-5 rounded-full font-semibold"
+						>
+							Save
+						</button>
+					)}
 				</div>
 				{selectedJob.postedBy && (
 					<div className="flex flex-col gap-2.5 border border-base-300 rounded-lg px-5 pt-3 pb-5">
@@ -124,8 +157,15 @@ const JobViewModal = ({ isOpen, setIsOpen, selectedJob, user }) => {
 										{selectedJob.postedBy.lastName}
 									</Link>
 								</span>
-								<span>{selectedJob.postedBy.headline}Senior HR Executive</span>
-								<span className="text-xs text-zinc-500">Job poster</span>
+								<span>
+									{selectedJob.postedBy.headline
+										? selectedJob.postedBy.headline
+										: "New user"}
+								</span>
+								<span className="text-xs text-zinc-500">
+									Job poster · Member since{" "}
+									{getMonthYear(selectedJob.postedBy.createdAt)}
+								</span>
 							</div>
 						</div>
 					</div>
@@ -146,7 +186,11 @@ const JobViewModal = ({ isOpen, setIsOpen, selectedJob, user }) => {
 								className="flex items-center gap-3"
 							>
 								<Image
-									src={selectedJob.company.picturePath}
+									src={
+										selectedJob.company.picturePath
+											? selectedJob.company.picturePath
+											: "/company.png"
+									}
 									alt="about-the-company-logo"
 									width={56}
 									height={56}

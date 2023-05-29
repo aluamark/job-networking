@@ -35,11 +35,13 @@ const GuestJobs = () => {
 		return (
 			<div className="max-w-screen-sm mx-auto pt-20 md:px-5">
 				<div className="flex flex-col gap-3 bg-base-100 border border-base-300 p-5 rounded-lg">
-					<span className="text-xl font-semibold">
+					<p className="text-xl font-semibold">
 						No jobs available at the moment.
-					</span>
-					Stay tuned as we onboard companies and new job postings will appear
-					soon!
+					</p>
+					<p>
+						Stay tuned as we onboard companies and new job postings will appear
+						soon!
+					</p>
 				</div>
 			</div>
 		);

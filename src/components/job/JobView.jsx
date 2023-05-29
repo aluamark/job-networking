@@ -3,7 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getTimeDifference, renderDescription, saveJob } from "@/lib/helper";
+import {
+	getMonthYear,
+	getTimeDifference,
+	renderDescription,
+	saveJob,
+} from "@/lib/helper";
 import { BsBriefcaseFill, BsListCheck } from "react-icons/bs";
 import SkillsModal from "./JobSkillsModal";
 import { toast } from "react-toastify";
@@ -147,8 +152,15 @@ const JobView = ({ selectedJob, user }) => {
 									{selectedJob.postedBy.lastName}
 								</Link>
 							</span>
-							<span>{selectedJob.postedBy.headline}Senior HR Executive</span>
-							<span className="text-xs text-zinc-500">Job poster</span>
+							<span>
+								{selectedJob.postedBy.headline
+									? selectedJob.postedBy.headline
+									: "New user"}
+							</span>
+							<span className="text-xs text-zinc-500">
+								Job poster · Member since{" "}
+								{getMonthYear(selectedJob.postedBy.createdAt)}
+							</span>
 						</div>
 					</div>
 				</div>

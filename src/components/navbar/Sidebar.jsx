@@ -43,7 +43,7 @@ const Sidebar = () => {
 								width={40}
 								height={40}
 							/>
-							{data.user.firstName} {data.user.lastName}
+							{user.data.firstName} {user.data.lastName}
 						</Link>
 					</li>
 					<li>

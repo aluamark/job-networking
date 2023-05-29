@@ -64,7 +64,11 @@ const AllResults = () => {
 								className="flex items-center gap-5 bg-base-100 border border-base-300 rounded-lg p-5"
 							>
 								<Image
-									src={search.data.companies[0].picturePath}
+									src={
+										search.data.companies[0].picturePath
+											? search.data.companies[0].picturePath
+											: "/company.png"
+									}
 									width={88}
 									height={88}
 									alt={search.data.companies[0].name}
@@ -99,7 +103,11 @@ const AllResults = () => {
 											key={company._id}
 										>
 											<Image
-												src={company.picturePath}
+												src={
+													company.picturePath
+														? company.picturePath
+														: "/company.png"
+												}
 												alt={company.name}
 												width={48}
 												height={48}
@@ -171,7 +179,11 @@ const AllResults = () => {
 														key={job._id}
 													>
 														<Image
-															src={job.company.picturePath}
+															src={
+																job.company.picturePath
+																	? job.company.picturePath
+																	: "/company.png"
+															}
 															alt={job.company.name}
 															width={48}
 															height={48}
@@ -228,7 +240,11 @@ const AllResults = () => {
 										<div className="flex gap-3 py-3" key={person._id}>
 											<Link href={`/gh/${person.email}`} className="flex-none">
 												<Image
-													src={person.picturePath}
+													src={
+														person.picturePath
+															? person.picturePath
+															: "/default.png"
+													}
 													alt={person.name}
 													width={48}
 													height={48}
@@ -266,7 +282,11 @@ const AllResults = () => {
 										<div className="flex gap-3 py-3" key={job._id}>
 											<Link href="" className="flex-none">
 												<Image
-													src={job.company.picturePath}
+													src={
+														job.company.picturePath
+															? job.company.picturePath
+															: "/company.png"
+													}
 													alt={job.company.name}
 													width={48}
 													height={48}
@@ -304,7 +324,11 @@ const AllResults = () => {
 										<div className="flex gap-3 py-3" key={job._id}>
 											<Link href="" className="flex-none">
 												<Image
-													src={job.company.picturePath}
+													src={
+														job.company.picturePath
+															? job.company.picturePath
+															: "/company.png"
+													}
 													alt={job.company.name}
 													width={48}
 													height={48}

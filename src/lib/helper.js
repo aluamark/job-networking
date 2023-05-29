@@ -255,6 +255,15 @@ export const getRecommendedJobs = (userProfile, jobListings) => {
 	return filteredJobs.map((recommendedJob) => recommendedJob.jobListing);
 };
 
+export const getMonthYear = (dateTimeString) => {
+	const date = new Date(dateTimeString);
+
+	const options = { month: "long", year: "numeric" };
+	const formattedDate = date.toLocaleString("en-US", options);
+
+	return formattedDate;
+};
+
 export const getTimeDifference = (postedAt) => {
 	const postTime = new Date(postedAt);
 	const currentTime = new Date();

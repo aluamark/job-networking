@@ -19,15 +19,11 @@ const OwnPage = ({ company, randomUsers, createUpdateMutation }) => {
 		switch (tab) {
 			case 0:
 				return (
-					<>
-						{company.data.about && (
-							<Overview
-								company={company.data}
-								about={company.data.about}
-								setTab={setTab}
-							/>
-						)}
-					</>
+					<Overview
+						company={company.data}
+						about={company.data.about}
+						setTab={setTab}
+					/>
 				);
 			case 1:
 				return <About company={company.data} />;
