@@ -22,25 +22,28 @@ const JobPosting = () => {
 			<Head>
 				<title>Job Posting | GetHired</title>
 			</Head>
-			<div className="flex flex-col gap-3 bg-base-100 border border-base-300 rounded-lg p-5">
-				<h1 className="text-xl font-semibold">Manage pages</h1>
-				{pages.map((page) => (
-					<Link
-						key={page.uniqueAddress}
-						href={`/company/${page.uniqueAddress}`}
-						className="btn btn-outline flex-1 justify-start gap-3 normal-case hover:bg-base-100 hover:text-base-content rounded-none p-1"
-					>
-						<Image
-							src={page.picturePath ? page.picturePath : "/company.png"}
-							alt={page.name}
-							width={48}
-							height={48}
-						/>
+			{pages.length !== 0 && (
+				<div className="flex flex-col gap-3 bg-base-100 border border-base-300 rounded-lg p-5">
+					<h1 className="text-xl font-semibold">Manage pages</h1>
 
-						{page.name}
-					</Link>
-				))}
-			</div>
+					{pages.map((page) => (
+						<Link
+							key={page.uniqueAddress}
+							href={`/company/${page.uniqueAddress}`}
+							className="btn btn-outline flex-1 justify-start gap-3 normal-case hover:bg-base-100 hover:text-base-content rounded-none p-1"
+						>
+							<Image
+								src={page.picturePath ? page.picturePath : "/company.png"}
+								alt={page.name}
+								width={48}
+								height={48}
+							/>
+
+							{page.name}
+						</Link>
+					))}
+				</div>
+			)}
 			<Link
 				href="/company/setup/new"
 				className="btn flex-1 normal-case rounded-lg p-5 mx-5 md:mx-0"

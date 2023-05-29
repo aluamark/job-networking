@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
-import { useDispatch } from "react-redux";
-import { addUserAdminPage } from "@/redux/reducer";
 import { validateUniqueAddress, createCompany } from "@/lib/helper";
 import FormInput from "@/components/form/FormInput";
 import { toast } from "react-toastify";
@@ -11,7 +9,6 @@ import { PuffLoader } from "react-spinners";
 import { FaSpinner } from "react-icons/fa";
 
 const NewCompany = () => {
-	const dispatch = useDispatch();
 	const router = useRouter();
 	const { data, status } = useSession();
 	const [formData, setFormData] = useState({
@@ -109,7 +106,6 @@ const NewCompany = () => {
 
 			if (company) {
 				toast.success(`Created company page for ${company.name}.`);
-				dispatch(addUserAdminPage(company));
 				router.push(`/company/${formData.uniqueAddress}`);
 			} else {
 				toast.error(res.error);

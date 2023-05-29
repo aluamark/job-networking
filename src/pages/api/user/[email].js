@@ -1,6 +1,7 @@
 import connectMongo from "@/utils/connectMongo";
 import User from "@/models/User";
 import Company from "@/models/Company";
+import Job from "@/models/Job";
 
 export default async function handler(req, res) {
 	const { email } = req.query;
