@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "react-modal";
 import { MdClose } from "react-icons/md";
 import { BsCheckCircleFill } from "react-icons/bs";
@@ -18,8 +18,8 @@ const SkillsModal = ({ isOpen, setIsOpen, skills, user }) => {
 			className="min-h-screen h-screen flex justify-center items-center"
 		>
 			<div
-				className={`bg-base-100 rounded-lg w-[550px] h-full ${
-					skills.length > 7 ? "md:h-96" : "md:h-auto"
+				className={`bg-base-100 rounded-lg w-[550px] ${
+					skills.length > 8 ? "h-[47.1%]" : null
 				}`}
 			>
 				<div className="flex flex-col h-full">

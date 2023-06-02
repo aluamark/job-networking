@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { getTimeDifference } from "@/lib/helper";
 import { BsChevronCompactRight, BsChevronCompactLeft } from "react-icons/bs";
+import JobTimeDifference from "@/components/job/JobTimeDifference";
+
 const Jobs = ({ companyId, companyName, companyPicture, jobs }) => {
 	const carouselRef = useRef(null);
 	const [isScrollStart, setIsScrollStart] = useState(true);
@@ -110,7 +111,7 @@ const Jobs = ({ companyId, companyName, companyPicture, jobs }) => {
 							</span>
 						</div>
 						<span className="text-green-600 text-xs font-semibold">
-							{getTimeDifference(job.createdAt)}
+							<JobTimeDifference date={job.createdAt} />
 						</span>
 					</Link>
 				))}

@@ -50,6 +50,10 @@ const Sidebar = () => {
 						<Link href={`/jobs`}>Jobs</Link>
 					</li>
 					<li>
+						<Link href="/job-posting">Job Posting Account</Link>
+					</li>
+
+					<li>
 						<button onClick={() => signOut()}>Logout</button>
 					</li>
 				</ul>

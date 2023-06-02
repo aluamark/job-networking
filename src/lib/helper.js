@@ -1,7 +1,7 @@
 import axios from "axios";
 import DOMPurify from "dompurify";
 
-const BASE_URL = "https://job-networking.vercel.app";
+const BASE_URL = "http://localhost:3000";
 
 // SEARCH
 export const search = async (keywords) => {
@@ -61,6 +61,25 @@ export const updateUserPicture = async ({ data, userId }) => {
 		},
 		body: JSON.stringify({ data, userId }),
 	});
+};
+
+// USER JOB APPLICATION
+export const submitApplication = async ({
+	userId,
+	jobId,
+	email,
+	phone,
+	data,
+}) => {
+	return await axios.put(
+		`${BASE_URL}/api/user/job/apply`,
+		{ userId, jobId, email, phone, data },
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}
+	);
 };
 
 // ADD NEW EXPERIENCE

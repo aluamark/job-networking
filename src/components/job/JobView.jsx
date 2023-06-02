@@ -3,14 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-	getMonthYear,
-	getTimeDifference,
-	renderDescription,
-	saveJob,
-} from "@/lib/helper";
+import { getMonthYear, renderDescription, saveJob } from "@/lib/helper";
 import { BsBriefcaseFill, BsListCheck } from "react-icons/bs";
+import JobApplicationModal from "./JobApplicationModal";
 import SkillsModal from "./JobSkillsModal";
+import JobTimeDifference from "./JobTimeDifference";
 import { toast } from "react-toastify";
 
 const JobView = ({ selectedJob, user }) => {
@@ -43,6 +40,7 @@ const JobView = ({ selectedJob, user }) => {
 		}
 	};
 
+	const [jobApplicationModal, setJobApplicationModal] = useState(false);
 	const [skillsModal, setSkillsModal] = useState(false);
 	const [isExpanded, setIsExpanded] = useState(false);
 	const toggleExpand = () => {
@@ -54,9 +52,9 @@ const JobView = ({ selectedJob, user }) => {
 	const showButton = selectedJob?.company.about.length > 100;
 
 	return (
-		<div className="flex flex-col gap-5 w-full px-7 py-5">
+		<div className="flex flex-col gap-5 w-full h-full px-7 py-5 bg-base-100 overflow-y-scroll">
 			<div className="flex flex-col gap-1.5">
-				<span className="text-2xl font-semibold">{selectedJob.title}</span>
+				<span className="text-2xl font-semibold">{selectedJob?.title}</span>
 
 				<div className="text-sm">
 					<span>
@@ -70,8 +68,14 @@ const JobView = ({ selectedJob, user }) => {
 						{selectedJob.locationType}){" "}
 					</span>
 					<span className="text-zinc-500">
-						{getTimeDifference(selectedJob.createdAt)}
+						<JobTimeDifference date={selectedJob.createdAt} />{" "}
 					</span>
+					{selectedJob.applications.length !== 0 && (
+						<span className="text-green-600">
+							· {selectedJob.applications.length}{" "}
+							{selectedJob.applications.length > 1 ? "applicants" : "applicant"}
+						</span>
+					)}
 				</div>
 			</div>
 
@@ -84,39 +88,55 @@ const JobView = ({ selectedJob, user }) => {
 				)}
 
 				{selectedJob.skills.length !== 0 && (
-					<button
-						onClick={() => setSkillsModal(true)}
-						className="flex items-center gap-3"
-					>
-						<BsListCheck className="h-5 w-5" />
-						Skills:{" "}
-						{selectedJob.skills.length > 2
-							? `${selectedJob.skills[0]}, ${selectedJob.skills[1]}, +${
-									selectedJob.skills.length - 2
-							  } more`
-							: selectedJob.skills === 1
-							? `${selectedJob.skills[0]}`
-							: `${selectedJob.skills[0]}, ${selectedJob.skills[1]}`}
+					<button onClick={() => setSkillsModal(true)} className="flex gap-3">
+						<div className="flex flex-none">
+							<BsListCheck className="h-5 w-5" />
+						</div>
+						<p className="flex text-left">
+							Skills:{" "}
+							{selectedJob.skills.length > 2
+								? `${selectedJob.skills[0]}, ${selectedJob.skills[1]}, +${
+										selectedJob.skills.length - 2
+								  } more`
+								: selectedJob.skills === 1
+								? `${selectedJob.skills[0]}`
+								: `${selectedJob.skills[0]}, ${selectedJob.skills[1]}`}
+						</p>
 					</button>
 				)}
 			</div>
 			<div className="flex gap-1.5">
-				<button className="bg-blue-700 hover:bg-blue-800 duration-300 text-white px-5 rounded-full font-semibold">
-					Apply
-				</button>
+				{user?.jobApplications.some(
+					(application) => application.job._id === selectedJob._id
+				) ? (
+					<button
+						disabled
+						className="bg-blue-900 text-white px-5 rounded-full font-semibold disabled"
+					>
+						Applied
+					</button>
+				) : (
+					<button
+						onClick={() => setJobApplicationModal(true)}
+						className="bg-blue-700 hover:bg-blue-800 text-white px-5 rounded-full font-semibold"
+					>
+						Apply
+					</button>
+				)}
+
 				{user?.savedJobs.some(
 					(savedJob) => savedJob._id === selectedJob._id
 				) ? (
 					<button
 						onClick={handleSaveJob}
-						className="h-10 w-24 box-border hover:box-border border border-blue-600 hover:bg-blue-50 duration-300 hover:border-2 text-blue-600 px-5 rounded-full font-semibold"
+						className="h-10 w-24 box-border hover:box-border border border-blue-600 hover:bg-blue-50 hover:border-2 text-blue-600 px-5 rounded-full font-semibold"
 					>
 						Saved
 					</button>
 				) : (
 					<button
 						onClick={user ? handleSaveJob : () => signIn()}
-						className="h-10 w-20 box-border hover:box-border border border-blue-600 hover:bg-blue-50 duration-300 hover:border-2 text-blue-600 px-5 rounded-full font-semibold"
+						className="h-10 w-20 box-border hover:box-border border border-blue-600 hover:bg-blue-50 hover:border-2 text-blue-600 px-5 rounded-full font-semibold"
 					>
 						Save
 					</button>
@@ -165,7 +185,6 @@ const JobView = ({ selectedJob, user }) => {
 					</div>
 				</div>
 			)}
-
 			<div className="flex flex-col gap-3">
 				<span className="text-lg font-semibold">About the job</span>
 				<div className="text-sm">
@@ -218,6 +237,12 @@ const JobView = ({ selectedJob, user }) => {
 					Show more
 				</Link>
 			</div>
+			<JobApplicationModal
+				isOpen={jobApplicationModal}
+				setIsOpen={setJobApplicationModal}
+				user={user}
+				selectedJob={selectedJob}
+			/>
 			<SkillsModal
 				isOpen={skillsModal}
 				setIsOpen={setSkillsModal}

@@ -4,11 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getTimeDifference, saveJob, renderDescription } from "@/lib/helper";
+import { saveJob, renderDescription } from "@/lib/helper";
 import { PuffLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { BsBriefcaseFill, BsListCheck } from "react-icons/bs";
 import JobSkillsModal from "@/components/job/JobSkillsModal";
+import JobTimeDifference from "@/components/job/JobTimeDifference";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
 import { useJobQuery } from "@/lib/react-query-hooks/useJobQuery";
 
@@ -104,7 +105,7 @@ const View = () => {
 								· {job.data.city}, {job.data.country} ({job.data.locationType}){" "}
 							</span>
 							<span className="text-zinc-500">
-								{getTimeDifference(job.data.createdAt)}
+								<JobTimeDifference date={job.data.createdAt} />
 							</span>
 						</div>
 					</div>

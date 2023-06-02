@@ -156,6 +156,11 @@ const userSchema = Schema(
 			default: "",
 			select: true,
 		},
+		resumePath: {
+			type: String,
+			default: "",
+			select: true,
+		},
 		adminPages: [
 			{
 				type: Schema.Types.ObjectId,

@@ -16,10 +16,14 @@ const AddSkillModal = ({ isOpen, setIsOpen, formData, setFormData }) => {
 
 	const handleAdd = () => {
 		const updatedSkills = [...formData.skills];
-		updatedSkills.push(skill);
-		setFormData({ ...formData, skills: updatedSkills });
-		setSkill("");
-		setIsOpen(false);
+		if (updatedSkills.length < 10) {
+			updatedSkills.push(skill);
+			setFormData({ ...formData, skills: updatedSkills });
+			setSkill("");
+			setIsOpen(false);
+		} else {
+			setInputError("You can only add up to 10 skills");
+		}
 	};
 
 	const closeModal = () => {

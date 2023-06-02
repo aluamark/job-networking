@@ -11,13 +11,17 @@ const jobApplicationSchema = Schema(
 			ref: "User",
 			required: true,
 		},
-		resume: {
+		email: {
 			type: String,
 			required: true,
 		},
-		coverLetter: {
+		phone: {
 			type: String,
-			default: "",
+			required: true,
+		},
+		resume: {
+			type: String,
+			required: true,
 		},
 		status: {
 			type: String,
@@ -29,6 +33,6 @@ const jobApplicationSchema = Schema(
 );
 
 const JobApplication =
-	models.Job || model("JobApplication", jobApplicationSchema);
+	models.JobApplication || model("JobApplication", jobApplicationSchema);
 
 export default JobApplication;

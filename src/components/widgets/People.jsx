@@ -11,7 +11,7 @@ const People = ({ randomUsers, userEmail }) => {
 		(user) => user.email !== userEmail && user.email !== email
 	);
 
-	if (filteredUsers.length === 0)
+	if (filteredUsers?.length === 0)
 		return (
 			<div className="flex flex-col gap-3 bg-base-100 border border-base-300 rounded-lg p-5">
 				<h3 className="font-semibold">People you may know</h3>
@@ -19,7 +19,7 @@ const People = ({ randomUsers, userEmail }) => {
 			</div>
 		);
 
-	if (filteredUsers.length > 0)
+	if (filteredUsers?.length > 0)
 		return (
 			<div className="bg-base-100 border border-base-300 rounded-lg p-5">
 				<h3 className="font-semibold">People you may know</h3>
@@ -32,7 +32,7 @@ const People = ({ randomUsers, userEmail }) => {
 										<Image
 											src={user.picturePath ? user.picturePath : "/default.png"}
 											alt="picture"
-											className="rounded-full w-12 h-12 object-cover"
+											className="border border-base-300 rounded-full w-12 h-12 object-cover"
 											width={48}
 											height={48}
 										/>

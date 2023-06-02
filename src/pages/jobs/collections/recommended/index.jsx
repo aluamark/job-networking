@@ -3,9 +3,10 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
 import { useJobsQuery } from "@/lib/react-query-hooks/useJobsQuery";
-import { getRecommendedJobs, getTimeDifference } from "@/lib/helper";
+import { getRecommendedJobs } from "@/lib/helper";
 import JobView from "@/components/job/JobView";
 import JobViewModal from "@/components/job/JobViewModal";
+import JobTimeDifference from "@/components/job/JobTimeDifference";
 import { PuffLoader } from "react-spinners";
 
 const Recommended = () => {
@@ -89,7 +90,7 @@ const Recommended = () => {
 												{job.city}, {job.country} ({job.locationType})
 											</span>
 											<span className="text-green-600 text-xs font-semibold pt-1.5">
-												{getTimeDifference(job.createdAt)}
+												<JobTimeDifference date={job.createdAt} />
 											</span>
 										</div>
 									</li>

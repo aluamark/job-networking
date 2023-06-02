@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 		}
 
 		const result = await cloudinary.v2.uploader.upload(data, {
-			folder: "job-networking",
+			folder: "job-networking/users",
 		});
 
 		if (result.secure_url) {

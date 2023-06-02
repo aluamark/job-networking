@@ -29,14 +29,17 @@ const ProfilePictureModal = ({ userId, picturePath, isOpen, setIsOpen }) => {
 
 	const handleFileChange = (event) => {
 		const file = event.target.files[0];
-		setSelectedFile(file);
 
 		if (file) {
+			setSelectedFile(file);
 			const reader = new FileReader();
 			reader.onload = () => {
 				setPreviewUrl(reader.result);
 			};
 			reader.readAsDataURL(file);
+		} else {
+			setSelectedFile(null);
+			setPreviewUrl(null);
 		}
 	};
 

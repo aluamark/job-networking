@@ -88,7 +88,7 @@ const SignUp = () => {
 	}
 
 	return (
-		<div className="hero min-h-screen bg-base-100">
+		<div className="hero min-h-screen bg-base-100 py-20">
 			<Head>
 				<title>Register</title>
 			</Head>

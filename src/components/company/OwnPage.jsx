@@ -137,9 +137,6 @@ const OwnPage = ({ company, randomUsers, createUpdateMutation }) => {
 								</div>
 							</div>
 						</div>
-						{handleRenderTab()}
-					</div>
-					<div className="flex flex-col gap-3 w-full md:flex-none lg:w-1/4">
 						<div className="bg-base-100 border border-base-300 rounded-lg p-5">
 							<Link
 								href={{
@@ -159,6 +156,9 @@ const OwnPage = ({ company, randomUsers, createUpdateMutation }) => {
 								</span>
 							</Link>
 						</div>
+						{handleRenderTab()}
+					</div>
+					<div className="flex flex-col gap-3 w-full md:flex-none lg:w-1/4">
 						<People randomUsers={randomUsers.data} />
 					</div>
 				</div>

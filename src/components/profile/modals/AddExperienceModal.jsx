@@ -60,8 +60,15 @@ const AddExperienceModal = ({
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 
-		setFormData({ ...formData, [name]: value });
-		setFormErrors({ ...formErrors, [name]: "" });
+		if (name === "description") {
+			if (value.length <= 2000) {
+				setFormData({ ...formData, [name]: value });
+				setFormErrors({ ...formErrors, [name]: "" });
+			}
+		} else {
+			setFormData({ ...formData, [name]: value });
+			setFormErrors({ ...formErrors, [name]: "" });
+		}
 	};
 
 	const handleSubmit = async (event) => {
@@ -142,7 +149,7 @@ const AddExperienceModal = ({
 			overlayClassName="fixed inset-0 bg-black/75"
 			className="min-h-screen h-screen flex justify-center items-center"
 		>
-			<div className="bg-base-100 rounded-lg w-[550px] h-full md:h-[80%]">
+			<div className="bg-base-100 rounded-lg w-[550px] h-[80%]">
 				<form onSubmit={handleSubmit} className="flex flex-col h-full">
 					<div className="flex justify-between items-center py-3 pl-7 pr-3">
 						<h3 className="text-lg font-semibold">Add experience</h3>
@@ -154,7 +161,7 @@ const AddExperienceModal = ({
 						</button>
 					</div>
 
-					<div className="flex flex-col gap-5 border-y border-base-300 px-7 pb-7 overflow-y-auto">
+					<div className="flex flex-col gap-5 border-y border-base-300 px-7 pb-1 overflow-y-auto">
 						<div className="flex flex-col">
 							<div className="pt-1">
 								<span className="text-xs text-zinc-500">
@@ -333,37 +340,22 @@ const AddExperienceModal = ({
 									name="description"
 									onChange={handleChange}
 									className="textarea textarea-bordered textarea-sm"
+									value={formData?.description}
 								></textarea>
 								<label className="label">
 									<span className="label-text-alt"></span>
-									<span className="label-text-alt">0/2000</span>
+									<span
+										className={`label-text-alt ${
+											formData?.description.length === 2000
+												? "text-red-500"
+												: null
+										}`}
+									>
+										{formData?.description.length}/2000
+									</span>
 								</label>
 							</div>
 						</div>
-
-						{/* <div className="flex flex-col">
-							<h3 className="text-lg font-semibold">Skills</h3>
-							<FormInput
-								name="city"
-								size="sm"
-								title="City"
-								type="text"
-								placeholder="Ex. Manila"
-								value={formData?.city}
-								onChange={handleChange}
-								error={formErrors.city}
-							/>
-							<FormInput
-								name="country"
-								size="sm"
-								title="Country/Region*"
-								type="text"
-								placeholder="Ex. Philippines"
-								value={formData?.country}
-								onChange={handleChange}
-								error={formErrors.country}
-							/>
-						</div> */}
 					</div>
 					<div className="flex-none items-center px-5 py-3">
 						{submitLoading ? (

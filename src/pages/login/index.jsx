@@ -76,7 +76,7 @@ const Login = () => {
 	}
 
 	return (
-		<div className="hero min-h-screen bg-base-100">
+		<div className="hero min-h-screen bg-base-100 py-20">
 			<Head>
 				<title>Login</title>
 			</Head>

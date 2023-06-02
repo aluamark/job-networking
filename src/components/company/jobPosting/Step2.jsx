@@ -36,7 +36,7 @@ const Step2 = ({
 	};
 
 	return (
-		<div className="max-w-screen-xl flex gap-5 mx-auto py-20 px-5">
+		<div className="max-w-screen-xl flex flex-col md:flex-row gap-5 mx-auto py-20 px-5">
 			<div className="flex flex-col w-full">
 				<div className="flex flex-col gap-3 bg-base-100 rounded-lg">
 					<div className="flex items-center gap-3 border-b border-base-300 px-5 py-3">
@@ -82,6 +82,16 @@ const Step2 = ({
 									Add skill +
 								</button>
 							</div>
+							<label className="label px-0 pt-0">
+								<span className="label-text-alt">Add up to 10 skills</span>
+								<span
+									className={`label-text-alt ${
+										formData?.skills.length === 10 ? "text-red-500" : null
+									}`}
+								>
+									{formData?.skills.length}/10
+								</span>
+							</label>
 						</div>
 					</div>
 					<div className="flex justify-between px-5 py-3 border-t border-base-300">
@@ -95,7 +105,7 @@ const Step2 = ({
 							onClick={handleSubmit}
 							className="bg-blue-600 rounded-full px-5 py-1 text-white font-semibold"
 						>
-							Continue
+							Post job
 						</button>
 					</div>
 				</div>

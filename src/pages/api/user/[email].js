@@ -2,6 +2,7 @@ import connectMongo from "@/utils/connectMongo";
 import User from "@/models/User";
 import Company from "@/models/Company";
 import Job from "@/models/Job";
+import JobApplication from "@/models/JobApplication";
 
 export default async function handler(req, res) {
 	const { email } = req.query;
@@ -22,8 +23,21 @@ export default async function handler(req, res) {
 				},
 			})
 			.populate({
+				path: "postedJobs",
+				populate: {
+					path: "company applications",
+				},
+			})
+			.populate({
 				path: "adminPages",
 				select: "uniqueAddress name picturePath",
+			})
+			.populate({
+				path: "jobApplications",
+				populate: {
+					path: "job",
+					model: "Job",
+				},
 			});
 
 		if (!user) {

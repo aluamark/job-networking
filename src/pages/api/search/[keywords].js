@@ -13,12 +13,12 @@ export default async function handler(req, res) {
 		await connectMongo();
 
 		const people = await User.find({
-			firstName: { $regex: keywords, $options: "i" },
+			firstName: { $regex: `^${keywords}`, $options: "i" },
 		});
 
 		// Search for company names
 		const companies = await Company.find({
-			name: { $regex: keywords, $options: "i" },
+			name: { $regex: `^${keywords}`, $options: "i" },
 		});
 
 		const companyIds = companies.map((company) => company._id);
@@ -29,12 +29,12 @@ export default async function handler(req, res) {
 
 		// Search for job titles
 		const jobsByTitle = await Job.find({
-			title: { $regex: keywords, $options: "i" },
+			title: { $regex: `^${keywords}`, $options: "i" },
 		}).populate("company");
 
 		// Search for jobs by skills
 		const jobsBySkills = await Job.find({
-			skills: { $regex: keywords, $options: "i" },
+			skills: { $regex: `^${keywords}`, $options: "i" },
 		}).populate("company");
 
 		// Combine the results

@@ -124,7 +124,7 @@ const EditProfileModal = ({
 			overlayClassName="fixed inset-0 bg-black/75"
 			className="min-h-screen h-screen flex justify-center items-center"
 		>
-			<div className="bg-base-100 rounded-lg w-[550px] h-full md:h-[90%]">
+			<div className="bg-base-100 rounded-lg w-[550px] h-[80%]">
 				<form onSubmit={handleSubmit} className="flex flex-col h-full">
 					<div className="flex justify-between items-center py-3 pl-7 pr-3">
 						<h3 className="text-lg font-semibold">Edit intro</h3>

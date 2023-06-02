@@ -1,5 +1,8 @@
 import connectMongo from "@/utils/connectMongo";
 import Job from "@/models/Job";
+import JobApplication from "@/models/JobApplication";
+import Company from "@/models/Company";
+import User from "@/models/User";
 import mongoose from "mongoose";
 
 export default async function first(req, res) {
@@ -18,6 +21,12 @@ export default async function first(req, res) {
 						path: "postedBy",
 						select:
 							"-additionalName -adminPages -adminRequests -city -connections -contact -country -educations -experiences -jobApplications -postedJobs -pronoun -savedJobs -searchHistory -skills -createdAt -updatedAt",
+					})
+					.populate({
+						path: "applications",
+						populate: {
+							path: "applicant",
+						},
 					})
 					.populate({
 						path: "company",

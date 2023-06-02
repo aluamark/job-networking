@@ -43,7 +43,7 @@ const Navbar = () => {
 	return (
 		<nav className="fixed navbar bg-base-100 border-b border-base-300 z-50 text-sm p-0">
 			<div className="max-w-screen-xl w-full mx-auto">
-				<div className="flex items-center flex-1">
+				<div className="flex items-center flex-1 gap-3 px-3">
 					<Link
 						href={`${
 							status === "authenticated" && data.user.employer
@@ -51,9 +51,9 @@ const Navbar = () => {
 								: "/jobs"
 						}`}
 					>
-						<button className="p-3 font-semibold">GetHired</button>
+						<button className="py-3 font-semibold">GetHired</button>
 					</Link>
-					<Search />
+					<Search searchHistory={user?.data?.searchHistory} />
 				</div>
 				<div className="flex-none hidden md:block">
 					<ul className="menu menu-horizontal px-3">
@@ -77,7 +77,7 @@ const Navbar = () => {
 													: "/default.png"
 											}
 											alt="profile-picture"
-											className="rounded-full w-10 h-10 object-cover"
+											className="border border-base-300 rounded-full w-10 h-10 object-cover"
 											width={40}
 											height={40}
 										/>

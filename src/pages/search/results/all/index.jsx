@@ -40,8 +40,8 @@ const AllResults = () => {
 								{search.data.companies.length !== 0 && (
 									<li href="/">Companies</li>
 								)}
-								{search.data.people.length !== 0 && <li>People</li>}
 								{search.data.jobsByCompany !== 0 && <li>Jobs by companies</li>}
+								{search.data.people.length !== 0 && <li>People</li>}
 								{search.data.jobsByTitle.length !== 0 && <li>Jobs by title</li>}
 								{search.data.jobsBySkills.length !== 0 && (
 									<li>Jobs by skills</li>

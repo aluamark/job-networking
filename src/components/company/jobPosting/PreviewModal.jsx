@@ -27,7 +27,7 @@ const PreviewModal = ({
 			<Head>
 				<title>Job Preview | GetHired</title>
 			</Head>
-			<div className="flex flex-col bg-base-100 w-[550px] h-[90%]">
+			<div className="flex flex-col bg-base-100 w-[550px] h-[80%]">
 				<div className="flex justify-between items-center py-3 pl-5 pr-3">
 					<div>
 						<h3 className="font-semibold">Job Preview</h3>

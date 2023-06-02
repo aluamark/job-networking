@@ -11,6 +11,7 @@ import {
 	BsBellFill,
 	BsGearFill,
 	BsFileEarmark,
+	BsBriefcaseFill,
 } from "react-icons/bs";
 import People from "../widgets/People";
 import { PuffLoader } from "react-spinners";
@@ -43,26 +44,37 @@ const UserJobs = () => {
 					<title>Jobs | GetHired</title>
 				</Head>
 				<div className="flex flex-col flex-none w-full md:w-[225px]">
-					<div className="md:fixed md:w-[225px] flex flex-col gap-7 bg-base-100 border border-base-300 rounded-lg px-5 py-7 font-semibold text-sm">
-						<Link
-							href="/my-items/saved-jobs"
-							className="flex items-center gap-1.5"
-						>
-							<BsFillBookmarkCheckFill className="h-5 w-5" />
-							My jobs
-						</Link>
-						<Link href="/jobs" className="flex items-center gap-1.5">
-							<BsBellFill className="h-5 w-5" />
-							Job alerts
-						</Link>
-						<Link href="/jobs" className="flex items-center gap-1.5">
-							<BsFileEarmark className="h-5 w-5" />
-							Resume builder
-						</Link>
-						<Link href="/jobs" className="flex items-center gap-1.5">
-							<BsGearFill className="h-5 w-5" />
-							Application settings
-						</Link>
+					<div className="md:fixed md:w-[225px] flex flex-col gap-3 font-semibold text-sm">
+						<div className="flex flex-col gap-7 bg-base-100 border border-base-300 rounded-lg px-5 py-7">
+							<Link
+								href="/my-items/saved-jobs"
+								className="flex items-center gap-3"
+							>
+								<BsFillBookmarkCheckFill className="h-5 w-5" />
+								My jobs
+							</Link>
+							<Link href="/jobs" className="flex items-center gap-3">
+								<BsBellFill className="h-5 w-5" />
+								Job alerts
+							</Link>
+							<Link href="/jobs" className="flex items-center gap-3">
+								<BsFileEarmark className="h-5 w-5" />
+								Resume builder
+							</Link>
+							<Link href="/jobs" className="flex items-center gap-3">
+								<BsGearFill className="h-5 w-5" />
+								Application settings
+							</Link>
+						</div>
+						{user.data.postedJobs.length !== 0 && (
+							<Link
+								href="/my-items/posted-jobs"
+								className="flex gap-3 bg-base-100 border border-base-300 rounded-lg p-5"
+							>
+								<BsBriefcaseFill className="h-5 w-5" />
+								Manage job posts
+							</Link>
+						)}
 					</div>
 				</div>
 				<div className="flex flex-col lg:flex-row gap-5 w-full">

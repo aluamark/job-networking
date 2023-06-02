@@ -9,7 +9,7 @@ import { BsFillBookmarkCheckFill } from "react-icons/bs";
 import People from "@/components/widgets/People";
 import JobTimeDifference from "@/components/job/JobTimeDifference";
 
-const SavedJobs = () => {
+const PostedJobs = () => {
 	const user = useLoggedUserQuery();
 	const randomUsers = useRandomUsersQuery();
 
@@ -38,7 +38,7 @@ const SavedJobs = () => {
 							<div>
 								<Link
 									href="/my-items/saved-jobs"
-									className="flex justify-between items-center gap-3 p-3 border-l-8 text-blue-600 border-blue-600"
+									className="flex justify-between items-center gap-3 p-3"
 								>
 									<span>My jobs</span>
 									<span>{user.data.savedJobs.length}</span>
@@ -48,7 +48,7 @@ const SavedJobs = () => {
 							<div>
 								<Link
 									href="/my-items/posted-jobs"
-									className="flex justify-between items-center gap-3 p-3"
+									className="flex justify-between items-center gap-3 p-3 border-l-8 text-blue-600 border-blue-600 rounded-b-lg"
 								>
 									<span>Posted jobs</span>
 									<span>{user.data.postedJobs.length}</span>
@@ -60,20 +60,20 @@ const SavedJobs = () => {
 				<div className="flex flex-col lg:flex-row gap-5 w-full">
 					<div className="w-full">
 						<div className="bg-base-100 border border-base-300 rounded-lg p-5">
-							<span className="font-semibold">Saved</span>
-							{user.data.savedJobs && user.data.savedJobs.length === 0 ? (
+							<span className="font-semibold">Posted Jobs</span>
+							{user.data.postedJobs && user.data.postedJobs.length === 0 ? (
 								<div className="pt-3">
-									<span>No saved jobs.</span>
+									<span>No posted jobs.</span>
 								</div>
 							) : (
 								<div className="flex flex-col divide-y divide-base-300 pt-3">
-									{user.data.savedJobs &&
-										user.data.savedJobs
+									{user.data.postedJobs &&
+										user.data.postedJobs
 											.slice()
 											.reverse()
 											.map((job) => (
 												<Link
-													href={`/jobs/view/${job._id}`}
+													href={`/hiring/jobs/${job._id}/applicants/${job.applications[0].applicant}`}
 													key={job._id}
 													className="flex gap-5 py-3 group/job"
 												>
@@ -86,16 +86,33 @@ const SavedJobs = () => {
 														/>
 													</div>
 
-													<div className="flex flex-col">
-														<span className="group-hover/job:underline text-blue-600 font-semibold">
-															{job.title}
-														</span>
-														<span className="text-sm">{job.company.name}</span>
-														<span className="text-sm text-zinc-500">
-															{job.city}, {job.country} ({job.locationType})
-														</span>
-														<span className="text-green-600 text-xs font-semibold pt-1.5">
-															<JobTimeDifference date={job.createdAt} />
+													<div className="flex flex-col gap-1">
+														<div className="flex flex-col">
+															<span className="group-hover/job:underline text-blue-600 font-semibold">
+																{job.title}
+															</span>
+															<span className="text-sm">
+																{job.company.name}
+															</span>
+															<span className="text-sm text-zinc-500">
+																{job.city}, {job.country} ({job.locationType})
+															</span>
+														</div>
+
+														<div className="text-xs">
+															<span className="text-green-600 font-semibold">
+																Active
+															</span>{" "}
+															<span className="text-zinc-500">
+																· Posted{" "}
+																<JobTimeDifference date={job.createdAt} />
+															</span>
+														</div>
+														<span className="text-xs text-zinc-500">
+															{job.applications.length}{" "}
+															{job.applications.length > 1
+																? "applicants"
+																: "applicant"}
 														</span>
 													</div>
 												</Link>
@@ -117,4 +134,4 @@ const SavedJobs = () => {
 		);
 };
 
-export default SavedJobs;
+export default PostedJobs;
