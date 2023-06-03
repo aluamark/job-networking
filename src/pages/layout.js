@@ -37,7 +37,7 @@ const Layout = ({ children }) => {
 	return (
 		<div className="drawer scroll-smooth">
 			<input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-			<div className="drawer-content flex flex-col">
+			<div className="drawer-content flex flex-col h-screen">
 				<Navbar />
 				{/* {isLoading && (
 					<div className="min-h-screen flex flex-col justify-center items-center gap-10">

@@ -43,40 +43,40 @@ const ManageApplicants = () => {
 
 	if (job.data)
 		return (
-			<div className="min-h-screen h-screen flex flex-col">
-				<div className="relative h-full">
-					<div className="fixed mt-[3.8rem] bg-base-100 border border-base-300 w-full z-40">
-						<div className="max-w-screen-xl mx-auto flex items-center gap-1.5 py-3 px-3">
-							<div className="flex-none">
-								<Image
-									src={
-										job.data.company.picturePath
-											? job.data.company.picturePath
-											: "/company.png"
-									}
-									width={48}
-									height={48}
-									alt="company-logo"
-								/>
-							</div>
+			<>
+				<div className="fixed top-[4rem] bg-base-100 border-b border-base-300 w-full z-40">
+					<div className="max-w-screen-xl mx-auto flex items-center gap-1.5 py-3 px-3">
+						<div className="flex-none">
+							<Image
+								src={
+									job.data.company.picturePath
+										? job.data.company.picturePath
+										: "/company.png"
+								}
+								width={48}
+								height={48}
+								alt="company-logo"
+							/>
+						</div>
 
-							<div className="flex flex-col">
-								<span className="font-semibold">{job.data.title}</span>
-								<span className="text-xs">
-									{job.data.company.name}{" "}
-									{job.data.company.country && `· ${job.data.company.country}`}
+						<div className="flex flex-col">
+							<span className="font-semibold">{job.data.title}</span>
+							<span className="text-xs">
+								{job.data.company.name}{" "}
+								{job.data.company.country && `· ${job.data.company.country}`}
+							</span>
+							<div className="text-xs">
+								<span className="text-green-600 font-semibold">Active</span>{" "}
+								<span className="text-zinc-500">
+									· Posted <JobTimeDifference date={job.data.createdAt} />
 								</span>
-								<div className="text-xs">
-									<span className="text-green-600 font-semibold">Active</span>{" "}
-									<span className="text-zinc-500">
-										· Posted <JobTimeDifference date={job.data.createdAt} />
-									</span>
-								</div>
 							</div>
 						</div>
 					</div>
-					<div className="max-w-screen-xl h-full mx-auto flex divide-x divide-base-300 bg-base-100 border border-base-300 w-full pt-[8.9rem]">
-						<div className="relative w-full h-full">
+				</div>
+				<div className="fixed top-[9rem] w-full h-full">
+					<div className="max-w-screen-xl mx-auto flex z-0 divide-x divide-base-300 bg-base-100 border border-base-300 h-full">
+						<div className="w-full h-[85%]">
 							<div className="sticky top-0 px-5 py-2.5 border-b border-base-300">
 								<span className="font-semibold">
 									{job.data.applications.length}{" "}
@@ -85,7 +85,7 @@ const ManageApplicants = () => {
 										: "applicant"}
 								</span>
 							</div>
-							<div className="flex flex-col divide-y divide-base-300 h-[93.4%] overflow-y-auto border-b border-base-300">
+							<div className="flex flex-col divide-y divide-base-300 h-[94.7%] border-b border-base-300 overflow-y-auto">
 								{job.data.applications.map((application) => (
 									<div
 										key={application._id}
@@ -125,7 +125,7 @@ const ManageApplicants = () => {
 								))}
 							</div>
 						</div>
-						<div className="hidden md:flex w-full overflow-y-auto border-b border-base-300">
+						<div className="hidden md:flex w-full h-[85%] overflow-y-auto border-b border-base-300">
 							{selectedApplication && (
 								<ApplicationView selectedApplication={selectedApplication} />
 							)}
@@ -139,7 +139,7 @@ const ManageApplicants = () => {
 						selectedApplication={selectedApplication}
 					/>
 				)}
-			</div>
+			</>
 		);
 };
 

@@ -41,7 +41,7 @@ const Navbar = () => {
 	}
 
 	return (
-		<nav className="fixed navbar bg-base-100 border-b border-base-300 z-50 text-sm p-0">
+		<nav className="fixed top-0 navbar bg-base-100 border-b border-base-300 text-sm p-0 z-50">
 			<div className="max-w-screen-xl w-full mx-auto">
 				<div className="flex items-center flex-1 gap-3 px-3">
 					<Link
