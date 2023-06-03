@@ -106,7 +106,11 @@ const UserJobs = () => {
 											>
 												<div className="flex-none">
 													<Image
-														src={job.company.picturePath}
+														src={
+															job.company.picturePath
+																? job.company.picturePath
+																: "/company.png"
+														}
 														width={56}
 														height={56}
 														alt="company-logo"

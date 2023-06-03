@@ -7,8 +7,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { saveJob, renderDescription } from "@/lib/helper";
 import { PuffLoader } from "react-spinners";
 import { toast } from "react-toastify";
-import { BsBriefcaseFill, BsListCheck } from "react-icons/bs";
+import { BsBriefcaseFill, BsListCheck, BsArrowLeftShort } from "react-icons/bs";
 import JobSkillsModal from "@/components/job/JobSkillsModal";
+import JobApplicationModal from "@/components/job/JobApplicationModal";
 import JobTimeDifference from "@/components/job/JobTimeDifference";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
 import { useJobQuery } from "@/lib/react-query-hooks/useJobQuery";
@@ -17,7 +18,8 @@ const View = () => {
 	const router = useRouter();
 	const { jobId } = router.query;
 	const queryClient = useQueryClient();
-	const [skillsModal, setSkillsModal] = useState();
+	const [skillsModal, setSkillsModal] = useState(false);
+	const [jobApplicationModal, setJobApplicationModal] = useState(false);
 
 	const user = useLoggedUserQuery();
 	const job = useJobQuery(jobId);
@@ -80,6 +82,16 @@ const View = () => {
 				<Head>
 					<title>{job.data.title}</title>
 				</Head>
+				<div>
+					<Link
+						href="/my-items/saved-jobs"
+						className="btn btn-outline btn-sm gap-2 normal-case lg:gap-3"
+					>
+						<BsArrowLeftShort className="w-7 h-7" />
+						<span>Saved jobs</span>
+					</Link>
+				</div>
+
 				<div className="flex flex-col gap-5 bg-base-100 border border-base-300 rounded-lg p-5">
 					<Image
 						src={
@@ -136,9 +148,23 @@ const View = () => {
 						)}
 					</div>
 					<div className="flex gap-1.5">
-						<button className="bg-blue-700 hover:bg-blue-800 duration-300 text-white px-5 rounded-full font-semibold">
-							Apply
-						</button>
+						{user.data.jobApplications.some(
+							(application) => application.job._id === job.data._id
+						) ? (
+							<button
+								disabled
+								className="bg-blue-900 text-white px-5 rounded-full font-semibold disabled"
+							>
+								Applied
+							</button>
+						) : (
+							<button
+								onClick={() => setJobApplicationModal(true)}
+								className="bg-blue-700 hover:bg-blue-800 text-white px-5 rounded-full font-semibold"
+							>
+								Apply
+							</button>
+						)}
 						{user.data.savedJobs.some(
 							(savedJob) => savedJob._id === job.data._id
 						) ? (
@@ -202,12 +228,17 @@ const View = () => {
 						{renderDescription(job.data.description)}
 					</div>
 				</div>
-
 				<JobSkillsModal
 					isOpen={skillsModal}
 					setIsOpen={setSkillsModal}
 					skills={job.data.skills}
 					user={user.data}
+				/>
+				<JobApplicationModal
+					isOpen={jobApplicationModal}
+					setIsOpen={setJobApplicationModal}
+					user={user.data}
+					selectedJob={job.data}
 				/>
 			</div>
 		);

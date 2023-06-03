@@ -53,7 +53,7 @@ const JobViewModal = ({ isOpen, setIsOpen, selectedJob, user }) => {
 			className="md:hidden min-h-screen h-screen flex justify-center items-center"
 		>
 			<div className="fixed top-0 left-0 flex w-full p-3 bg-base-100">
-				<button onClick={closeModal} className="">
+				<button onClick={closeModal}>
 					<BsArrowLeftShort className="w-7 h-7" />
 				</button>
 			</div>

@@ -45,7 +45,7 @@ const ManageApplicants = () => {
 		return (
 			<div className="min-h-screen h-screen flex flex-col">
 				<div className="relative h-full">
-					<div className="fixed mt-[3.8rem] bg-base-100 border border-base-300 w-full z-40">
+					<div className="fixed mt-[3.8rem] bg-base-100 border border-base-300 w-full">
 						<div className="max-w-screen-xl mx-auto flex items-center gap-1.5 py-3 px-3">
 							<div className="flex-none">
 								<Image

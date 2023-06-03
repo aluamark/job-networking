@@ -30,7 +30,7 @@ export default async function first(req, res) {
 					})
 					.populate({
 						path: "company",
-						select: "picturePath name",
+						select: "picturePath name uniqueAddress",
 					});
 
 				if (!job) {

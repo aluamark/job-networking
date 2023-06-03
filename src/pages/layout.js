@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Navbar from "@/components/navbar/Navbar";
 import Sidebar from "@/components/navbar/Sidebar";
+import BottomNav from "@/components/navbar/BottomNav";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "@/components/footer/Footer";
@@ -48,6 +49,7 @@ const Layout = ({ children }) => {
 				)} */}
 				{/* className={`bg-base-200 ${isLoading ? "hidden" : "block"}`} */}
 				<main>{children}</main>
+				<BottomNav />
 				{/* prevent toast from rendering behind the modal if a modal is open */}
 				{!openModal && (
 					<ToastContainer

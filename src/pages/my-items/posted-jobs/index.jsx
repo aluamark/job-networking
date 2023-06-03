@@ -73,13 +73,21 @@ const PostedJobs = () => {
 											.reverse()
 											.map((job) => (
 												<Link
-													href={`/hiring/jobs/${job._id}/applicants/${job.applications[0].applicant}`}
+													href={`/hiring/jobs/${job._id}/applicants/${
+														job?.applications[0]?.applicant
+															? job?.applications[0]?.applicant
+															: "0"
+													}`}
 													key={job._id}
 													className="flex gap-5 py-3 group/job"
 												>
 													<div className="flex-none">
 														<Image
-															src={job.company.picturePath}
+															src={
+																job.company.picturePath
+																	? job.company.picturePath
+																	: "/company.png"
+															}
 															alt={job.company.name}
 															width={56}
 															height={56}

@@ -79,7 +79,11 @@ const SavedJobs = () => {
 												>
 													<div className="flex-none">
 														<Image
-															src={job.company.picturePath}
+															src={
+																job.company.picturePath
+																	? job.company.picturePath
+																	: "/company.png"
+															}
 															alt={job.company.name}
 															width={56}
 															height={56}
