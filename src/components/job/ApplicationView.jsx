@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Link from "next/link";
 import { getTimeDifference } from "@/lib/helper";
 import { BarLoader } from "react-spinners";
 
@@ -38,6 +39,15 @@ const ApplicationView = ({ selectedApplication }) => {
 				<span>Email: {selectedApplication.email}</span>
 				<span>Phone: {selectedApplication.phone}</span>
 			</div>
+			<div className="flex px-5">
+				<Link
+					href={`/gh/${selectedApplication.applicant.email}`}
+					className="border-blue-600 hover:bg-blue-50 border-2 text-blue-600 px-5 py-1 rounded-full font-semibold"
+				>
+					View profile
+				</Link>
+			</div>
+
 			<div className="px-5">
 				Status:{" "}
 				<span className="text-green-600 font-semibold">
@@ -47,7 +57,7 @@ const ApplicationView = ({ selectedApplication }) => {
 			<div className="px-5">
 				<span className="font-semibold">Uploaded resume</span>
 			</div>
-			<div className="px-5 overflow-x-auto">
+			<div className="overflow-x-auto">
 				<Document
 					file={selectedApplication.resume}
 					onLoadSuccess={onDocumentLoadSuccess}

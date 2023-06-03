@@ -76,8 +76,8 @@ const ManageApplicants = () => {
 						</div>
 					</div>
 					<div className="max-w-screen-xl h-full mx-auto flex divide-x divide-base-300 bg-base-100 border border-base-300 w-full pt-[8.9rem]">
-						<div className="relative flex-1 h-full">
-							<div className="absolute px-5 py-2.5 bg-base-100 w-full">
+						<div className="relative w-full h-full">
+							<div className="sticky top-0 px-5 py-2.5 border-b border-base-300">
 								<span className="font-semibold">
 									{job.data.applications.length}{" "}
 									{job.data.applications.length > 1
@@ -85,7 +85,7 @@ const ManageApplicants = () => {
 										: "applicant"}
 								</span>
 							</div>
-							<ul className="flex flex-col divide-y divide-base-300 h-[92.4%] mt-[2.8rem] overflow-y-auto border-y border-base-300">
+							<div className="flex flex-col divide-y divide-base-300 h-[93.4%] overflow-y-auto border-b border-base-300">
 								{job.data.applications.map((application) => (
 									<div
 										key={application._id}
@@ -123,9 +123,9 @@ const ManageApplicants = () => {
 										</div>
 									</div>
 								))}
-							</ul>
+							</div>
 						</div>
-						<div className="hidden md:flex flex-1 overflow-y-auto border-b border-base-300">
+						<div className="hidden md:flex w-full overflow-y-auto border-b border-base-300">
 							{selectedApplication && (
 								<ApplicationView selectedApplication={selectedApplication} />
 							)}

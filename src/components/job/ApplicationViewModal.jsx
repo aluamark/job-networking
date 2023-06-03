@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Link from "next/link";
 import Modal from "react-modal";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { getTimeDifference } from "@/lib/helper";
@@ -56,6 +57,14 @@ const ApplicationViewModal = ({ isOpen, setIsOpen, selectedApplication }) => {
 				<div className="flex flex-col px-5">
 					<span>Email: {selectedApplication.email}</span>
 					<span>Phone: {selectedApplication.phone}</span>
+				</div>
+				<div className="flex px-5">
+					<Link
+						href={`/gh/${selectedApplication.applicant.email}`}
+						className="border-blue-600 hover:bg-blue-50 border-2 text-blue-600 px-5 py-1 rounded-full font-semibold"
+					>
+						View profile
+					</Link>
 				</div>
 				<div className="px-5">
 					Status:{" "}

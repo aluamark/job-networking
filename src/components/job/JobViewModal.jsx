@@ -135,14 +135,14 @@ const JobViewModal = ({ isOpen, setIsOpen, selectedJob, user }) => {
 					) ? (
 						<button
 							onClick={handleSaveJob}
-							className="h-10 w-24 box-border hover:box-border border border-blue-600 hover:bg-blue-50 hover:border-2 text-blue-600 px-5 rounded-full font-semibold"
+							className="h-10 w-24 box-border border border-blue-600 hover:bg-blue-50 hover:border-2 text-blue-600 px-5 rounded-full font-semibold"
 						>
 							Saved
 						</button>
 					) : (
 						<button
 							onClick={user ? handleSaveJob : () => signIn()}
-							className="h-10 w-20 box-border hover:box-border border border-blue-600 hover:bg-blue-50 hover:border-2 text-blue-600 px-5 rounded-full font-semibold"
+							className="h-10 w-20 box-border border border-blue-600 hover:bg-blue-50 hover:border-2 text-blue-600 px-5 rounded-full font-semibold"
 						>
 							Save
 						</button>
