@@ -29,7 +29,7 @@ const PostedJobs = () => {
 				</Head>
 				<div className="flex flex-col flex-none w-full md:w-[225px]">
 					<div className="md:fixed md:w-[225px] font-semibold text-sm">
-						<div className="flex flex-col divide-y divide-base-300 bg-base-100 border border-base-300 rounded-lg">
+						<div className="flex flex-col divide-y divide-base-300 bg-base-100 border border-base-300 md:rounded-t-lg">
 							<div className="flex gap-3 px-3 py-5">
 								<BsFillBookmarkCheckFill className="h-5 w-5" />
 								<span>My Items</span>
@@ -48,7 +48,7 @@ const PostedJobs = () => {
 							<div>
 								<Link
 									href="/my-items/posted-jobs"
-									className="flex justify-between items-center gap-3 p-3 border-l-8 text-blue-600 border-blue-600 rounded-b-lg"
+									className="flex justify-between items-center gap-3 p-3 border-l-8 text-blue-600 border-blue-600"
 								>
 									<span>Posted jobs</span>
 									<span>{user.data.postedJobs.length}</span>
