@@ -6,6 +6,5 @@ export const useCompanyJobsQuery = (companyId) =>
 		queryKey: ["jobs", companyId],
 		queryFn: () => getCompanyJobs(companyId),
 		enabled: !!companyId,
-		retry: false,
 		refetchOnWindowFocus: false,
 	});

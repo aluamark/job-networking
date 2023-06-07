@@ -6,6 +6,5 @@ export const useSearchQuery = (keywords) =>
 		queryKey: ["search", keywords],
 		queryFn: () => search(keywords),
 		enabled: !!keywords,
-		retry: false,
 		refetchOnWindowFocus: false,
 	});

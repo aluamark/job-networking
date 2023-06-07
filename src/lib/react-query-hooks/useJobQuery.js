@@ -6,6 +6,5 @@ export const useJobQuery = (jobId) =>
 		queryKey: ["job", jobId],
 		queryFn: () => getJob(jobId),
 		enabled: !!jobId,
-		retry: false,
 		refetchOnWindowFocus: false,
 	});
