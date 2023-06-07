@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import FormInput from "@/components/form/FormInput";
 import { toast } from "react-toastify";
-import { PuffLoader } from "react-spinners";
 import { createUser } from "@/lib/helper";
 import { FaSpinner } from "react-icons/fa";
+import Loading from "@/components/widgets/Loading";
 
 const SignUp = () => {
 	const router = useRouter();
@@ -74,11 +74,7 @@ const SignUp = () => {
 	};
 
 	if (status === "loading") {
-		return (
-			<div className="min-h-screen flex justify-center items-center">
-				<PuffLoader />
-			</div>
-		);
+		return <Loading />;
 	}
 
 	if (status === "authenticated") {
@@ -90,7 +86,7 @@ const SignUp = () => {
 	return (
 		<div className="hero min-h-screen bg-base-100 py-20">
 			<Head>
-				<title>Register</title>
+				<title>Sign Up | EmployX</title>
 			</Head>
 			<div className="hero-content flex flex-col gap-10 md:w-[600px]">
 				<h1 className="text-3xl text-blue-600">
@@ -156,7 +152,7 @@ const SignUp = () => {
 					</div>
 					<div className="divider">or</div>
 					<p className="text-center">
-						Already on GetHired?{" "}
+						Already on EmployX?{" "}
 						<a
 							onClick={() => signIn()}
 							className="link link-hover text-blue-600"

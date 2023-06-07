@@ -121,7 +121,7 @@ const Search = ({ searchHistory }) => {
 											search.data.people.map((user) => (
 												<Link
 													onClick={() => setIsFocused(false)}
-													href={`/gh/${user.email}`}
+													href={`/ex/${user.email}`}
 													key={user._id}
 													className="flex items-center hover:bg-base-300 px-5 py-1.5"
 												>
@@ -143,7 +143,7 @@ const Search = ({ searchHistory }) => {
 											search.data.jobsByTitle.map((job) => (
 												<Link
 													onClick={() => setIsFocused(false)}
-													href={`/gh/${job._id}`}
+													href={`/ex/${job._id}`}
 													key={job._id}
 													className="flex items-center hover:bg-base-300 px-5 py-1.5"
 												>
@@ -161,7 +161,7 @@ const Search = ({ searchHistory }) => {
 													.map((skill) => (
 														<Link
 															onClick={() => setIsFocused(false)}
-															href={`/gh/${skill}`}
+															href={`/ex/${skill}`}
 															key={skill}
 															className="flex items-center hover:bg-base-300 px-5 py-1.5"
 														>

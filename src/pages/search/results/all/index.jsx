@@ -6,9 +6,9 @@ import { useRouter } from "next/router";
 import { useSearchQuery } from "@/lib/react-query-hooks/useSearchQuery";
 import { useRandomUsersQuery } from "@/lib/react-query-hooks/useRandomUsersQuery";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
-import { PuffLoader } from "react-spinners";
 import People from "@/components/widgets/People";
 import { RiBriefcase4Line } from "react-icons/ri";
+import Loading from "@/components/widgets/Loading";
 
 const AllResults = () => {
 	const router = useRouter();
@@ -18,19 +18,13 @@ const AllResults = () => {
 	const user = useLoggedUserQuery();
 	const randomUsers = useRandomUsersQuery();
 
-	if (search.isLoading || randomUsers.isLoading)
-		return (
-			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
-				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
-				<PuffLoader />
-			</div>
-		);
+	if (search.isLoading || randomUsers.isLoading) return <Loading />;
 
 	if (search.data && randomUsers.data)
 		return (
 			<div className="max-w-screen-xl flex flex-col md:flex-row gap-5 mx-auto py-20 md:px-5">
 				<Head>
-					<title>&quot;{keywords}&quot; | Search | GetHired</title>
+					<title>&quot;{keywords}&quot; | Search | EmployX</title>
 				</Head>
 				<div className="flex flex-col flex-none w-full md:w-[225px]">
 					<div className="md:fixed md:w-[225px] flex flex-col gap-3 bg-base-100 border border-base-300 rounded-lg p-5 font-semibold text-sm">
@@ -238,7 +232,7 @@ const AllResults = () => {
 								<div className="flex flex-col divide-y divide-base-300">
 									{search.data.people.map((person) => (
 										<div className="flex gap-3 py-3" key={person._id}>
-											<Link href={`/gh/${person.email}`} className="flex-none">
+											<Link href={`/ex/${person.email}`} className="flex-none">
 												<Image
 													src={
 														person.picturePath
@@ -252,7 +246,7 @@ const AllResults = () => {
 												/>
 											</Link>
 
-											<Link href={`/gh/${person.email}`}>
+											<Link href={`/ex/${person.email}`}>
 												<div className="flex flex-col">
 													<span className="link link-hover font-semibold">
 														{person.firstName} {person.lastName}

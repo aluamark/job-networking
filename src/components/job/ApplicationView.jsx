@@ -41,7 +41,7 @@ const ApplicationView = ({ selectedApplication }) => {
 			</div>
 			<div className="flex px-5">
 				<Link
-					href={`/gh/${selectedApplication.applicant.email}`}
+					href={`/ex/${selectedApplication.applicant.email}`}
 					className="border-blue-600 hover:bg-blue-50 border-2 text-blue-600 px-5 py-1 rounded-full font-semibold"
 				>
 					View profile
@@ -61,7 +61,11 @@ const ApplicationView = ({ selectedApplication }) => {
 				<Document
 					file={selectedApplication.resume}
 					onLoadSuccess={onDocumentLoadSuccess}
-					loading={<BarLoader />}
+					loading={
+						<div className="p-5">
+							<BarLoader />
+						</div>
+					}
 				>
 					{Array.from(new Array(numPages), (el, index) => (
 						<Page scale={0.95} key={index + 1} pageNumber={index + 1} />

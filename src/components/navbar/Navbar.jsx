@@ -14,7 +14,7 @@ const Navbar = () => {
 		<nav className="fixed navbar bg-base-100 border-b border-base-300 z-50 text-sm font-semibold">
 			<div className="max-w-screen-xl w-full mx-auto">
 				<div className="flex-1">
-					<button className="p-3">GetHired</button>
+					<Image src="/employx.png" alt="website-logo" width={40} height={40} />
 				</div>
 				<div className="flex-none hidden md:block">
 					<ul className="menu menu-horizontal px-3"></ul>
@@ -51,7 +51,15 @@ const Navbar = () => {
 								: "/jobs"
 						}`}
 					>
-						<button className="py-3 font-semibold">GetHired</button>
+						<button className="font-semibold flex items-center">
+							<Image
+								src="/employx.png"
+								alt="website-logo"
+								width={40}
+								height={40}
+								className="animate-pulse"
+							/>
+						</button>
 					</Link>
 					<Search searchHistory={user?.data?.searchHistory} />
 				</div>
@@ -86,7 +94,7 @@ const Navbar = () => {
 										tabIndex={0}
 										className="dropdown-content menu shadow bg-base-100 border border-base-300 rounded-box w-64 font-normal"
 									>
-										<Link href={`/gh/${data.user.email}`}>
+										<Link href={`/ex/${data.user.email}`}>
 											<li className="border-b border-base-300">
 												<div className="w-full active:bg-base-300 hover:bg-base-100 px-3">
 													<Image

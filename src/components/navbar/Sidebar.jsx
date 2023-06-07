@@ -5,7 +5,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
 
 const Sidebar = () => {
-	const { data, status } = useSession();
+	const { status } = useSession();
 
 	const user = useLoggedUserQuery();
 
@@ -33,7 +33,7 @@ const Sidebar = () => {
 				<label htmlFor="my-drawer-3" className="drawer-overlay"></label>
 				<ul className="menu p-4 w-80 bg-base-100">
 					<li>
-						<Link href={`/gh/${user.data.email}`} className="flex gap-3">
+						<Link href={`/ex/${user.data.email}`} className="flex gap-3">
 							<Image
 								src={
 									user.data.picturePath ? user.data.picturePath : "/default.png"

@@ -44,7 +44,7 @@ const OwnPage = ({ company, randomUsers, createUpdateMutation }) => {
 			<div className="max-w-screen-xl mx-auto py-20 md:px-5">
 				<Head>
 					<title>
-						{company ? `${company.data.name} | GetHired` : "GetHired"}
+						{company ? `${company.data.name} | EmployX` : "EmployX"}
 					</title>
 				</Head>
 				<div className="flex flex-col lg:flex-row gap-3 lg:gap-5">

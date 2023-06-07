@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import Image from "next/image";
 import { getTimeDifference } from "@/lib/helper";
 import JobView from "../job/JobView";
 import JobViewModal from "../job/JobViewModal";
 import { useJobsQuery } from "@/lib/react-query-hooks/useJobsQuery";
-import { PuffLoader } from "react-spinners";
+import Loading from "../widgets/Loading";
 
 const GuestJobs = () => {
 	const [selectedJob, setSelectedJob] = useState(null);
@@ -23,13 +24,7 @@ const GuestJobs = () => {
 		}
 	}, [jobs.data]);
 
-	if (jobs.isLoading)
-		return (
-			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
-				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
-				<PuffLoader />
-			</div>
-		);
+	if (jobs.isLoading) return <Loading />;
 
 	if (jobs.data && jobs.data.length === 0)
 		return (
@@ -49,6 +44,9 @@ const GuestJobs = () => {
 	if (selectedJob)
 		return (
 			<div className="min-h-screen max-w-screen-xl mx-auto flex divide-x divide-base-300 pt-[4rem] bg-base-100">
+				<Head>
+					<title>Jobs | EmployX</title>
+				</Head>
 				<div className="flex-1 overflow-y-auto border-l border-base-300">
 					<ul className="flex flex-col divide-y divide-base-300">
 						{jobs.data &&

@@ -18,9 +18,9 @@ import ReorderExperienceModal from "./modals/ReorderExperienceModal";
 import ReorderSkillModal from "./modals/ReorderSkillModal";
 import ContactInfoModal from "@/components/profile/modals/ContactInfoModal";
 import ProfilePictureModal from "./modals/ProfilePictureModal";
-import { PuffLoader } from "react-spinners";
 import People from "../widgets/People";
 import AddSkillModal from "./modals/AddSkillModal";
+import Loading from "../widgets/Loading";
 
 const OwnProfile = () => {
 	const dispatch = useDispatch();
@@ -50,13 +50,7 @@ const OwnProfile = () => {
 		}
 	};
 
-	if (user.isLoading || randomUsers.isLoading)
-		return (
-			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
-				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
-				<PuffLoader />
-			</div>
-		);
+	if (user.isLoading || randomUsers.isLoading) return <Loading />;
 
 	if (user.data)
 		return (
@@ -64,8 +58,8 @@ const OwnProfile = () => {
 				<Head>
 					<title>
 						{user
-							? `${user.data.firstName} ${user.data.lastName} | GetHired`
-							: "GetHired"}
+							? `${user.data.firstName} ${user.data.lastName} | EmployX`
+							: "EmployX"}
 					</title>
 				</Head>
 				<div className="flex flex-col md:flex-row gap-1.5 md:gap-5">

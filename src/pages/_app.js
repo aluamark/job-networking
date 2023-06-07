@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
 	return (
 		<>
 			<Head>
-				<title>CRUD</title>
+				<title>EmployX</title>
 			</Head>
 			<QueryClientProvider client={queryClient}>
 				<Provider store={store}>

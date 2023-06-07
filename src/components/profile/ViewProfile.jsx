@@ -5,11 +5,11 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import { getUser, getRandomUsers } from "@/lib/helper";
-import { PuffLoader } from "react-spinners";
 import { BsArrowRightShort, BsArrowUpShort } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 import ContactInfoModal from "./modals/ContactInfoModal";
 import People from "../widgets/People";
+import Loading from "../widgets/Loading";
 
 const ViewProfile = () => {
 	const router = useRouter();
@@ -40,12 +40,7 @@ const ViewProfile = () => {
 	const [showAllSkills, setShowAllSkills] = useState(false);
 
 	if (user.isLoading || randomUsers.isLoading) {
-		return (
-			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
-				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
-				<PuffLoader />
-			</div>
-		);
+		return <Loading />;
 	}
 
 	if (user.isError || randomUsers.isError) {
@@ -71,8 +66,8 @@ const ViewProfile = () => {
 				<Head>
 					<title>
 						{user
-							? `${user.data.firstName} ${user.data.lastName} | GetHired`
-							: "GetHired"}
+							? `${user.data.firstName} ${user.data.lastName} | EmployX`
+							: "EmployX"}
 					</title>
 				</Head>
 				<div className="flex flex-col md:flex-row gap-1.5 md:gap-5">

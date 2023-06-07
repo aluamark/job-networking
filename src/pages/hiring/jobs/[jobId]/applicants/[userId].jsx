@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useJobQuery } from "@/lib/react-query-hooks/useJobQuery";
 import { getTimeDifference } from "@/lib/helper";
 import JobTimeDifference from "@/components/job/JobTimeDifference";
-import { PuffLoader } from "react-spinners";
 import ApplicationView from "@/components/job/ApplicationView";
 import ApplicationViewModal from "@/components/job/ApplicationViewModal";
+import Loading from "@/components/widgets/Loading";
 
 const ManageApplicants = () => {
 	const router = useRouter();
@@ -33,19 +34,16 @@ const ManageApplicants = () => {
 		}
 	}, [job.data, userId]);
 
-	if (job.isLoading)
-		return (
-			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
-				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
-				<PuffLoader />
-			</div>
-		);
+	if (job.isLoading) return <Loading />;
 
 	if (job.data)
 		return (
 			<>
 				<div className="fixed top-[4rem] bg-base-100 border-b border-base-300 w-full z-40">
-					<div className="max-w-screen-xl mx-auto flex items-center gap-1.5 py-3 px-3">
+					<Head>
+						<title>Applications for {job.data.title} | EmployX</title>
+					</Head>
+					<div className="max-w-screen-xl mx-auto flex items-center gap-3 py-3 px-3">
 						<div className="flex-none">
 							<Image
 								src={
@@ -90,7 +88,7 @@ const ManageApplicants = () => {
 									<div
 										key={application._id}
 										onClick={() => handleApplicationClick(application)}
-										className="flex gap-1.5 px-5 py-3 cursor-pointer"
+										className="flex gap-3 px-5 py-3 cursor-pointer"
 									>
 										<div className="flex-none">
 											<Image

@@ -220,12 +220,15 @@ const JobApplicationModal = ({ user, selectedJob, isOpen, setIsOpen }) => {
 										ref={fileInputRef}
 									/>
 									<div>
-										<button
-											onClick={handleClick}
-											className="rounded-full border border-blue-500 px-3 py-1 text-blue-500  font-semibold"
-										>
-											Select resume
-										</button>
+										{!selectedFile && (
+											<button
+												onClick={handleClick}
+												className="rounded-full border border-blue-500 px-3 py-1 text-blue-500  font-semibold"
+											>
+												Select resume
+											</button>
+										)}
+
 										<label className="label px-0 pb-0">
 											<span className="label-text">DOC, DOCX, PDF (5 MB)</span>
 										</label>

@@ -7,7 +7,7 @@ import BottomNav from "@/components/navbar/BottomNav";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "@/components/footer/Footer";
-import { PuffLoader } from "react-spinners";
+import Loading from "@/components/widgets/Loading";
 
 const Layout = ({ children }) => {
 	const openModal = useSelector((state) => state.openModal);
@@ -39,14 +39,7 @@ const Layout = ({ children }) => {
 			<input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content flex flex-col h-screen">
 				<Navbar />
-				{/* {isLoading && (
-					<div className="min-h-screen flex flex-col justify-center items-center gap-10">
-						<span className="text-5xl font-extrabold text-blue-600">
-							GetHired
-						</span>
-						<PuffLoader />
-					</div>
-				)} */}
+				{/* {isLoading && <Loading />} */}
 				{/* className={`bg-base-200 ${isLoading ? "hidden" : "block"}`} */}
 				<main>{children}</main>
 				<BottomNav />

@@ -47,9 +47,9 @@ const ContactInfoModal = ({ user, ownProfile, isOpen, setIsOpen }) => {
 									? "Your Profile"
 									: `${user.firstName} ${user.lastName}'s Profile`}
 							</h2>
-							<Link href={`/gh/${user.email}`}>
+							<Link href={`/ex/${user.email}`}>
 								<span className="link link-hover text-blue-600 text-sm font-semibold">
-									{`gethired.com/gh/${user.email}`}
+									{`employx.vercel.app/ex/${user.email}`}
 								</span>
 							</Link>
 						</div>

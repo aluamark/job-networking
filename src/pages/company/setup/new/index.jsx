@@ -5,8 +5,8 @@ import { signIn, useSession } from "next-auth/react";
 import { validateUniqueAddress, createCompany } from "@/lib/helper";
 import FormInput from "@/components/form/FormInput";
 import { toast } from "react-toastify";
-import { PuffLoader } from "react-spinners";
 import { FaSpinner } from "react-icons/fa";
+import Loading from "@/components/widgets/Loading";
 
 const NewCompany = () => {
 	const router = useRouter();
@@ -118,12 +118,7 @@ const NewCompany = () => {
 	};
 
 	if (status === "loading") {
-		return (
-			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
-				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
-				<PuffLoader />
-			</div>
-		);
+		return <Loading />;
 	}
 
 	if (status === "unauthenticated") {
@@ -177,7 +172,7 @@ const NewCompany = () => {
 						/>
 						<FormInput
 							name="uniqueAddress"
-							title="gethired.com/company/*"
+							title="employx.vercel.app/company/*"
 							type="text"
 							placeholder="Add your unique address"
 							size="sm"

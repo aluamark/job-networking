@@ -5,12 +5,12 @@ import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import FormInput from "@/components/form/FormInput";
 import { toast } from "react-toastify";
-import { PuffLoader } from "react-spinners";
 import { FaSpinner } from "react-icons/fa";
+import Loading from "@/components/widgets/Loading";
 
 const Login = () => {
 	const router = useRouter();
-	const { data, status } = useSession();
+	const { status } = useSession();
 	const [formData, setFormData] = useState({ email: "", password: "" });
 	const [formErrors, setFormErrors] = useState({ email: "", password: "" });
 	const [submitLoading, setSubmitLoading] = useState(false);
@@ -56,20 +56,10 @@ const Login = () => {
 	};
 
 	if (status === "loading") {
-		return (
-			<div className="min-h-screen flex justify-center items-center">
-				<PuffLoader />
-			</div>
-		);
+		<Loading />;
 	}
 
-	if (status === "authenticated" && data.user.employer) {
-		router.replace("/dashboard");
-
-		return null;
-	}
-
-	if (status === "authenticated" && !data.user.employer) {
+	if (status === "authenticated") {
 		router.replace("/jobs");
 
 		return null;
@@ -78,7 +68,7 @@ const Login = () => {
 	return (
 		<div className="hero min-h-screen bg-base-100 py-20">
 			<Head>
-				<title>Login</title>
+				<title>Login | EmployX</title>
 			</Head>
 			<div className="hero-content flex flex-col gap-10 md:w-[600px]">
 				<h1 className="text-3xl text-blue-600">
@@ -127,7 +117,7 @@ const Login = () => {
 					<div>
 						<Link href="/signup">
 							<button className="w-full rounded-full py-3 bg-base-100 hover:bg-base-200 border border-zinc-600 normal-case font-bold">
-								New to GetHired? Join now
+								New to EmployX? Join now
 							</button>
 						</Link>
 					</div>

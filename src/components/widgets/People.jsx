@@ -26,7 +26,7 @@ const People = ({ randomUsers, userEmail }) => {
 				<div className="flex flex-col divide-y divide-base-300 text-sm">
 					{filteredUsers.map((user) => {
 						return (
-							<Link href={`/gh/${user.email}`} key={user._id}>
+							<Link href={`/ex/${user.email}`} key={user._id}>
 								<div className="flex gap-3 w-full py-3">
 									<div className="flex-none">
 										<Image

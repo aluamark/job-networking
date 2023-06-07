@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
@@ -7,7 +8,7 @@ import { getRecommendedJobs } from "@/lib/helper";
 import JobView from "@/components/job/JobView";
 import JobViewModal from "@/components/job/JobViewModal";
 import JobTimeDifference from "@/components/job/JobTimeDifference";
-import { PuffLoader } from "react-spinners";
+import Loading from "@/components/widgets/Loading";
 
 const Recommended = () => {
 	const router = useRouter();
@@ -42,17 +43,14 @@ const Recommended = () => {
 		}
 	}, [jobs.data, recommendedJobs, currentJobId]);
 
-	if (jobs.isLoading)
-		return (
-			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
-				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
-				<PuffLoader />
-			</div>
-		);
+	if (jobs.isLoading) return <Loading />;
 
 	if (selectedJob)
 		return (
 			<div className="min-h-screen h-screen max-w-screen-xl mx-auto flex md:px-5">
+				<Head>
+					<title>Jobs based on your Profile | EmployX</title>
+				</Head>
 				<div className="h-[91.8%] flex divide-x divide-base-300 mt-20 bg-base-100 border border-base-300 md:rounded-t-lg w-full">
 					<div className="relative flex-1 h-full">
 						<div className="sticky top-0 bg-blue-700 p-2.5 md:rounded-tl-lg">

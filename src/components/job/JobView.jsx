@@ -117,7 +117,7 @@ const JobView = ({ selectedJob, user }) => {
 					</button>
 				) : (
 					<button
-						onClick={() => setJobApplicationModal(true)}
+						onClick={user ? () => setJobApplicationModal(true) : () => signIn()}
 						className="bg-blue-700 hover:bg-blue-800 text-white px-5 rounded-full font-semibold"
 					>
 						Apply
@@ -147,7 +147,7 @@ const JobView = ({ selectedJob, user }) => {
 					<span className="text-lg font-semibold">Meet the hiring team</span>
 					<div className="flex gap-1.5">
 						<Link
-							href={`/gh/${selectedJob.postedBy.email}`}
+							href={`/ex/${selectedJob.postedBy.email}`}
 							className="flex-none"
 						>
 							<Image
@@ -165,7 +165,7 @@ const JobView = ({ selectedJob, user }) => {
 						<div className="flex flex-col text-sm">
 							<span className="font-semibold">
 								<Link
-									href={`/gh/${selectedJob.postedBy.email}`}
+									href={`/ex/${selectedJob.postedBy.email}`}
 									className="link link-hover"
 								>
 									{selectedJob.postedBy.firstName}{" "}

@@ -14,7 +14,7 @@ import {
 	BsBriefcaseFill,
 } from "react-icons/bs";
 import People from "../widgets/People";
-import { PuffLoader } from "react-spinners";
+import Loading from "../widgets/Loading";
 
 const UserJobs = () => {
 	const [recommendedJobs, setRecommendedJobs] = useState(null);
@@ -30,18 +30,13 @@ const UserJobs = () => {
 	}, [jobs.data, user?.data]);
 
 	if (user?.isLoading || jobs.isLoading || randomUsers.isLoading)
-		return (
-			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
-				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
-				<PuffLoader />
-			</div>
-		);
+		return <Loading />;
 
 	if (user.data && jobs.data && randomUsers.data)
 		return (
 			<div className="max-w-screen-xl flex flex-col md:flex-row gap-5 mx-auto py-20 md:px-5">
 				<Head>
-					<title>Jobs | GetHired</title>
+					<title>Jobs | EmployX</title>
 				</Head>
 				<div className="flex flex-col flex-none w-full md:w-[225px]">
 					<div className="md:fixed md:w-[225px] flex flex-col gap-3 font-semibold text-sm">

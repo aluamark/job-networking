@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { saveJob, renderDescription } from "@/lib/helper";
-import { PuffLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { BsBriefcaseFill, BsListCheck, BsArrowLeftShort } from "react-icons/bs";
 import JobSkillsModal from "@/components/job/JobSkillsModal";
@@ -13,6 +12,7 @@ import JobApplicationModal from "@/components/job/JobApplicationModal";
 import JobTimeDifference from "@/components/job/JobTimeDifference";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
 import { useJobQuery } from "@/lib/react-query-hooks/useJobQuery";
+import Loading from "@/components/widgets/Loading";
 
 const View = () => {
 	const router = useRouter();
@@ -52,13 +52,7 @@ const View = () => {
 		}
 	};
 
-	if (job.isLoading || user.isLoading)
-		return (
-			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
-				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
-				<PuffLoader />
-			</div>
-		);
+	if (job.isLoading || user.isLoading) return <Loading />;
 
 	if (job.isError || user.isError) {
 		return (
@@ -80,7 +74,7 @@ const View = () => {
 		return (
 			<div className="max-w-screen-xl mx-auto flex flex-col gap-3 py-20 md:px-5">
 				<Head>
-					<title>{job.data.title}</title>
+					<title>{job.data.title} | EmployX</title>
 				</Head>
 				<div>
 					<Link
@@ -190,7 +184,7 @@ const View = () => {
 						<span className="text-lg font-semibold">Meet the hiring team</span>
 						<div className="flex gap-1.5">
 							<Link
-								href={`/gh/${job.data.postedBy.email}`}
+								href={`/ex/${job.data.postedBy.email}`}
 								className="flex-none"
 							>
 								<Image
@@ -207,7 +201,7 @@ const View = () => {
 							</Link>
 							<div className="flex flex-col text-sm">
 								<Link
-									href={`/gh/${job.data.postedBy.email}`}
+									href={`/ex/${job.data.postedBy.email}`}
 									className="link link-hover"
 								>
 									<span className="font-semibold">

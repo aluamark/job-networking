@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getCompany, updateCompany, getRandomUsers } from "@/lib/helper";
-import { PuffLoader } from "react-spinners";
 import OwnPage from "@/components/company/OwnPage";
 import ViewPage from "@/components/company/ViewPage";
+import Loading from "@/components/widgets/Loading";
 
 const Company = () => {
 	const router = useRouter();
@@ -39,12 +39,7 @@ const Company = () => {
 	});
 
 	if (status === "loading" || company.isLoading || randomUsers.isLoading)
-		return (
-			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
-				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
-				<PuffLoader />
-			</div>
-		);
+		return <Loading />;
 
 	if (company.isError || randomUsers.isError) {
 		return (

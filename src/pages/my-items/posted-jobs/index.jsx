@@ -3,29 +3,23 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
-import { PuffLoader } from "react-spinners";
 import { useRandomUsersQuery } from "@/lib/react-query-hooks/useRandomUsersQuery";
 import { BsFillBookmarkCheckFill } from "react-icons/bs";
 import People from "@/components/widgets/People";
 import JobTimeDifference from "@/components/job/JobTimeDifference";
+import Loading from "@/components/widgets/Loading";
 
 const PostedJobs = () => {
 	const user = useLoggedUserQuery();
 	const randomUsers = useRandomUsersQuery();
 
-	if (user.isLoading)
-		return (
-			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
-				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
-				<PuffLoader />
-			</div>
-		);
+	if (user.isLoading) return <Loading />;
 
 	if (user.data)
 		return (
 			<div className="max-w-screen-xl flex flex-col md:flex-row gap-5 mx-auto py-20 md:px-5">
 				<Head>
-					<title>Jobs | GetHired</title>
+					<title>Posted Jobs | EmployX</title>
 				</Head>
 				<div className="flex flex-col flex-none w-full md:w-[225px]">
 					<div className="md:fixed md:w-[225px] font-semibold text-sm">
@@ -40,8 +34,18 @@ const PostedJobs = () => {
 									href="/my-items/saved-jobs"
 									className="flex justify-between items-center gap-3 p-3"
 								>
-									<span>My jobs</span>
+									<span>Saved jobs</span>
 									<span>{user.data.savedJobs.length}</span>
+								</Link>
+							</div>
+
+							<div>
+								<Link
+									href="/my-items/applied-jobs"
+									className="flex justify-between items-center gap-3 p-3"
+								>
+									<span>Applied jobs</span>
+									<span>{user.data.jobApplications.length}</span>
 								</Link>
 							</div>
 
@@ -60,7 +64,7 @@ const PostedJobs = () => {
 				<div className="flex flex-col lg:flex-row gap-5 w-full">
 					<div className="w-full">
 						<div className="bg-base-100 border border-base-300 rounded-lg p-5">
-							<span className="font-semibold">Posted Jobs</span>
+							<span className="font-semibold">Posted</span>
 							{user.data.postedJobs && user.data.postedJobs.length === 0 ? (
 								<div className="pt-3">
 									<span>No posted jobs.</span>

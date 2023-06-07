@@ -3,19 +3,13 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
-import { PuffLoader } from "react-spinners";
+import Loading from "@/components/widgets/Loading";
 
 const JobPosting = () => {
 	const user = useLoggedUserQuery();
 	const pages = user?.data?.adminPages;
 
-	if (!pages)
-		return (
-			<div className="min-h-screen flex flex-col justify-center items-center gap-10">
-				<span className="text-5xl font-extrabold text-blue-600">GetHired</span>
-				<PuffLoader />
-			</div>
-		);
+	if (!pages) return <Loading />;
 
 	return (
 		<div className="max-w-screen-sm mx-auto flex flex-col gap-5 pt-20 md:px-5 pb-5">

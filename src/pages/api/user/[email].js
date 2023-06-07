@@ -36,7 +36,9 @@ export default async function handler(req, res) {
 				path: "jobApplications",
 				populate: {
 					path: "job",
-					model: "Job",
+					populate: {
+						path: "company",
+					},
 				},
 			});
 

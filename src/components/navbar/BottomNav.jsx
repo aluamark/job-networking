@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
 import { BsBriefcaseFill, BsFillBookmarkCheckFill } from "react-icons/bs";
 
 const BottomNav = () => {
-	const { data, status } = useSession();
+	const { status } = useSession();
 	const user = useLoggedUserQuery();
 	const [active, setActive] = useState(0);
 
@@ -36,7 +36,7 @@ const BottomNav = () => {
 					<BsBriefcaseFill />
 				</Link>
 				<Link
-					href={`/gh/${user.data.email}`}
+					href={`/ex/${user.data.email}`}
 					className={`flex gap-3 ${active === 1 && "active"}`}
 					onClick={() => setActive(1)}
 				>
