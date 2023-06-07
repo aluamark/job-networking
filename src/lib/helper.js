@@ -1,7 +1,7 @@
 import axios from "axios";
 import DOMPurify from "dompurify";
 
-const BASE_URL = "https://job-networking.vercel.app";
+const BASE_URL = "https://employx.vercel.app";
 // const BASE_URL = "http://localhost:3000";
 
 // SEARCH
