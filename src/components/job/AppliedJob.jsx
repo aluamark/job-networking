@@ -10,16 +10,18 @@ const AppliedJob = ({ application }) => {
 	return (
 		<div className="flex gap-5 py-3">
 			<div className="flex-none">
-				<Image
-					src={
-						application.job.company.picturePath
-							? application.job.company.picturePath
-							: "/company.png"
-					}
-					alt={application.job.company.name}
-					width={56}
-					height={56}
-				/>
+				<Link href={`/jobs/view/${application.job._id}`}>
+					<Image
+						src={
+							application.job.company.picturePath
+								? application.job.company.picturePath
+								: "/company.png"
+						}
+						alt={application.job.company.name}
+						width={56}
+						height={56}
+					/>
+				</Link>
 			</div>
 
 			<div className="flex flex-col">

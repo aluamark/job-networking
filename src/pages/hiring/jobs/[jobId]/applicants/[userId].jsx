@@ -36,7 +36,7 @@ const ManageApplicants = () => {
 
 	if (job.isLoading) return <Loading />;
 
-	if (job.data && selectedApplication)
+	if (job.data)
 		return (
 			<>
 				<div className="fixed top-[4rem] bg-base-100 border-b border-base-300 w-full z-40">
@@ -68,8 +68,10 @@ const ManageApplicants = () => {
 								href={`/company/${job.data.company.uniqueAddress}`}
 								className="link link-hover hover:text-blue-600 text-xs"
 							>
-								{job.data.company.name}{" "}
-								{job.data.company.country && `· ${job.data.company.country}`}
+								<span className="font-semibold">{job.data.company.name}</span>{" "}
+								{job.data.city &&
+									job.data.country &&
+									`· ${job.data.city}, ${job.data.country}`}
 							</Link>
 							<div className="text-xs pt-1">
 								<span className="text-green-600 font-semibold">Active</span>{" "}
@@ -97,7 +99,8 @@ const ManageApplicants = () => {
 										key={application._id}
 										onClick={() => handleApplicationClick(application)}
 										className={`flex gap-3 px-5 py-3 cursor-pointer ${
-											selectedApplication._id === application._id && "bg-sky-50"
+											selectedApplication?._id === application._id &&
+											"bg-sky-50"
 										}`}
 									>
 										<div className="flex-none">
