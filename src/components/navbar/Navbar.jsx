@@ -2,15 +2,13 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
 import { BsBriefcaseFill } from "react-icons/bs";
 import Search from "./Search";
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
 	const { data, status } = useSession();
-	const user = useLoggedUserQuery();
 
-	if (user.isLoading || status === "loading") {
+	if (user?.isLoading || status === "loading") {
 		<nav className="fixed navbar bg-base-100 border-b border-base-300 z-50 text-sm font-semibold">
 			<div className="max-w-screen-xl w-full mx-auto">
 				<div className="flex-1">
@@ -44,13 +42,7 @@ const Navbar = () => {
 		<nav className="fixed top-0 navbar bg-base-100 border-b border-base-300 text-sm p-0 z-50">
 			<div className="max-w-screen-xl w-full mx-auto">
 				<div className="flex items-center flex-1 gap-3 px-3">
-					<Link
-						href={`${
-							status === "authenticated" && data.user.employer
-								? "/dashboard"
-								: "/jobs"
-						}`}
-					>
+					<Link href={`${status === "authenticated" ? "/jobs" : "/"}`}>
 						<button className="font-semibold flex items-center">
 							<Image
 								src="/employx.png"
@@ -119,12 +111,20 @@ const Navbar = () => {
 												</div>
 											</li>
 										</Link>
-										<li className="px-3 pt-2.5 font-semibold">Manage</li>
-										<Link href="/job-posting">
-											<li className="link link-hover text-xs w-full active:bg-base-300 hover:bg-base-100 py-2.5 px-3">
-												Job Posting Account
-											</li>
-										</Link>
+										<div className="flex flex-col gap-1.5 py-2.5 px-3">
+											<li className="font-semibold">Manage</li>
+											<Link href="/job-posting">
+												<li className="link link-hover text-xs w-full active:bg-base-300 hover:bg-base-100">
+													Company Pages
+												</li>
+											</Link>
+											<Link href="/job-posting/new">
+												<li className="link link-hover text-xs w-full active:bg-base-300 hover:bg-base-100">
+													Job Posting
+												</li>
+											</Link>
+										</div>
+
 										<li
 											onClick={() =>
 												signOut({ callbackUrl: `${window.location.origin}` })

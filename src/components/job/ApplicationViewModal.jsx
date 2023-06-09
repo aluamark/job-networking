@@ -41,8 +41,10 @@ const ApplicationViewModal = ({ isOpen, setIsOpen, selectedApplication }) => {
 						{selectedApplication.applicant.firstName}{" "}
 						{selectedApplication.applicant.lastName}&apos;s application
 					</span>
-					<span>{selectedApplication.applicant?.headline}</span>
-					<span>
+					<span className="text-sm">
+						{selectedApplication.applicant?.headline}
+					</span>
+					<span className="text-sm text-zinc-500">
 						{selectedApplication.applicant.city &&
 						selectedApplication.applicant.country
 							? `${selectedApplication.applicant.city}, ${selectedApplication.applicant.country}`
@@ -50,13 +52,6 @@ const ApplicationViewModal = ({ isOpen, setIsOpen, selectedApplication }) => {
 							? `${selectedApplication.applicant.country}`
 							: null}
 					</span>
-					<span className="text-sm text-zinc-500">
-						Applied {getTimeDifference(selectedApplication.createdAt)}
-					</span>
-				</div>
-				<div className="flex flex-col px-5">
-					<span>Email: {selectedApplication.email}</span>
-					<span>Phone: {selectedApplication.phone}</span>
 				</div>
 				<div className="flex px-5">
 					<Link
@@ -66,12 +61,22 @@ const ApplicationViewModal = ({ isOpen, setIsOpen, selectedApplication }) => {
 						View profile
 					</Link>
 				</div>
-				<div className="px-5">
-					Status:{" "}
-					<span className="text-green-600 font-semibold">
-						{selectedApplication.status}
+				<div className="text-sm px-5">
+					{/* <div>
+						Status:{" "}
+						<span className="text-green-600 font-semibold">
+							{selectedApplication.status}
+						</span>
+					</div> */}
+					<span className="font-semibold text-xs text-zinc-500">
+						Applied {getTimeDifference(selectedApplication.createdAt)}
 					</span>
 				</div>
+				<div className="flex flex-col px-5 text-sm">
+					<span>Email: {selectedApplication.email}</span>
+					<span>Phone: {selectedApplication.phone}</span>
+				</div>
+
 				<div className="px-5">
 					<span className="font-semibold">Uploaded resume</span>
 				</div>

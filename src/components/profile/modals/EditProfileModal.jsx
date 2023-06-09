@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setOpenModal, setLoggedUser } from "@/redux/reducer";
+import { setOpenModal } from "@/redux/reducer";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateUser } from "@/lib/helper";
 import Modal from "react-modal";
 import { FaSpinner } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import FormInput from "@/components/form/FormInput";
-import { updateUser } from "@/lib/helper";
 import { ToastContainer, toast } from "react-toastify";
 
 Modal.setAppElement("#root");
@@ -84,18 +84,19 @@ const EditProfileModal = ({
 						onSuccess: (response) => {
 							const { message } = response.data;
 							toast.success(message);
+							setSubmitLoading(false);
+							setIsOpen(false);
 						},
 					}
 				);
-
-				setIsOpen(false);
 			} catch (error) {
 				toast.error(error?.response?.data?.error);
+				setSubmitLoading(false);
 			}
 		} else {
 			setFormErrors(errors);
+			setSubmitLoading(false);
 		}
-		setSubmitLoading(false);
 	};
 
 	const closeModal = () => {

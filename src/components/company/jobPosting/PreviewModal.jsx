@@ -6,13 +6,7 @@ import { MdClose } from "react-icons/md";
 
 Modal.setAppElement("#root");
 
-const PreviewModal = ({
-	company,
-	formData,
-	isOpen,
-	setIsOpen,
-	renderDescription,
-}) => {
+const PreviewModal = ({ formData, isOpen, setIsOpen, renderDescription }) => {
 	const closeModal = () => {
 		setIsOpen(false);
 	};
@@ -61,7 +55,9 @@ const PreviewModal = ({
 							<div className="absolute top-14 left-5 bg-base-100 p-1">
 								<Image
 									src={
-										company.picturePath ? company.picturePath : "/company.png"
+										formData.companyPicturePath
+											? formData.companyPicturePath
+											: "/company.png"
 									}
 									width={60}
 									height={60}
@@ -74,7 +70,7 @@ const PreviewModal = ({
 							<span className="text-lg font-semibold">{formData.title}</span>
 
 							<span className="text-sm">
-								<span className="font-semibold">{company.name}</span> ·{" "}
+								<span className="font-semibold">{formData.companyName}</span> ·{" "}
 								{formData.locationType} · {formData.city}, {formData.country} ·{" "}
 								{formData.employmentType}
 							</span>

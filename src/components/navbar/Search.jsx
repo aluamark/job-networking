@@ -16,6 +16,26 @@ const Search = ({ searchHistory }) => {
 	const debouncedKeywords = useDebounce(keywords, 500);
 	const search = useSearchQuery(debouncedKeywords);
 
+	const [uniqueSkills, setUniqueSkills] = useState([]);
+
+	useEffect(() => {
+		const skillsSet = new Set();
+
+		if (search?.data?.jobsBySkills?.length !== 0) {
+			search?.data?.jobsBySkills.forEach((job) => {
+				job.skills
+					.filter((skill) =>
+						skill.toLowerCase().startsWith(debouncedKeywords.toLowerCase())
+					)
+					.forEach((skill) => {
+						skillsSet.add(skill);
+					});
+			});
+
+			setUniqueSkills(Array.from(skillsSet));
+		}
+	}, [search?.data?.jobsBySkills, debouncedKeywords]);
+
 	const handleFocus = () => {
 		setIsFocused(true);
 	};
@@ -75,112 +95,118 @@ const Search = ({ searchHistory }) => {
 						onBlur={handleDivBlur}
 						className="absolute top-11 bg-base-100 w-full border border-base-300 rounded-lg py-1"
 					>
-						{searchHistory.length !== 0 && (
+						{searchHistory?.length !== 0 && (
 							<div>
-								{searchHistory.map((keyword) => (
+								{searchHistory?.map((keyword) => (
 									<div key={keyword}>{keyword}</div>
 								))}
 							</div>
 						)}
-						{searchHistory.length === 0 && !keywords && (
-							<div
-								onClick={() => handleSuggestionClick("kooapps")}
-								className="p-5"
-							>
-								Try searching for your desired job
-							</div>
-						)}
-						{keywords && (
+						{keywords && debouncedKeywords ? (
 							<>
-								{search.data &&
-								!Object.values(search.data).every((arr) => arr.length === 0) ? (
-									<div className="flex flex-col">
-										{search.data.companies.length !== 0 &&
-											search.data.companies.map((company) => (
-												<Link
-													onClick={() => setIsFocused(false)}
-													href={`/company/${company.uniqueAddress}`}
-													key={company._id}
-													className="flex items-center hover:bg-base-300 px-5 py-1.5"
-												>
-													{company.name}{" "}
-													<Image
-														src={
-															company.picturePath
-																? company.picturePath
-																: "/company.png"
-														}
-														width={32}
-														height={32}
-														alt={company.name}
-														className="ml-auto"
-													/>
-												</Link>
-											))}
-										{search.data.people.length !== 0 &&
-											search.data.people.map((user) => (
-												<Link
-													onClick={() => setIsFocused(false)}
-													href={`/ex/${user.email}`}
-													key={user._id}
-													className="flex items-center hover:bg-base-300 px-5 py-1.5"
-												>
-													{user.firstName} {user.lastName}
-													<Image
-														src={
-															user.picturePath
-																? user.picturePath
-																: "/default.png"
-														}
-														width={32}
-														height={32}
-														alt={`${user.firstName} ${user.lastName}`}
-														className="ml-auto border border-base-300 rounded-full"
-													/>
-												</Link>
-											))}
-										{search.data.jobsByTitle.length !== 0 &&
-											search.data.jobsByTitle.map((job) => (
-												<Link
-													onClick={() => setIsFocused(false)}
-													href={`/ex/${job._id}`}
-													key={job._id}
-													className="flex items-center hover:bg-base-300 px-5 py-1.5"
-												>
-													{job.title}
-												</Link>
-											))}
-										{search.data.jobsBySkills.length !== 0 &&
-											search.data.jobsBySkills.map((job) => {
-												return job.skills
-													.filter((skill) =>
-														skill
-															.toLowerCase()
-															.startsWith(debouncedKeywords.toLowerCase())
-													)
-													.map((skill) => (
-														<Link
-															onClick={() => setIsFocused(false)}
-															href={`/ex/${skill}`}
-															key={skill}
-															className="flex items-center hover:bg-base-300 px-5 py-1.5"
-														>
-															{skill}
-														</Link>
-													));
-											})}
+								{keywords && debouncedKeywords && search.isLoading ? (
+									<div className="p-5">
+										<PuffLoader size={20} />
 									</div>
-								) : keywords && debouncedKeywords && search.data ? (
-									<div className="p-5">No results found</div>
+								) : search.data ? (
+									!Object.values(search.data).every(
+										(arr) => arr.length === 0
+									) ? (
+										<div className="flex flex-col">
+											{search.data.companies.length !== 0 &&
+												search.data.companies.map((company) => (
+													<Link
+														onClick={() => setIsFocused(false)}
+														href={`/search/results/all?keywords=${company.uniqueAddress}`}
+														key={company._id}
+														className="flex items-center hover:bg-base-300 px-5 py-1.5"
+													>
+														{company.name}{" "}
+														<Image
+															src={
+																company.picturePath
+																	? company.picturePath
+																	: "/company.png"
+															}
+															width={32}
+															height={32}
+															alt={company.name}
+															className="ml-auto"
+														/>
+													</Link>
+												))}
+											{search.data.people.length !== 0 &&
+												search.data.people.map((user) => (
+													<Link
+														onClick={() => setIsFocused(false)}
+														href={`/ex/${user.email}`}
+														key={user._id}
+														className="flex items-center hover:bg-base-300 px-5 py-1.5"
+													>
+														{user.firstName} {user.lastName}
+														<Image
+															src={
+																user.picturePath
+																	? user.picturePath
+																	: "/default.png"
+															}
+															width={32}
+															height={32}
+															alt={`${user.firstName} ${user.lastName}`}
+															className="ml-auto border border-base-300 rounded-full"
+														/>
+													</Link>
+												))}
+											{search.data.jobsByTitle.length !== 0 &&
+												search.data.jobsByTitle.map((job) => (
+													<Link
+														onClick={() => setIsFocused(false)}
+														href={`/search/results/all?keywords=${job.title}`}
+														key={job._id}
+														className="flex justify-between items-center gap-2.5 hover:bg-base-300 px-5 py-1"
+													>
+														<div>
+															{job.title} ·{" "}
+															<span className="text-xs text-zinc-500">
+																{job.company.name}
+															</span>
+														</div>
+														<Image
+															src={
+																job.company.picturePath
+																	? job.company.picturePath
+																	: "/company.png"
+															}
+															width={30}
+															height={30}
+															alt={job.company.name}
+														/>
+													</Link>
+												))}
+											{uniqueSkills.map((skill) => (
+												<Link
+													onClick={() => setIsFocused(false)}
+													href={`/search/results/all?keywords=${skill}`}
+													key={skill}
+													className="flex items-center gap-1 hover:bg-base-300 px-5 py-1.5"
+												>
+													{skill}
+													<span className="text-xs text-zinc-500">in Jobs</span>
+												</Link>
+											))}
+										</div>
+									) : (
+										keywords &&
+										debouncedKeywords && (
+											<div className="p-5">No results found</div>
+										)
+									)
 								) : (
-									<div
-										onClick={() => handleSuggestionClick("kooapps")}
-										className="p-5"
-									>
-										Try searching for your desired job
-									</div>
+									<div className="p-5">Try searching for your desired job</div>
 								)}
 							</>
+						) : (
+							<div className="p-5">Try searching for your desired job</div>
 						)}
 					</div>
 				)}

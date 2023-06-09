@@ -34,7 +34,9 @@ const AllResults = () => {
 								{search.data.companies.length !== 0 && (
 									<li href="/">Companies</li>
 								)}
-								{search.data.jobsByCompany !== 0 && <li>Jobs by companies</li>}
+								{search.data.jobsByCompany.length !== 0 && (
+									<li>Jobs by companies</li>
+								)}
 								{search.data.people.length !== 0 && <li>People</li>}
 								{search.data.jobsByTitle.length !== 0 && <li>Jobs by title</li>}
 								{search.data.jobsBySkills.length !== 0 && (
@@ -273,38 +275,37 @@ const AllResults = () => {
 								<span className="font-semibold">Jobs by title</span>
 								<div className="flex flex-col divide-y divide-base-300">
 									{search.data.jobsByTitle.map((job) => (
-										<div className="flex gap-3 py-3" key={job._id}>
-											<Link href="" className="flex-none">
-												<Image
-													src={
-														job.company.picturePath
-															? job.company.picturePath
-															: "/company.png"
-													}
-													alt={job.company.name}
-													width={48}
-													height={48}
-													className="w-[48px] h-[48px] object-cover"
-												/>
-											</Link>
+										<Link
+											href={`/jobs/view/${job._id}`}
+											className="flex gap-3 py-3"
+											key={job._id}
+										>
+											<Image
+												src={
+													job.company.picturePath
+														? job.company.picturePath
+														: "/company.png"
+												}
+												alt={job.company.name}
+												width={48}
+												height={48}
+												className="w-[48px] h-[48px] object-cover"
+											/>
+											<div className="flex flex-col">
+												<span className="link link-hover font-semibold">
+													{job.title}
+												</span>
 
-											<Link href="">
-												<div className="flex flex-col">
-													<span className="link link-hover font-semibold">
-														{job.title}
-													</span>
-
-													<span className="text-sm">{job.company.name}</span>
-													<span className="text-sm text-zinc-500">
-														{job.city && job.country
-															? `${job.city}, ${job.country}`
-															: job.country
-															? job.country
-															: null}
-													</span>
-												</div>
-											</Link>
-										</div>
+												<span className="text-sm">{job.company.name}</span>
+												<span className="text-sm text-zinc-500">
+													{job.city && job.country
+														? `${job.city}, ${job.country}`
+														: job.country
+														? job.country
+														: null}
+												</span>
+											</div>
+										</Link>
 									))}
 								</div>
 							</div>
@@ -315,38 +316,37 @@ const AllResults = () => {
 								<span className="font-semibold">Jobs by skills</span>
 								<div className="flex flex-col divide-y divide-base-300">
 									{search.data.jobsBySkills.map((job) => (
-										<div className="flex gap-3 py-3" key={job._id}>
-											<Link href="" className="flex-none">
-												<Image
-													src={
-														job.company.picturePath
-															? job.company.picturePath
-															: "/company.png"
-													}
-													alt={job.company.name}
-													width={48}
-													height={48}
-													className="w-[48px] h-[48px] object-cover"
-												/>
-											</Link>
+										<Link
+											href={`/jobs/view/${job._id}`}
+											className="flex gap-3 py-3"
+											key={job._id}
+										>
+											<Image
+												src={
+													job.company.picturePath
+														? job.company.picturePath
+														: "/company.png"
+												}
+												alt={job.company.name}
+												width={48}
+												height={48}
+												className="w-[48px] h-[48px] object-cover"
+											/>
+											<div className="flex flex-col">
+												<span className="link link-hover font-semibold">
+													{job.title}
+												</span>
 
-											<Link href="">
-												<div className="flex flex-col">
-													<span className="link link-hover font-semibold">
-														{job.title}
-													</span>
-
-													<span className="text-sm">{job.company.name}</span>
-													<span className="text-sm text-zinc-500">
-														{job.city && job.country
-															? `${job.city}, ${job.country}`
-															: job.country
-															? job.country
-															: null}
-													</span>
-												</div>
-											</Link>
-										</div>
+												<span className="text-sm">{job.company.name}</span>
+												<span className="text-sm text-zinc-500">
+													{job.city && job.country
+														? `${job.city}, ${job.country}`
+														: job.country
+														? job.country
+														: null}
+												</span>
+											</div>
+										</Link>
 									))}
 								</div>
 							</div>
@@ -354,10 +354,7 @@ const AllResults = () => {
 					</div>
 					<div>
 						<div className="w-full lg:w-[300px]">
-							<People
-								randomUsers={randomUsers.data}
-								userEmail={user.data ? user.data.email : null}
-							/>
+							<People />
 						</div>
 					</div>
 				</div>

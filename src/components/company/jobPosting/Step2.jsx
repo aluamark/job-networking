@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
+import { createJob } from "@/lib/helper";
 import { BsArrowLeftShort } from "react-icons/bs";
 import "react-quill/dist/quill.snow.css";
 import DOMPurify from "dompurify";
@@ -6,19 +8,21 @@ import dynamic from "next/dynamic";
 import PreviewModal from "./PreviewModal";
 import AddSkillModal from "./AddSkillModal";
 import { MdClose } from "react-icons/md";
+import { toast } from "react-toastify";
+import { FaSpinner } from "react-icons/fa";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const Step2 = ({
-	company,
 	formData,
 	setFormData,
 	handleDescriptionChange,
 	previousStep,
-	handleSubmit,
 }) => {
+	const router = useRouter();
 	const [previewModal, setPreviewModal] = useState(false);
 	const [addSkillModal, setAddSkillModal] = useState(false);
+	const [submitLoading, setSubmitLoading] = useState(false);
 
 	const renderDescription = () => {
 		const sanitizedDescription = DOMPurify.sanitize(formData.description);
@@ -33,6 +37,25 @@ const Step2 = ({
 	const handleRemoveSkill = (skill) => {
 		const skills = formData.skills.filter((s) => s !== skill);
 		setFormData({ ...formData, skills });
+	};
+
+	const handleSubmit = async () => {
+		setSubmitLoading(true);
+
+		if (formData.description) {
+			try {
+				const { message } = await createJob(formData);
+				toast.success(message);
+				setSubmitLoading(false);
+				router.push(`/company/${formData.companyUniqueAddress}`);
+			} catch (error) {
+				toast.error(error?.response?.data?.error);
+				setSubmitLoading(false);
+			}
+		} else {
+			toast.error("Please add a job description.");
+			setSubmitLoading(false);
+		}
 	};
 
 	return (
@@ -101,12 +124,23 @@ const Step2 = ({
 						>
 							Preview
 						</button>
-						<button
-							onClick={handleSubmit}
-							className="bg-blue-600 rounded-full px-5 py-1 text-white font-semibold"
-						>
-							Post job
-						</button>
+						{submitLoading ? (
+							<button
+								className="bg-blue-700 rounded-full px-9 py-1 text-white font-semibold"
+								disabled
+							>
+								<FaSpinner className="w-6 h-6 animate-spin fill-white" />
+							</button>
+						) : (
+							<div className="flex">
+								<button
+									onClick={handleSubmit}
+									className="bg-blue-600 rounded-full px-5 py-1 text-white font-semibold"
+								>
+									Post job
+								</button>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
@@ -115,7 +149,7 @@ const Step2 = ({
 					<span className="text-xl font-bold">{formData.title}</span>
 
 					<span className="text-sm">
-						{company.name} · {formData.locationType} · {formData.city},{" "}
+						{formData.companyName} · {formData.locationType} · {formData.city},{" "}
 						{formData.country} · {formData.employmentType}
 					</span>
 				</div>
@@ -125,7 +159,6 @@ const Step2 = ({
 				</div>
 			</div>
 			<PreviewModal
-				company={company}
 				formData={formData}
 				isOpen={previewModal}
 				setIsOpen={setPreviewModal}

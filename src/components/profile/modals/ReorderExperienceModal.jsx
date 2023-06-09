@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Modal from "react-modal";
 import { useDispatch } from "react-redux";
-import { setOpenModal, setLoggedUser } from "@/redux/reducer";
+import { setOpenModal } from "@/redux/reducer";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import { StrictModeDroppable as Droppable } from "@/lib/StrictModeDroppable";
 import { reorderUserExperiences } from "@/lib/helper";
 import { MdDragIndicator, MdClose } from "react-icons/md";
 import { FaSpinner } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
-import { useSelector } from "react-redux";
 
 Modal.setAppElement("#root");
 
@@ -28,8 +27,12 @@ const ReorderExperienceModal = ({
 	setIsOpen,
 }) => {
 	const dispatch = useDispatch();
-	const [experiences, updateExperiences] = useState(userExperiences);
 	const [submitLoading, setSubmitLoading] = useState(false);
+
+	const [experiences, setExperiences] = useState(userExperiences);
+	useEffect(() => {
+		setExperiences(userExperiences);
+	}, [userExperiences]);
 
 	const queryClient = useQueryClient();
 	const createUpdateMutation = useMutation({
@@ -48,7 +51,7 @@ const ReorderExperienceModal = ({
 		}
 		const items = reorder(experiences, source.index, destination.index);
 
-		updateExperiences(items);
+		setExperiences(items);
 	};
 
 	const handleSubmit = async () => {
@@ -65,15 +68,15 @@ const ReorderExperienceModal = ({
 					onSuccess: (response) => {
 						const { message } = response.data;
 						toast.success(message);
+						setSubmitLoading(false);
+						setIsOpen(false);
 					},
 				}
 			);
-
-			setIsOpen(false);
 		} catch (error) {
 			toast.error(error?.response?.data?.error);
+			setSubmitLoading(false);
 		}
-		setSubmitLoading(false);
 	};
 
 	const closeModal = () => {

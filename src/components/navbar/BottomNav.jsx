@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { signIn, useSession } from "next-auth/react";
-import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
 import { BsBriefcaseFill, BsFillBookmarkCheckFill } from "react-icons/bs";
 
-const BottomNav = () => {
+const BottomNav = ({ user }) => {
 	const { status } = useSession();
-	const user = useLoggedUserQuery();
 	const [active, setActive] = useState(0);
 
 	if (status === "unauthenticated")
@@ -16,16 +14,10 @@ const BottomNav = () => {
 				<Link href="/jobs" className="active">
 					<BsBriefcaseFill />
 				</Link>
-				<Link href="/signup" className="active">
-					Join now
-				</Link>
-				<button onClick={() => signIn()} className="active">
-					Sign in
-				</button>
 			</div>
 		);
 
-	if (user.data)
+	if (status === "authenticated" && user?.data)
 		return (
 			<div className="btm-nav md:hidden">
 				<Link

@@ -50,7 +50,7 @@ export default async function handler(req, res) {
 
 				return res
 					.status(201)
-					.send({ message: "Upload was successful.", updatedUser });
+					.send({ message: "Application sent.", updatedUser });
 			} else {
 				return res.status(500).send({ error: "Internal" });
 			}
@@ -58,7 +58,6 @@ export default async function handler(req, res) {
 			return res.status(404).send({ error: "Missing data" });
 		}
 	} catch (error) {
-		console.log(error);
 		return res.status(500).send({ error: "Internal server error" });
 	}
 }

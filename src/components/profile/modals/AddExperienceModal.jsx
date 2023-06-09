@@ -111,30 +111,31 @@ const AddExperienceModal = ({
 						onSuccess: (response) => {
 							const { message } = response.data;
 							toast.success(message);
+							setFormData({
+								title: "",
+								employmentType: "",
+								company: "",
+								location: "",
+								locationType: "",
+								startDateMonth: "",
+								startDateYear: "",
+								endDateMonth: "",
+								endDateYear: "",
+								description: "",
+							});
+							setSubmitLoading(false);
+							setIsOpen(false);
 						},
 					}
 				);
-
-				setFormData({
-					title: "",
-					employmentType: "",
-					company: "",
-					location: "",
-					locationType: "",
-					startDateMonth: "",
-					startDateYear: "",
-					endDateMonth: "",
-					endDateYear: "",
-					description: "",
-				});
-				setIsOpen(false);
 			} catch (error) {
 				toast.error(error?.response?.data?.error);
+				setSubmitLoading(false);
 			}
 		} else {
 			setFormErrors(errors);
+			setSubmitLoading(false);
 		}
-		setSubmitLoading(false);
 	};
 
 	const closeModal = () => {

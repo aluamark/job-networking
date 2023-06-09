@@ -39,6 +39,12 @@ const JobPosting = () => {
 				</div>
 			)}
 			<Link
+				href="/job-posting/new"
+				className="btn btn-outline flex-1 normal-case rounded-lg p-5 mx-5 md:mx-0"
+			>
+				Create a new job posting
+			</Link>
+			<Link
 				href="/company/setup/new"
 				className="btn flex-1 normal-case rounded-lg p-5 mx-5 md:mx-0"
 			>

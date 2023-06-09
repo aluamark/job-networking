@@ -55,13 +55,15 @@ export const updateUser = async ({ userId, userData }) => {
 
 // UPDATE USER PICTURE
 export const updateUserPicture = async ({ data, userId }) => {
-	return await fetch("/api/user/photo/upload", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ data, userId }),
-	});
+	return await axios.post(
+		"/api/user/photo/upload",
+		JSON.stringify({ data, userId }),
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}
+	);
 };
 
 // USER JOB APPLICATION
@@ -85,16 +87,13 @@ export const submitApplication = async ({
 
 // ADD NEW EXPERIENCE
 export const addUserExperience = async ({ userId, userExperience }) => {
-	const response = await axios.put(
+	return await axios.put(
 		`${BASE_URL}/api/user/position/new/${userId}`,
 		userExperience,
 		{
 			headers: { "Content-Type": "application/json" },
 		}
 	);
-	const updatedUser = response.data;
-
-	return updatedUser;
 };
 
 // ADD NEW SKILL
@@ -113,30 +112,24 @@ export const reorderUserExperiences = async ({
 	userId,
 	reorderedExperiences,
 }) => {
-	const response = await axios.put(
+	return await axios.put(
 		`${BASE_URL}/api/user/position/reorder/${userId}`,
 		reorderedExperiences,
 		{
 			headers: { "Content-Type": "application/json" },
 		}
 	);
-	const updatedUser = response.data;
-
-	return updatedUser;
 };
 
 // REORDER SKILLS
 export const reorderUserSkills = async ({ userId, reorderedSkills }) => {
-	const response = await axios.put(
+	return await axios.put(
 		`${BASE_URL}/api/user/skill/reorder/${userId}`,
 		reorderedSkills,
 		{
 			headers: { "Content-Type": "application/json" },
 		}
 	);
-	const updatedUser = response.data;
-
-	return updatedUser;
 };
 
 // SAVE JOB
@@ -182,6 +175,14 @@ export const getCompany = async (uniqueAddress) => {
 	return company;
 };
 
+// GET RANDOM COMPANIES
+export const getRandomCompanies = async () => {
+	const response = await axios.get(`${BASE_URL}/api/companies`);
+	const users = response.data;
+
+	return users;
+};
+
 // UPDATE COMPANY
 export const updateCompany = async ({ uniqueAddress, companyData }) => {
 	return await axios.put(
@@ -195,13 +196,15 @@ export const updateCompany = async ({ uniqueAddress, companyData }) => {
 
 // UPDATE COMPANY PICTURE
 export const updateCompanyPicture = async ({ data, companyId }) => {
-	return await fetch("/api/company/photo/upload", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ data, companyId }),
-	});
+	return await axios.post(
+		"/api/company/photo/upload",
+		JSON.stringify({ data, companyId }),
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}
+	);
 };
 
 // GET COMPANY JOBS

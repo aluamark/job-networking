@@ -51,18 +51,17 @@ const AddSkillModal = ({ user, isOpen, setIsOpen }) => {
 						onSuccess: (response) => {
 							const { message } = response.data;
 							toast.success(message);
+							setSkill("");
+							setIsOpen(false);
+							setSubmitLoading(false);
 						},
 					}
 				);
-
-				setSkill("");
-				setIsOpen(false);
 			} catch (error) {
 				toast.error(error?.response?.data?.error);
+				setSubmitLoading(false);
 			}
 		}
-
-		setSubmitLoading(false);
 	};
 
 	const closeModal = () => {

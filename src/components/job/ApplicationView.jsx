@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { getTimeDifference } from "@/lib/helper";
 import { BarLoader } from "react-spinners";
+import JobTimeDifference from "./JobTimeDifference";
 
 // Resume PDF renderer
 import { Document, Page, pdfjs } from "react-pdf";
@@ -16,14 +16,16 @@ const ApplicationView = ({ selectedApplication }) => {
 	};
 
 	return (
-		<div className="flex flex-col gap-3 w-full h-full py-5 bg-base-100 overflow-y-auto">
+		<div className="flex flex-col gap-3 w-full h-full pt-5 bg-base-100 overflow-y-auto">
 			<div className="flex flex-col px-5">
 				<span className="text-xl font-semibold">
 					{selectedApplication.applicant.firstName}{" "}
 					{selectedApplication.applicant.lastName}&apos;s application
 				</span>
-				<span>{selectedApplication.applicant?.headline}</span>
-				<span>
+				<span className="text-sm">
+					{selectedApplication.applicant?.headline}
+				</span>
+				<span className="text-sm text-zinc-500">
 					{selectedApplication.applicant.city &&
 					selectedApplication.applicant.country
 						? `${selectedApplication.applicant.city}, ${selectedApplication.applicant.country}`
@@ -31,13 +33,6 @@ const ApplicationView = ({ selectedApplication }) => {
 						? `${selectedApplication.applicant.country}`
 						: null}
 				</span>
-				<span className="text-sm text-zinc-500">
-					Applied {getTimeDifference(selectedApplication.createdAt)}
-				</span>
-			</div>
-			<div className="flex flex-col px-5">
-				<span>Email: {selectedApplication.email}</span>
-				<span>Phone: {selectedApplication.phone}</span>
 			</div>
 			<div className="flex px-5">
 				<Link
@@ -47,13 +42,22 @@ const ApplicationView = ({ selectedApplication }) => {
 					View profile
 				</Link>
 			</div>
-
-			<div className="px-5">
-				Status:{" "}
-				<span className="text-green-600 font-semibold">
-					{selectedApplication.status}
+			<div className="text-sm px-5">
+				{/* <div>
+					Status:{" "}
+					<span className="text-green-600 font-semibold">
+						{selectedApplication.status}
+					</span>
+				</div> */}
+				<span className="font-semibold text-xs text-zinc-500">
+					Applied <JobTimeDifference date={selectedApplication.createdAt} />
 				</span>
 			</div>
+			<div className="flex flex-col px-5 text-sm">
+				<span>Email: {selectedApplication.email}</span>
+				<span>Phone: {selectedApplication.phone}</span>
+			</div>
+
 			<div className="px-5">
 				<span className="font-semibold">Uploaded resume</span>
 			</div>
@@ -62,7 +66,7 @@ const ApplicationView = ({ selectedApplication }) => {
 					file={selectedApplication.resume}
 					onLoadSuccess={onDocumentLoadSuccess}
 					loading={
-						<div className="p-5">
+						<div className="px-5 pt-5">
 							<BarLoader />
 						</div>
 					}

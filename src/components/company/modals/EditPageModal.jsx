@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setOpenModal } from "@/redux/reducer";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateCompany } from "@/lib/helper";
 import Modal from "react-modal";
 import { FaSpinner } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
@@ -9,12 +11,8 @@ import { ToastContainer, toast } from "react-toastify";
 
 Modal.setAppElement("#root");
 
-const EditPageModal = ({
-	company,
-	isOpen,
-	setIsOpen,
-	createUpdateMutation,
-}) => {
+const EditPageModal = ({ company, isOpen, setIsOpen }) => {
+	const queryClient = useQueryClient();
 	const dispatch = useDispatch();
 	const [submitLoading, setSubmitLoading] = useState(false);
 	const [formData, setFormData] = useState(null);
@@ -27,6 +25,15 @@ const EditPageModal = ({
 		country: "",
 		website: "",
 		founded: "",
+	});
+
+	const createUpdateMutation = useMutation({
+		mutationFn: updateCompany,
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ["companyProfile"],
+			});
+		},
 	});
 
 	const handleChange = (event) => {
@@ -71,20 +78,28 @@ const EditPageModal = ({
 			}
 
 			try {
-				createUpdateMutation.mutate({
-					uniqueAddress: company.uniqueAddress,
-					companyData,
-				});
-
-				setIsOpen(false);
-				toast.success("Save was successful.");
+				createUpdateMutation.mutate(
+					{
+						uniqueAddress: company.uniqueAddress,
+						companyData,
+					},
+					{
+						onSuccess: (response) => {
+							const { message } = response.data;
+							toast.success(message);
+							setSubmitLoading(false);
+							setIsOpen(false);
+						},
+					}
+				);
 			} catch (error) {
 				toast.error(error?.response?.data?.error);
+				setSubmitLoading(false);
 			}
 		} else {
 			setFormErrors(errors);
+			setSubmitLoading(false);
 		}
-		setSubmitLoading(false);
 	};
 
 	const closeModal = () => {

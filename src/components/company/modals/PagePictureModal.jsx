@@ -21,7 +21,6 @@ const PagePictureModal = ({ company, isOpen, setIsOpen }) => {
 	const createUpdateMutation = useMutation({
 		mutationFn: updateCompanyPicture,
 		onSuccess: () => {
-			// trigger a refetch
 			queryClient.invalidateQueries({
 				queryKey: ["companyProfile"],
 			});
@@ -53,15 +52,21 @@ const PagePictureModal = ({ company, isOpen, setIsOpen }) => {
 			const reader = new FileReader();
 			reader.readAsDataURL(selectedFile);
 			reader.onloadend = async () => {
-				createUpdateMutation.mutate({
-					data: reader.result,
-					companyId: company._id,
-				});
-
-				setSelectedFile(null);
-				setUploadLoading(false);
-				setIsOpen(false);
-				toast.success("Upload was successful.");
+				createUpdateMutation.mutate(
+					{
+						data: reader.result,
+						companyId: company._id,
+					},
+					{
+						onSuccess: (response) => {
+							const { message } = response.data;
+							toast.success(message);
+							setSelectedFile(null);
+							setUploadLoading(false);
+							setIsOpen(false);
+						},
+					}
+				);
 			};
 		} else {
 			setUploadLoading(false);

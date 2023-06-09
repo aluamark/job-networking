@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
+import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useJobQuery } from "@/lib/react-query-hooks/useJobQuery";
-import { getTimeDifference } from "@/lib/helper";
 import JobTimeDifference from "@/components/job/JobTimeDifference";
 import ApplicationView from "@/components/job/ApplicationView";
 import ApplicationViewModal from "@/components/job/ApplicationViewModal";
@@ -36,7 +36,7 @@ const ManageApplicants = () => {
 
 	if (job.isLoading) return <Loading />;
 
-	if (job.data)
+	if (job.data && selectedApplication)
 		return (
 			<>
 				<div className="fixed top-[4rem] bg-base-100 border-b border-base-300 w-full z-40">
@@ -58,12 +58,20 @@ const ManageApplicants = () => {
 						</div>
 
 						<div className="flex flex-col">
-							<span className="font-semibold">{job.data.title}</span>
-							<span className="text-xs">
+							<Link
+								href={`/jobs/view/${job.data._id}`}
+								className="link link-hover hover:text-blue-600 font-semibold"
+							>
+								{job.data.title}
+							</Link>
+							<Link
+								href={`/company/${job.data.company.uniqueAddress}`}
+								className="link link-hover hover:text-blue-600 text-xs"
+							>
 								{job.data.company.name}{" "}
 								{job.data.company.country && `· ${job.data.company.country}`}
-							</span>
-							<div className="text-xs">
+							</Link>
+							<div className="text-xs pt-1">
 								<span className="text-green-600 font-semibold">Active</span>{" "}
 								<span className="text-zinc-500">
 									· Posted <JobTimeDifference date={job.data.createdAt} />
@@ -88,7 +96,9 @@ const ManageApplicants = () => {
 									<div
 										key={application._id}
 										onClick={() => handleApplicationClick(application)}
-										className="flex gap-3 px-5 py-3 cursor-pointer"
+										className={`flex gap-3 px-5 py-3 cursor-pointer ${
+											selectedApplication._id === application._id && "bg-sky-50"
+										}`}
 									>
 										<div className="flex-none">
 											<Image
@@ -104,7 +114,7 @@ const ManageApplicants = () => {
 											/>
 										</div>
 
-										<div className="flex flex-col gap-1.5">
+										<div className="flex flex-col">
 											<span className="font-semibold">
 												{application.applicant.firstName}{" "}
 												{application.applicant.lastName}
@@ -115,8 +125,9 @@ const ManageApplicants = () => {
 												</span>
 											)}
 
-											<span className="text-sm text-zinc-500">
-												Applied {getTimeDifference(application.createdAt)}
+											<span className="font-semibold text-xs text-green-600 pt-1.5">
+												Applied{" "}
+												<JobTimeDifference date={application.createdAt} />
 											</span>
 										</div>
 									</div>

@@ -6,7 +6,7 @@ import Overview from "./content/Overview";
 import About from "./content/About";
 import Jobs from "./content/Jobs";
 
-const ViewPage = ({ company, randomUsers }) => {
+const ViewPage = ({ company }) => {
 	const [tab, setTab] = useState(0);
 
 	const handleRenderTab = () => {
@@ -121,7 +121,7 @@ const ViewPage = ({ company, randomUsers }) => {
 						{handleRenderTab()}
 					</div>
 					<div className="flex flex-col gap-3 w-full md:flex-none lg:w-1/4">
-						<People randomUsers={randomUsers.data} />
+						<People />
 					</div>
 				</div>
 			</div>

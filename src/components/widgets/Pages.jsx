@@ -3,53 +3,54 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { useRandomUsersQuery } from "@/lib/react-query-hooks/useRandomUsersQuery";
+import { useRandomCompaniesQuery } from "@/lib/react-query-hooks/useRandomCompaniesQuery";
 
-const People = () => {
+const Pages = () => {
 	const router = useRouter();
 	const { email } = router.query;
 	const { data: loggedUser } = useSession();
-	const { data: randomUsers } = useRandomUsersQuery();
+	const { data: randomCompanies } = useRandomCompaniesQuery();
 
-	const filteredUsers = randomUsers?.filter(
-		(user) => user.email !== loggedUser?.user?.email && user.email !== email
-	);
-
-	if (filteredUsers?.length === 0)
+	if (randomCompanies?.length === 0)
 		return (
 			<div className="flex flex-col gap-3 bg-base-100 border border-base-300 rounded-lg p-5">
-				<h3 className="font-semibold">People you may know</h3>
-				<p>No users available at the moment.</p>
+				<h3 className="font-semibold">Pages you may like</h3>
+				<p>No pages available at the moment.</p>
 			</div>
 		);
 
-	if (filteredUsers?.length > 0)
+	if (randomCompanies?.length > 0)
 		return (
 			<div className="bg-base-100 border border-base-300 rounded-lg p-5">
-				<h3 className="font-semibold">People you may know</h3>
+				<h3 className="font-semibold">Pages you may like</h3>
 				<div className="flex flex-col divide-y divide-base-300 text-sm">
-					{filteredUsers.map((user) => {
+					{randomCompanies.map((company) => {
 						return (
-							<Link href={`/ex/${user.email}`} key={user._id}>
+							<Link
+								href={`/company/${company.uniqueAddress}`}
+								key={company._id}
+							>
 								<div className="flex gap-3 w-full py-3">
 									<div className="flex-none">
 										<Image
-											src={user.picturePath ? user.picturePath : "/default.png"}
-											alt="picture"
-											className="border border-base-300 rounded-full w-12 h-12 object-cover"
+											src={
+												company.picturePath
+													? company.picturePath
+													: "/company.png"
+											}
+											alt="company-logo"
+											className="border border-base-300 w-12 h-12 object-cover"
 											width={48}
 											height={48}
 										/>
 									</div>
 									<div>
 										<div>
-											<span className="font-semibold">
-												{user.firstName} {user.lastName}
-											</span>
+											<span className="font-semibold">{company.name}</span>
 										</div>
 										<div>
 											<span className="text-zinc-500 text-xs">
-												{user.headline}
+												{company.industry}
 											</span>
 										</div>
 
@@ -68,4 +69,4 @@ const People = () => {
 		);
 };
 
-export default People;
+export default Pages;

@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Modal from "react-modal";
 import { useDispatch } from "react-redux";
-import { setOpenModal, setLoggedUser } from "@/redux/reducer";
+import { setOpenModal } from "@/redux/reducer";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import { StrictModeDroppable as Droppable } from "@/lib/StrictModeDroppable";
 import { reorderUserSkills } from "@/lib/helper";
 import { MdDragIndicator, MdClose } from "react-icons/md";
 import { FaSpinner } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
-import { useSelector } from "react-redux";
 
 Modal.setAppElement("#root");
 
@@ -22,11 +21,15 @@ const reorder = (list, startIndex, endIndex) => {
 };
 
 const ReorderSkillModal = ({ userId, userSkills, isOpen, setIsOpen }) => {
+	const queryClient = useQueryClient();
 	const dispatch = useDispatch();
-	const [skills, updateSkills] = useState(userSkills);
 	const [submitLoading, setSubmitLoading] = useState(false);
 
-	const queryClient = useQueryClient();
+	const [skills, setSkills] = useState(null);
+	useEffect(() => {
+		setSkills(userSkills);
+	}, [userSkills]);
+
 	const createUpdateMutation = useMutation({
 		mutationFn: reorderUserSkills,
 		onSuccess: () => {
@@ -43,7 +46,7 @@ const ReorderSkillModal = ({ userId, userSkills, isOpen, setIsOpen }) => {
 		}
 		const items = reorder(skills, source.index, destination.index);
 
-		updateSkills(items);
+		setSkills(items);
 	};
 
 	const handleSubmit = async () => {
@@ -60,15 +63,15 @@ const ReorderSkillModal = ({ userId, userSkills, isOpen, setIsOpen }) => {
 					onSuccess: (response) => {
 						const { message } = response.data;
 						toast.success(message);
+						setSubmitLoading(false);
+						setIsOpen(false);
 					},
 				}
 			);
-
-			setIsOpen(false);
 		} catch (error) {
 			toast.error(error?.response?.data?.error);
+			setSubmitLoading(false);
 		}
-		setSubmitLoading(false);
 	};
 
 	const closeModal = () => {

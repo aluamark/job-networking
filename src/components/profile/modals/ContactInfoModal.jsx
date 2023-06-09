@@ -53,11 +53,14 @@ const ContactInfoModal = ({ user, ownProfile, isOpen, setIsOpen }) => {
 								</span>
 							</Link>
 						</div>
-						<div>
-							<h2 className="font-bold">Phone</h2>
-							<span className="text-sm">{user.contact}</span>{" "}
-							{/* <span className="text-zinc-500 text-sm">(Work)</span> */}
-						</div>
+						{user.contact && (
+							<div>
+								<h2 className="font-bold">Phone</h2>
+								<span className="text-sm">{user.contact}</span>{" "}
+								{/* <span className="text-zinc-500 text-sm">(Work)</span> */}
+							</div>
+						)}
+
 						<div>
 							<h2 className="font-bold">Address</h2>
 							<span className="link link-hover text-blue-600 text-sm font-semibold">

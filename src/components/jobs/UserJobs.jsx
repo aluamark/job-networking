@@ -4,8 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
 import { useJobsQuery } from "@/lib/react-query-hooks/useJobsQuery";
-import { useRandomUsersQuery } from "@/lib/react-query-hooks/useRandomUsersQuery";
-import { getRecommendedJobs, getTimeDifference } from "@/lib/helper";
+import { getRecommendedJobs } from "@/lib/helper";
 import {
 	BsFillBookmarkCheckFill,
 	BsBellFill,
@@ -14,14 +13,15 @@ import {
 	BsBriefcaseFill,
 } from "react-icons/bs";
 import People from "../widgets/People";
+import Pages from "../widgets/Pages";
 import Loading from "../widgets/Loading";
+import JobTimeDifference from "../job/JobTimeDifference";
 
 const UserJobs = () => {
 	const [recommendedJobs, setRecommendedJobs] = useState(null);
 
 	const user = useLoggedUserQuery();
 	const jobs = useJobsQuery();
-	const randomUsers = useRandomUsersQuery();
 
 	useEffect(() => {
 		if (jobs.data && user?.data) {
@@ -29,10 +29,9 @@ const UserJobs = () => {
 		}
 	}, [jobs.data, user?.data]);
 
-	if (user?.isLoading || jobs.isLoading || randomUsers.isLoading)
-		return <Loading />;
+	if (user?.isLoading || jobs.isLoading) return <Loading />;
 
-	if (user.data && jobs.data && randomUsers.data)
+	if (user.data && jobs.data)
 		return (
 			<div className="max-w-screen-xl flex flex-col md:flex-row gap-5 mx-auto py-20 md:px-5">
 				<Head>
@@ -48,7 +47,7 @@ const UserJobs = () => {
 								<BsFillBookmarkCheckFill className="h-5 w-5" />
 								My jobs
 							</Link>
-							<Link href="/jobs" className="flex items-center gap-3">
+							{/* <Link href="/jobs" className="flex items-center gap-3">
 								<BsBellFill className="h-5 w-5" />
 								Job alerts
 							</Link>
@@ -59,7 +58,7 @@ const UserJobs = () => {
 							<Link href="/jobs" className="flex items-center gap-3">
 								<BsGearFill className="h-5 w-5" />
 								Application settings
-							</Link>
+							</Link> */}
 						</div>
 						{user.data.postedJobs.length !== 0 && (
 							<Link
@@ -121,7 +120,7 @@ const UserJobs = () => {
 														{job.city}, {job.country} ({job.locationType})
 													</span>
 													<span className="text-green-600 text-xs font-semibold pt-1.5">
-														{getTimeDifference(job.createdAt)}
+														<JobTimeDifference date={job.createdAt} />
 													</span>
 												</div>
 											</Link>
@@ -131,11 +130,9 @@ const UserJobs = () => {
 						</div>
 					</div>
 					<div>
-						<div className="w-full lg:w-[300px]">
-							<People
-								randomUsers={randomUsers.data}
-								userEmail={user.data.email}
-							/>
+						<div className="flex flex-col gap-3 w-full lg:w-[300px]">
+							<People />
+							<Pages />
 						</div>
 					</div>
 				</div>

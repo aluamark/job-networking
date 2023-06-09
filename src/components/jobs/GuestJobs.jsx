@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
-import { getTimeDifference } from "@/lib/helper";
 import JobView from "../job/JobView";
 import JobViewModal from "../job/JobViewModal";
+import JobTimeDifference from "../job/JobTimeDifference";
 import { useJobsQuery } from "@/lib/react-query-hooks/useJobsQuery";
 import Loading from "../widgets/Loading";
 
@@ -28,7 +28,7 @@ const GuestJobs = () => {
 
 	if (jobs.data && jobs.data.length === 0)
 		return (
-			<div className="max-w-screen-sm mx-auto pt-20 md:px-5">
+			<div className="max-w-screen-sm mx-auto py-20 md:px-5">
 				<div className="flex flex-col gap-3 bg-base-100 border border-base-300 p-5 rounded-lg">
 					<p className="text-xl font-semibold">
 						No jobs available at the moment.
@@ -43,7 +43,7 @@ const GuestJobs = () => {
 
 	if (selectedJob)
 		return (
-			<div className="min-h-screen max-w-screen-xl mx-auto flex divide-x divide-base-300 pt-[4rem] bg-base-100">
+			<div className="min-h-screen max-w-screen-xl mx-auto flex divide-x divide-base-300 py-[4rem] md:pb-0 bg-base-100">
 				<Head>
 					<title>Jobs | EmployX</title>
 				</Head>
@@ -83,7 +83,7 @@ const GuestJobs = () => {
 												{job.city}, {job.country} ({job.locationType})
 											</span>
 											<span className="text-green-600 text-xs font-semibold pt-1.5">
-												{getTimeDifference(job.createdAt)}
+												<JobTimeDifference date={job.createdAt} />
 											</span>
 										</div>
 									</li>

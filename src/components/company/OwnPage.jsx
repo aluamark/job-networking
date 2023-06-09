@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
-import { FiEdit2 } from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import { setOpenModal } from "@/redux/reducer";
 import People from "../widgets/People";
 import EditPageModal from "./modals/EditPageModal";
 import PagePictureModal from "./modals/PagePictureModal";
 import Overview from "./content/Overview";
 import About from "./content/About";
 import Jobs from "./content/Jobs";
+import { FiEdit2 } from "react-icons/fi";
 
-const OwnPage = ({ company, randomUsers, createUpdateMutation }) => {
+const OwnPage = ({ company }) => {
+	const dispatch = useDispatch();
 	const [editPageModal, setEditPageModal] = useState(false);
 	const [pagePictureModal, setPagePictureModal] = useState(false);
 	const [tab, setTab] = useState(0);
@@ -84,6 +87,7 @@ const OwnPage = ({ company, randomUsers, createUpdateMutation }) => {
 								<div className="p-3">
 									<button
 										onClick={() => {
+											dispatch(setOpenModal(true));
 											setEditPageModal(true);
 										}}
 										className="flex ml-auto btn btn-ghost btn-circle"
@@ -143,11 +147,6 @@ const OwnPage = ({ company, randomUsers, createUpdateMutation }) => {
 									pathname: "/job-posting/new",
 									query: {
 										_id: company.data._id,
-										uniqueAddress: company.data.uniqueAddress,
-										name: company.data.name,
-										picturePath: company.data.picturePath,
-										city: company.data.city,
-										country: company.data.country,
 									},
 								}}
 							>
@@ -159,7 +158,7 @@ const OwnPage = ({ company, randomUsers, createUpdateMutation }) => {
 						{handleRenderTab()}
 					</div>
 					<div className="flex flex-col gap-3 w-full md:flex-none lg:w-1/4">
-						<People randomUsers={randomUsers.data} />
+						<People />
 					</div>
 				</div>
 
@@ -167,7 +166,6 @@ const OwnPage = ({ company, randomUsers, createUpdateMutation }) => {
 					company={company.data}
 					isOpen={editPageModal}
 					setIsOpen={setEditPageModal}
-					createUpdateMutation={createUpdateMutation}
 				/>
 				<PagePictureModal
 					company={company.data}

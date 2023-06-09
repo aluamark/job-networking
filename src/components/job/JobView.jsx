@@ -52,7 +52,7 @@ const JobView = ({ selectedJob, user }) => {
 	const showButton = selectedJob?.company.about.length > 100;
 
 	return (
-		<div className="flex flex-col gap-5 w-full h-full px-7 py-5 bg-base-100 overflow-y-scroll">
+		<div className="flex flex-col gap-5 w-full h-full px-7 py-5 bg-base-100 rounded-tr-lg overflow-y-auto">
 			<div className="flex flex-col gap-1.5">
 				<span className="text-2xl font-semibold">{selectedJob?.title}</span>
 

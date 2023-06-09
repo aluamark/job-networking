@@ -2,12 +2,9 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
 
-const Sidebar = () => {
+const Sidebar = ({ user }) => {
 	const { status } = useSession();
-
-	const user = useLoggedUserQuery();
 
 	if (status === "unauthenticated")
 		return (
@@ -27,7 +24,7 @@ const Sidebar = () => {
 			</nav>
 		);
 
-	if (user.data)
+	if (user?.data)
 		return (
 			<nav className="drawer-side">
 				<label htmlFor="my-drawer-3" className="drawer-overlay"></label>
@@ -50,11 +47,20 @@ const Sidebar = () => {
 						<Link href={`/jobs`}>Jobs</Link>
 					</li>
 					<li>
-						<Link href="/job-posting">Job Posting Account</Link>
+						<Link href="/job-posting">Company Pages</Link>
+					</li>
+					<li>
+						<Link href="/job-posting/new">Job Posting</Link>
 					</li>
 
 					<li>
-						<button onClick={() => signOut()}>Logout</button>
+						<button
+							onClick={() =>
+								signOut({ callbackUrl: `${window.location.origin}` })
+							}
+						>
+							Logout
+						</button>
 					</li>
 				</ul>
 			</nav>

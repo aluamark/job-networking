@@ -105,22 +105,22 @@ const JobApplicationModal = ({ user, selectedJob, isOpen, setIsOpen }) => {
 						},
 						{
 							onSuccess: (response) => {
-								console.log(response);
 								const { message } = response.data;
 								toast.success(message);
+								setSubmitLoading(false);
+								setIsOpen(false);
 							},
 						}
 					);
-
-					setIsOpen(false);
 				};
 			} catch (error) {
 				toast.error(error?.response?.data?.error);
+				setSubmitLoading(false);
 			}
 		} else {
 			setFormErrors(errors);
+			setSubmitLoading(false);
 		}
-		setSubmitLoading(false);
 	};
 
 	const closeModal = () => {
@@ -199,7 +199,7 @@ const JobApplicationModal = ({ user, selectedJob, isOpen, setIsOpen }) => {
 									</span>
 									{selectedFile && (
 										<div className="flex border border-base-300 rounded-lg">
-											<div className="font-semibold p-5 rounded-l-lg bg-red-500 text-white">
+											<div className="flex items-center font-semibold p-5 rounded-l-lg bg-red-500 text-white">
 												PDF
 											</div>
 											<div className="flex justify-between items-center w-full p-5 text-sm">

@@ -102,7 +102,7 @@ const Login = () => {
 								className="w-full rounded-full py-3 bg-blue-600 border border-blue-600 flex justify-center"
 								disabled
 							>
-								<FaSpinner className="w-6 h-6 animate-spin" />
+								<FaSpinner className="w-6 h-6 animate-spin fill-white" />
 							</button>
 						) : (
 							<button

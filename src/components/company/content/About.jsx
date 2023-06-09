@@ -41,12 +41,12 @@ const Overview = ({ company }) => {
 				</div>
 			)}
 
-			{company.industry && (
+			{/* {company.industry && (
 				<div className="flex flex-col">
 					<span className="font-semibold">Specialties</span>
 					<span className="text-zinc-500">{company.industry}</span>
 				</div>
-			)}
+			)} */}
 		</div>
 	);
 };

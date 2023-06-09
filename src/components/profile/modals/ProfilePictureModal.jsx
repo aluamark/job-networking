@@ -52,15 +52,21 @@ const ProfilePictureModal = ({ userId, picturePath, isOpen, setIsOpen }) => {
 			const reader = new FileReader();
 			reader.readAsDataURL(selectedFile);
 			reader.onloadend = async () => {
-				createUpdateMutation.mutate({
-					data: reader.result,
-					userId,
-				});
-
-				setSelectedFile(null);
-				setUploadLoading(false);
-				setIsOpen(false);
-				toast.success("Upload was successful.");
+				createUpdateMutation.mutate(
+					{
+						data: reader.result,
+						userId,
+					},
+					{
+						onSuccess: (response) => {
+							const { message } = response.data;
+							toast.success(message);
+							setSelectedFile(null);
+							setUploadLoading(false);
+							setIsOpen(false);
+						},
+					}
+				);
 			};
 		} else {
 			setUploadLoading(false);

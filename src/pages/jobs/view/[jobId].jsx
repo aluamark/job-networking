@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { saveJob, renderDescription } from "@/lib/helper";
 import { toast } from "react-toastify";
-import { BsBriefcaseFill, BsListCheck, BsArrowLeftShort } from "react-icons/bs";
+import { BsBriefcaseFill, BsListCheck } from "react-icons/bs";
 import JobSkillsModal from "@/components/job/JobSkillsModal";
 import JobApplicationModal from "@/components/job/JobApplicationModal";
 import JobTimeDifference from "@/components/job/JobTimeDifference";
@@ -76,16 +76,6 @@ const View = () => {
 				<Head>
 					<title>{job.data.title} | EmployX</title>
 				</Head>
-				<div>
-					<Link
-						href="/my-items/saved-jobs"
-						className="btn btn-outline btn-sm gap-2 normal-case lg:gap-3"
-					>
-						<BsArrowLeftShort className="w-7 h-7" />
-						<span>Saved jobs</span>
-					</Link>
-				</div>
-
 				<div className="flex flex-col gap-5 bg-base-100 border border-base-300 rounded-lg p-5">
 					<Image
 						src={

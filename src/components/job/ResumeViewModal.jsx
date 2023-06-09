@@ -28,9 +28,9 @@ const ResumeViewModal = ({ isOpen, setIsOpen, resume }) => {
 			overlayClassName="fixed inset-0 bg-black/75"
 			className="min-h-screen h-screen flex justify-center items-center"
 		>
-			<div className="bg-base-100 rounded-lg w-full md:w-[585px] h-[80%]">
+			<div className="bg-base-100 rounded-t-lg w-full md:w-[585px] h-[80%]">
 				<div className="flex flex-col h-full">
-					<div className="flex justify-between items-center py-3 pl-5 pr-3">
+					<div className="flex justify-between items-center py-3 pl-5 pr-3 border-b border-base-300">
 						<h3 className="text-lg font-semibold">Submmited Resume</h3>
 						<button
 							onClick={closeModal}
