@@ -3,15 +3,14 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
-import { useRandomUsersQuery } from "@/lib/react-query-hooks/useRandomUsersQuery";
 import { BsFillBookmarkCheckFill } from "react-icons/bs";
 import People from "@/components/widgets/People";
+import Pages from "@/components/widgets/Pages";
 import JobTimeDifference from "@/components/job/JobTimeDifference";
 import Loading from "@/components/widgets/Loading";
 
 const SavedJobs = () => {
 	const user = useLoggedUserQuery();
-	const randomUsers = useRandomUsersQuery();
 
 	if (user.isLoading) return <Loading />;
 
@@ -113,11 +112,9 @@ const SavedJobs = () => {
 						</div>
 					</div>
 					<div>
-						<div className="w-full lg:w-[300px]">
-							<People
-								randomUsers={randomUsers.data}
-								userEmail={user.data.email}
-							/>
+						<div className="flex flex-col gap-3 w-full lg:w-[300px]">
+							<People />
+							<Pages />
 						</div>
 					</div>
 				</div>

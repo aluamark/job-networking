@@ -4,23 +4,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSearchQuery } from "@/lib/react-query-hooks/useSearchQuery";
-import { useRandomUsersQuery } from "@/lib/react-query-hooks/useRandomUsersQuery";
-import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
 import People from "@/components/widgets/People";
+import Pages from "@/components/widgets/Pages";
 import { RiBriefcase4Line } from "react-icons/ri";
 import Loading from "@/components/widgets/Loading";
 
 const AllResults = () => {
 	const router = useRouter();
 	const { keywords } = router.query;
-
 	const search = useSearchQuery(keywords);
-	const user = useLoggedUserQuery();
-	const randomUsers = useRandomUsersQuery();
 
-	if (search.isLoading || randomUsers.isLoading) return <Loading />;
+	if (search.isLoading) return <Loading />;
 
-	if (search.data && randomUsers.data)
+	if (search.data)
 		return (
 			<div className="max-w-screen-xl flex flex-col md:flex-row gap-5 mx-auto py-20 md:px-5">
 				<Head>
@@ -353,8 +349,9 @@ const AllResults = () => {
 						)}
 					</div>
 					<div>
-						<div className="w-full lg:w-[300px]">
+						<div className="flex flex-col gap-3 w-full lg:w-[300px]">
 							<People />
+							<Pages />
 						</div>
 					</div>
 				</div>
