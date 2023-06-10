@@ -27,6 +27,7 @@ const ManageApplicants = () => {
 
 	useEffect(() => {
 		if (job.data && userId) {
+			// console.log(job.data);
 			const application = job.data.applications.find(
 				(application) => application.applicant._id === userId
 			);
@@ -64,15 +65,18 @@ const ManageApplicants = () => {
 							>
 								{job.data.title}
 							</Link>
-							<Link
-								href={`/company/${job.data.company.uniqueAddress}`}
-								className="link link-hover hover:text-blue-600 text-xs"
-							>
-								<span className="font-semibold">{job.data.company.name}</span>{" "}
+							<div className="text-xs">
+								<Link
+									href={`/company/${job.data.company.uniqueAddress}`}
+									className="link link-hover hover:text-blue-600"
+								>
+									<span className="font-semibold">{job.data.company.name}</span>
+								</Link>{" "}
 								{job.data.city &&
 									job.data.country &&
 									`· ${job.data.city}, ${job.data.country}`}
-							</Link>
+							</div>
+
 							<div className="text-xs pt-1">
 								<span className="text-green-600 font-semibold">Active</span>{" "}
 								<span className="text-zinc-500">

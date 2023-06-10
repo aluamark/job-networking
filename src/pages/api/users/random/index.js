@@ -9,10 +9,8 @@ export default async function handler(req, res) {
 
 		await connectMongo();
 
-		// Get 3 random users from the "users" collection using Mongoose's aggregate() method
-		const users = await User.aggregate([{ $sample: { size: 10 } }]);
+		const users = await User.aggregate([{ $sample: { size: 3 } }]);
 
-		// Return the users as JSON
 		return res.status(200).send(users);
 	} catch (error) {
 		return res.status(500).send({ error: "Internal server error" });

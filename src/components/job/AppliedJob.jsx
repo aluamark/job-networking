@@ -6,6 +6,17 @@ import ResumeViewModal from "@/components/job/ResumeViewModal";
 
 const AppliedJob = ({ application }) => {
 	const [resumeModal, setResumeModal] = useState(false);
+	let status = "";
+
+	if (application.status === "pending") {
+		status = "Application submitted";
+	} else if (application.status === "viewed") {
+		status = "Application viewed";
+	} else if (application.status === "downloaded") {
+		status = "Resume viewed";
+	} else {
+		status = "Accepted";
+	}
 
 	return (
 		<div className="flex gap-5 py-3">
@@ -24,30 +35,34 @@ const AppliedJob = ({ application }) => {
 				</Link>
 			</div>
 
-			<div className="flex flex-col">
-				<div>
+			<div className="flex flex-col gap-1.5">
+				<div className="flex flex-col">
 					<Link
 						href={`/jobs/view/${application.job._id}`}
 						className="link link-hover text-blue-600 font-semibold"
 					>
 						{application.job.title}
 					</Link>
-				</div>
-				<div>
-					<Link
-						href={`/company/${application.job.company.uniqueAddress}`}
-						className="text-xs link link-hover hover:text-blue-600"
-					>
-						{application.job.company.name}
-					</Link>
-					{" · "}
-					<span className="text-xs text-zinc-500">
-						{application.job.city}, {application.job.country} (
-						{application.job.locationType})
-					</span>
+					<div>
+						<Link
+							href={`/company/${application.job.company.uniqueAddress}`}
+							className="text-xs link link-hover hover:text-blue-600"
+						>
+							{application.job.company.name}
+						</Link>
+						{" · "}
+						<span className="text-xs text-zinc-500">
+							{application.job.city}, {application.job.country} (
+							{application.job.locationType})
+						</span>
+					</div>
 				</div>
 
-				<div className="flex flex-col text-sm pt-1.5">
+				<div className="text-sm">
+					Job activity: <span className="font-semibold">{status}</span>
+				</div>
+
+				<div className="flex flex-col text-sm">
 					<span className="font-semibold">Submitted info</span>
 					<span>Email: {application.email}</span>
 					<span>Phone: {application.phone}</span>

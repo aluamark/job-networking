@@ -1,14 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import { useRandomCompaniesQuery } from "@/lib/react-query-hooks/useRandomCompaniesQuery";
 
 const Pages = () => {
-	const router = useRouter();
-	const { email } = router.query;
-	const { data: loggedUser } = useSession();
 	const { data: randomCompanies } = useRandomCompaniesQuery();
 
 	if (randomCompanies?.length === 0)

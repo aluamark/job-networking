@@ -243,6 +243,29 @@ export const getJobs = async () => {
 	return jobs;
 };
 
+// VIEW APPLICATION
+export const viewApplication = async (applicationId) => {
+	const response = await axios.put(`/api/application/view/${applicationId}`, {
+		headers: { "Content-Type": "application/json" },
+	});
+	const application = response.data;
+
+	return application;
+};
+
+// VIEW APPLICATION RESUME
+export const viewApplicationResume = async (applicationId) => {
+	const response = await axios.put(
+		`/api/application/view/resume/${applicationId}`,
+		{
+			headers: { "Content-Type": "application/json" },
+		}
+	);
+	const application = response.data;
+
+	return application;
+};
+
 // Function to get recommended jobs for a user
 export const getRecommendedJobs = (userProfile, jobListings) => {
 	// Function to calculate similarity between user profile and job listings
