@@ -27,7 +27,6 @@ const ManageApplicants = () => {
 
 	useEffect(() => {
 		if (job.data && userId) {
-			// console.log(job.data);
 			const application = job.data.applications.find(
 				(application) => application.applicant._id === userId
 			);

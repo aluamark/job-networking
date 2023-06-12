@@ -57,7 +57,7 @@ const Layout = ({ children }) => {
 						pauseOnFocusLoss
 						draggable
 						pauseOnHover
-						theme="colored"
+						theme="light"
 					/>
 				)}
 			</div>

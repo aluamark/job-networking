@@ -43,7 +43,7 @@ const GuestJobs = () => {
 
 	if (selectedJob)
 		return (
-			<div className="min-h-screen max-w-screen-xl mx-auto flex divide-x divide-base-300 py-[4rem] md:pb-0 bg-base-100">
+			<div className="min-h-screen h-screen max-w-screen-xl mx-auto flex divide-x divide-base-300 py-[4rem] md:pb-0 bg-base-100">
 				<Head>
 					<title>Jobs | EmployX</title>
 				</Head>

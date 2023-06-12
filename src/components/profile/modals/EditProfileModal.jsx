@@ -247,7 +247,7 @@ const EditProfileModal = ({
 									+ Add new position
 								</button>
 							</div>
-							<div className="flex flex-col gap-3">
+							<div className="flex flex-col gap-3 px-3">
 								{user.experiences?.map((experience) => (
 									<div key={experience} className="flex flex-col text-sm">
 										<span className="font-semibold">{experience.title}</span>
@@ -259,7 +259,7 @@ const EditProfileModal = ({
 											{experience.startDateMonth} {experience.startDateYear}{" "}
 											{experience.endDateMonth
 												? `- ${experience.endDateMonth} ${experience.endDateYear}`
-												: null}
+												: "- Present"}
 										</span>
 									</div>
 								))}

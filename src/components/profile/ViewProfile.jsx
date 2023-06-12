@@ -172,10 +172,10 @@ const ViewProfile = () => {
 												{experience.employmentType}
 											</span>
 											<span className="text-zinc-500 text-xs">
-												{experience.startDateMonth} {experience.startDateYear}{" "}
+												{experience.startDateMonth} {experience.startDateYear}
 												{experience.endDateMonth
-													? `- ${experience.endDateMonth} ${experience.endDateYear}`
-													: null}
+													? ` - ${experience.endDateMonth} ${experience.endDateYear}`
+													: " - Present"}
 											</span>
 										</div>
 									))}

@@ -51,7 +51,7 @@ const Recommended = () => {
 				<Head>
 					<title>Jobs based on your Profile | EmployX</title>
 				</Head>
-				<div className="h-[91.8%] flex divide-x divide-base-300 mt-20 bg-base-100 border border-base-300 md:rounded-t-lg w-full">
+				<div className="h-[91.8%] flex divide-x divide-base-300 my-20 bg-base-100 border border-base-300 md:rounded-t-lg w-full">
 					<div className="relative flex-1 h-full">
 						<div className="sticky top-0 bg-blue-700 p-2.5 md:rounded-tl-lg">
 							<span className="text-white">Jobs based on your Profile</span>

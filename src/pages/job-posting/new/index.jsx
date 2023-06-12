@@ -231,7 +231,7 @@ const PostJobForm = () => {
 								<FormInput
 									name="country"
 									size="sm"
-									title="Country"
+									title="Country*"
 									type="text"
 									placeholder="Ex. Philippines"
 									value={formData?.country}

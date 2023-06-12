@@ -61,16 +61,19 @@ const ContactInfoModal = ({ user, ownProfile, isOpen, setIsOpen }) => {
 							</div>
 						)}
 
-						<div>
-							<h2 className="font-bold">Address</h2>
-							<span className="link link-hover text-blue-600 text-sm font-semibold">
-								{user.city && user.country
-									? `${user.city}, ${user.country}`
-									: user.country
-									? `${user.country}`
-									: null}
-							</span>
-						</div>
+						{user.country && (
+							<div>
+								<h2 className="font-bold">Address</h2>
+								<span className="link link-hover text-blue-600 text-sm font-semibold">
+									{user.city && user.country
+										? `${user.city}, ${user.country}`
+										: user.country
+										? `${user.country}`
+										: null}
+								</span>
+							</div>
+						)}
+
 						<div>
 							<h2 className="font-bold">Email</h2>
 
