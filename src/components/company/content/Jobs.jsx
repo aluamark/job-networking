@@ -86,9 +86,8 @@ const Jobs = ({ companyId, companyName, companyPicture, jobs }) => {
 				{reversedJobs.map((job) => (
 					<Link
 						href={{
-							pathname: "/jobs/search/",
+							pathname: `/jobs/company/${companyId}`,
 							query: {
-								companyId,
 								companyName,
 								currentJobId: job._id,
 							},

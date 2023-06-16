@@ -65,9 +65,7 @@ const Search = ({ searchHistory }) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (keywords) {
-			router.push(
-				`/search/results/all?keywords=${encodeURIComponent(keywords)}`
-			);
+			router.push(`/jobs/search?keywords=${keywords}`);
 		}
 	};
 

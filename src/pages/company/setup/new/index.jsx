@@ -204,7 +204,7 @@ const NewCompany = () => {
 							<input
 								type="checkbox"
 								checked={isChecked}
-								onChange={handleCheckboxChange}
+								onChange={() => setIsChecked(!isChecked)}
 								className="checkbox"
 							/>
 							<p className="text-sm">

@@ -29,13 +29,13 @@ export default async function handler(req, res) {
 
 		// Search for job titles
 		const jobsByTitle = await Job.find({
-			title: { $regex: `^${keywords}`, $options: "i" },
-		}).populate("company");
+			title: { $regex: `${keywords}`, $options: "i" },
+		}).populate("company postedBy");
 
 		// Search for jobs by skills
 		const jobsBySkills = await Job.find({
-			skills: { $regex: `^${keywords}`, $options: "i" },
-		}).populate("company");
+			skills: { $regex: `${keywords}`, $options: "i" },
+		}).populate("company postedBy");
 
 		// Combine the results
 		const results = {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { saveJob, renderDescription } from "@/lib/helper";
@@ -13,6 +14,7 @@ import JobTimeDifference from "@/components/job/JobTimeDifference";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
 import { useJobQuery } from "@/lib/react-query-hooks/useJobQuery";
 import Loading from "@/components/widgets/Loading";
+import { sign } from "jsonwebtoken";
 
 const View = () => {
 	const router = useRouter();
@@ -52,9 +54,9 @@ const View = () => {
 		}
 	};
 
-	if (job.isLoading || user.isLoading) return <Loading />;
+	if (job.isLoading) return <Loading />;
 
-	if (job.isError || user.isError) {
+	if (job.isError) {
 		return (
 			<div className="min-h-screen flex flex-col justify-center items-center gap-3">
 				<h2 className="text-3xl font-bold flex gap-1">
@@ -70,7 +72,7 @@ const View = () => {
 		);
 	}
 
-	if (job.data && user.data)
+	if (job.data)
 		return (
 			<div className="max-w-screen-xl mx-auto flex flex-col gap-3 py-20 md:px-5">
 				<Head>
@@ -132,7 +134,7 @@ const View = () => {
 						)}
 					</div>
 					<div className="flex gap-1.5">
-						{user.data.jobApplications.some(
+						{user?.data?.jobApplications.some(
 							(application) => application.job._id === job.data._id
 						) ? (
 							<button
@@ -143,13 +145,18 @@ const View = () => {
 							</button>
 						) : (
 							<button
-								onClick={() => setJobApplicationModal(true)}
+								onClick={
+									user.data
+										? () => setJobApplicationModal(true)
+										: () => signIn()
+								}
 								className="bg-blue-700 hover:bg-blue-800 text-white px-5 rounded-full font-semibold"
 							>
 								Apply
 							</button>
 						)}
-						{user.data.savedJobs.some(
+
+						{user?.data?.savedJobs.some(
 							(savedJob) => savedJob._id === job.data._id
 						) ? (
 							<button
@@ -160,7 +167,7 @@ const View = () => {
 							</button>
 						) : (
 							<button
-								onClick={handleSaveJob}
+								onClick={user.data ? handleSaveJob : () => signIn()}
 								className="h-10 w-20 box-border hover:box-border border border-blue-600 hover:bg-blue-50 duration-300 hover:border-2 text-blue-600 px-5 rounded-full font-semibold"
 							>
 								Save

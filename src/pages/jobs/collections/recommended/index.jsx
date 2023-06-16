@@ -56,44 +56,48 @@ const Recommended = () => {
 						<div className="sticky top-0 bg-blue-700 p-2.5 md:rounded-tl-lg">
 							<span className="text-white">Jobs based on your Profile</span>
 						</div>
-						<ul className="flex flex-col divide-y divide-base-300 h-[95.2%] overflow-y-auto">
-							{recommendedJobs &&
-								recommendedJobs.map((job) => (
-									<li
-										onClick={() => handleJobClick(job)}
-										key={job._id}
-										className={`flex gap-5 py-3 px-2.5 cursor-pointer group/job ${
-											job._id === selectedJob._id && "bg-sky-50"
-										}`}
-									>
-										<div className="flex-none">
-											<Image
-												src={
-													job.company.picturePath
-														? job.company.picturePath
-														: "/company.png"
-												}
-												alt="company-logo"
-												width={56}
-												height={56}
-											/>
-										</div>
+						<div className="w-full h-[95.7%] pb-[4rem] md:pb-0">
+							<ul className="flex flex-col h-full overflow-y-auto">
+								<div className="divide-y divide-base-300 border-b border-base-300">
+									{recommendedJobs &&
+										recommendedJobs.map((job) => (
+											<li
+												onClick={() => handleJobClick(job)}
+												key={job._id}
+												className={`flex gap-5 py-3 px-2.5 cursor-pointer group/job ${
+													job._id === selectedJob._id && "bg-sky-50"
+												}`}
+											>
+												<div className="flex-none">
+													<Image
+														src={
+															job.company.picturePath
+																? job.company.picturePath
+																: "/company.png"
+														}
+														alt="company-logo"
+														width={56}
+														height={56}
+													/>
+												</div>
 
-										<div className="flex flex-col">
-											<span className="group-hover/job:underline text-blue-600 font-semibold">
-												{job.title}
-											</span>
-											<span className="text-sm">{job.company.name}</span>
-											<span className="text-sm text-zinc-500">
-												{job.city}, {job.country} ({job.locationType})
-											</span>
-											<span className="text-green-600 text-xs font-semibold pt-1.5">
-												<JobTimeDifference date={job.createdAt} />
-											</span>
-										</div>
-									</li>
-								))}
-						</ul>
+												<div className="flex flex-col">
+													<span className="group-hover/job:underline text-blue-600 font-semibold">
+														{job.title}
+													</span>
+													<span className="text-sm">{job.company.name}</span>
+													<span className="text-sm text-zinc-500">
+														{job.city}, {job.country} ({job.locationType})
+													</span>
+													<span className="text-green-600 text-xs font-semibold pt-1.5">
+														<JobTimeDifference date={job.createdAt} />
+													</span>
+												</div>
+											</li>
+										))}
+								</div>
+							</ul>
+						</div>
 					</div>
 					<div className="hidden md:flex flex-1 h-full overflow-y-auto">
 						{selectedJob && (

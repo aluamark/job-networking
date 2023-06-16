@@ -1,11 +1,14 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { BsBriefcaseFill } from "react-icons/bs";
 import Search from "./Search";
+import SearchFilter from "./SearchFilter";
 
 const Navbar = ({ user }) => {
+	const router = useRouter();
 	const { data, status } = useSession();
 
 	if (user?.isLoading || status === "loading") {
@@ -53,7 +56,11 @@ const Navbar = ({ user }) => {
 							/>
 						</button>
 					</Link>
-					<Search searchHistory={user?.data?.searchHistory} />
+					{router.asPath.startsWith("/jobs/search") ? (
+						<SearchFilter searchHistory={user?.data?.searchHistory} />
+					) : (
+						<Search searchHistory={user?.data?.searchHistory} />
+					)}
 				</div>
 				<div className="flex-none hidden md:block">
 					<ul className="menu menu-horizontal px-3">
@@ -71,6 +78,7 @@ const Navbar = ({ user }) => {
 								<li className="dropdown dropdown-end">
 									<button tabIndex={0} className="btn btn-ghost btn-circle p-0">
 										<Image
+											tabIndex={0}
 											src={
 												user.data.picturePath
 													? user.data.picturePath

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,7 +12,29 @@ import Loading from "@/components/widgets/Loading";
 const AllResults = () => {
 	const router = useRouter();
 	const { keywords } = router.query;
-	const search = useSearchQuery(keywords);
+	const search = useSearchQuery(encodeURIComponent(keywords));
+
+	const [jobs, setJobs] = useState([]);
+
+	useEffect(() => {
+		if (search.data) {
+			const allJobs = [...search.data.jobsByTitle, ...search.data.jobsBySkills];
+			const jobIdSet = new Set();
+			const uniqueJobs = [];
+
+			for (const job of allJobs) {
+				const jobId = job._id;
+
+				if (!jobIdSet.has(jobId)) {
+					jobIdSet.add(jobId);
+					uniqueJobs.push(job);
+				}
+			}
+			setJobs(
+				uniqueJobs.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+			);
+		}
+	}, [search.data]);
 
 	if (search.isLoading) return <Loading />;
 
@@ -160,9 +182,8 @@ const AllResults = () => {
 												.map((job) => (
 													<Link
 														href={{
-															pathname: "/jobs/search/",
+															pathname: `/jobs/company/${group.company._id}`,
 															query: {
-																companyId: group.company._id,
 																companyName: group.company.name,
 																currentJobId: job._id,
 															},
@@ -203,9 +224,8 @@ const AllResults = () => {
 										{group.jobs.length > 3 && (
 											<Link
 												href={{
-													pathname: "/jobs/search/",
+													pathname: `/jobs/company/${group.company._id}`,
 													query: {
-														companyId: group.company._id,
 														companyName: group.company.name,
 														currentJobId: group.jobs[0]._id,
 													},
@@ -266,85 +286,63 @@ const AllResults = () => {
 							</div>
 						)}
 
-						{search.data.jobsByTitle.length !== 0 && (
-							<div className="bg-base-100 border border-base-300 rounded-lg p-5">
-								<span className="font-semibold">Jobs by title</span>
-								<div className="flex flex-col divide-y divide-base-300">
-									{search.data.jobsByTitle.map((job) => (
-										<Link
-											href={`/jobs/view/${job._id}`}
-											className="flex gap-3 py-3"
-											key={job._id}
-										>
-											<Image
-												src={
-													job.company.picturePath
-														? job.company.picturePath
-														: "/company.png"
-												}
-												alt={job.company.name}
-												width={48}
-												height={48}
-												className="w-[48px] h-[48px] object-cover"
-											/>
-											<div className="flex flex-col">
-												<span className="link link-hover font-semibold">
-													{job.title}
-												</span>
-
-												<span className="text-sm">{job.company.name}</span>
-												<span className="text-sm text-zinc-500">
-													{job.city && job.country
-														? `${job.city}, ${job.country}`
-														: job.country
-														? job.country
-														: null}
-												</span>
-											</div>
-										</Link>
-									))}
+						{jobs.length !== 0 && (
+							<div className="bg-base-100 border border-base-300 rounded-lg">
+								<div className="font-semibold px-5 pt-5">
+									Jobs by title and skills
 								</div>
-							</div>
-						)}
+								<div className="flex flex-col divide-y divide-base-300 px-5">
+									{jobs
+										.slice()
+										.reverse()
+										.slice(0, 3)
+										.map((job) => (
+											<Link
+												href={`/jobs/search?keywords=${keywords}&currentJobId=${job._id}`}
+												className="flex gap-3 py-3"
+												key={job._id}
+											>
+												<Image
+													src={
+														job.company.picturePath
+															? job.company.picturePath
+															: "/company.png"
+													}
+													alt={job.company.name}
+													width={48}
+													height={48}
+													className="w-[48px] h-[48px] object-cover"
+												/>
+												<div className="flex flex-col">
+													<span className="link link-hover font-semibold">
+														{job.title}
+													</span>
 
-						{search.data.jobsBySkills.length !== 0 && (
-							<div className="bg-base-100 border border-base-300 rounded-lg p-5">
-								<span className="font-semibold">Jobs by skills</span>
-								<div className="flex flex-col divide-y divide-base-300">
-									{search.data.jobsBySkills.map((job) => (
-										<Link
-											href={`/jobs/view/${job._id}`}
-											className="flex gap-3 py-3"
-											key={job._id}
-										>
-											<Image
-												src={
-													job.company.picturePath
-														? job.company.picturePath
-														: "/company.png"
-												}
-												alt={job.company.name}
-												width={48}
-												height={48}
-												className="w-[48px] h-[48px] object-cover"
-											/>
-											<div className="flex flex-col">
-												<span className="link link-hover font-semibold">
-													{job.title}
-												</span>
-
-												<span className="text-sm">{job.company.name}</span>
-												<span className="text-sm text-zinc-500">
-													{job.city && job.country
-														? `${job.city}, ${job.country}`
-														: job.country
-														? job.country
-														: null}
-												</span>
-											</div>
-										</Link>
-									))}
+													<span className="text-sm">{job.company.name}</span>
+													<span className="text-sm text-zinc-500">
+														{job.city && job.country
+															? `${job.city}, ${job.country}`
+															: job.country
+															? job.country
+															: null}
+													</span>
+												</div>
+											</Link>
+										))}
 								</div>
+								{jobs.length > 3 && (
+									<Link
+										href={`/jobs/search?keywords=${keywords}&currentJobId=${
+											jobs[jobs.length - 1]._id
+										}`}
+									>
+										<div className="border-t py-3 text-center">
+											<span className="text-sm text-zinc-500 font-semibold">
+												Show all {jobs.length} jobs
+											</span>
+										</div>
+									</Link>
+								)}
 							</div>
 						)}
 					</div>
