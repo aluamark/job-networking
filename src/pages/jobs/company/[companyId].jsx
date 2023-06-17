@@ -22,7 +22,9 @@ const Search = () => {
 		setSelectedJob(job);
 		setJobViewModal(true);
 		router.push(
-			`/jobs/company/${companyId}?companyName=${companyName}&currentJobId=${job._id}`
+			`/jobs/company/${companyId}?companyName=${encodeURIComponent(
+				companyName
+			)}&currentJobId=${job._id}`
 		);
 	};
 
@@ -39,12 +41,14 @@ const Search = () => {
 		return (
 			<div className="min-h-screen h-screen max-w-screen-xl mx-auto flex md:px-5">
 				<Head>
-					<title>Jobs from {companyName} | EmployX</title>
+					<title>Jobs from {jobs.data[0].company.name} | EmployX</title>
 				</Head>
 				<div className="h-[91.8%] flex divide-x divide-base-300 my-20 bg-base-100 border border-base-300 md:rounded-t-lg w-full">
 					<div className="relative flex-1 h-full">
 						<div className="sticky top-0 bg-blue-700 p-2.5 md:rounded-tl-lg">
-							<span className="text-white">Jobs from {companyName}</span>
+							<span className="text-white">
+								Jobs from {jobs.data[0].company.name}
+							</span>
 						</div>
 						<div className="w-full h-[95.7%] pb-[4rem] md:pb-0">
 							<ul className="flex flex-col h-full overflow-y-auto">

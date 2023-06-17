@@ -7,7 +7,7 @@ import { FaSearch } from "react-icons/fa";
 import { useSearchQuery } from "@/lib/react-query-hooks/useSearchQuery";
 import { PuffLoader } from "react-spinners";
 
-const Search = ({ searchHistory }) => {
+const SearchFilter = ({ searchHistory }) => {
 	const router = useRouter();
 	const [keywords, setKeywords] = useState("");
 	const [isFocused, setIsFocused] = useState(false);
@@ -70,7 +70,7 @@ const Search = ({ searchHistory }) => {
 	};
 
 	return (
-		<div className="relative w-full md:w-1/2">
+		<div className="relative w-full">
 			<div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2.5">
 				<FaSearch />
 			</div>
@@ -78,7 +78,7 @@ const Search = ({ searchHistory }) => {
 				<input
 					type="text"
 					name="keywords"
-					className="bg-slate-100 rounded pl-8 pr-2.5 py-2.5 w-full md:w-1/2 focus:w-full duration-300"
+					className="bg-slate-100 rounded pl-8 pr-2.5 py-2.5 w-full"
 					placeholder="Search by title, skill, or company"
 					value={keywords}
 					onChange={handleInputChange}
@@ -210,4 +210,4 @@ const Search = ({ searchHistory }) => {
 	);
 };
 
-export default Search;
+export default SearchFilter;

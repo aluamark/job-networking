@@ -66,11 +66,11 @@ const Login = () => {
 	}
 
 	return (
-		<div className="hero min-h-screen bg-base-100 py-20">
+		<div className="hero min-h-screen bg-base-100 py-[4rem]">
 			<Head>
 				<title>Login | EmployX</title>
 			</Head>
-			<div className="hero-content flex flex-col gap-10 md:w-[600px]">
+			<div className="hero-content flex flex-col gap-5 md:w-[600px]">
 				<h1 className="text-3xl text-blue-600">
 					Join our community of job seekers and employers today and take the
 					first step towards achieving your career goals

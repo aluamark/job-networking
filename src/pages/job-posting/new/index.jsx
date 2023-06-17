@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import Step2 from "@/components/company/jobPosting/Step2";
 import { ToastContainer } from "react-toastify";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import FormInput from "@/components/form/FormInput";
 import FormSelect from "@/components/form/FormSelect";
 import { useLoggedUserQuery } from "@/lib/react-query-hooks/useLoggedUserQuery";
@@ -166,50 +167,74 @@ const PostJobForm = () => {
 									onChange={handleChange}
 									error={formErrors.title}
 								/>
-								<div className="form-control w-full">
-									<label className="label">
-										<span className="label-text">Company</span>
-									</label>
-									<div
-										className={`flex gap-1.5 ${
-											formErrors.company
-												? "tooltip tooltip-error tooltip-open tooltip-top"
-												: null
-										}`}
-										data-tip={formErrors.company}
-									>
-										{user?.data?.adminPages
-											?.filter((page) => page._id === formData?.company)
-											.map((page) => (
-												<Image
-													src={
-														page?.picturePath
-															? page?.picturePath
-															: "/company.png"
-													}
-													width={32}
-													height={32}
-													alt="company-logo"
-													key={page._id}
-												/>
-											))}
-
-										<div className="w-full">
-											<select
-												name="companyName"
-												value={formData?.companyName}
-												onChange={handleChange}
-												className={`select select-bordered w-full select-sm font-normal`}
-											>
-												{user?.data?.adminPages?.map((page) => (
-													<option key={page._id} value={page.name}>
-														{page.name}
-													</option>
+								{user?.data?.adminPages?.length !== 0 ? (
+									<div className="form-control w-full">
+										<label className="label">
+											<span className="label-text">Company</span>
+										</label>
+										<div
+											className={`flex gap-1.5 ${
+												formErrors.company
+													? "tooltip tooltip-error tooltip-open tooltip-top"
+													: null
+											}`}
+											data-tip={formErrors.company}
+										>
+											{user?.data?.adminPages
+												?.filter((page) => page._id === formData?.company)
+												.map((page) => (
+													<Image
+														src={
+															page?.picturePath
+																? page?.picturePath
+																: "/company.png"
+														}
+														width={32}
+														height={32}
+														alt="company-logo"
+														key={page._id}
+													/>
 												))}
-											</select>
+
+											<div className="w-full">
+												<select
+													name="companyName"
+													value={formData?.companyName}
+													onChange={handleChange}
+													className={`select select-bordered w-full select-sm font-normal`}
+												>
+													{user?.data?.adminPages?.map((page) => (
+														<option key={page._id} value={page.name}>
+															{page.name}
+														</option>
+													))}
+												</select>
+											</div>
 										</div>
 									</div>
-								</div>
+								) : (
+									<div className="form-control w-full">
+										<label className="label">
+											<span className="label-text">Company</span>
+										</label>
+										<div
+											className={`flex gap-1.5 ${
+												formErrors.company
+													? "tooltip tooltip-error tooltip-open tooltip-top"
+													: null
+											}`}
+											data-tip={formErrors.company}
+										>
+											<Link
+												href="/company/setup/new"
+												className="btn btn-sm w-full text-sm normal-case"
+											>
+												Add a new company
+											</Link>{" "}
+										</div>
+									</div>
+								)}
+
 								<FormSelect
 									name="locationType"
 									size="sm"

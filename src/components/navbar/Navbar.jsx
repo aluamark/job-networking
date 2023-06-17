@@ -56,8 +56,13 @@ const Navbar = ({ user }) => {
 							/>
 						</button>
 					</Link>
-					{router.asPath.startsWith("/jobs/search") ? (
-						<SearchFilter searchHistory={user?.data?.searchHistory} />
+					{router.asPath.startsWith("/jobs/search") &&
+					!router.asPath.startsWith("/jobs/collections") &&
+					!router.asPath.startsWith("/jobs/company") &&
+					!router.asPath.startsWith("/jobs/view") ? (
+						<div className="w-full md:w-1/2">
+							<SearchFilter searchHistory={user?.data?.searchHistory} />
+						</div>
 					) : (
 						<Search searchHistory={user?.data?.searchHistory} />
 					)}

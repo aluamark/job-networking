@@ -549,7 +549,7 @@ const Search = () => {
 												</div>
 											))
 									) : (
-										<div className="p-5 font-semibold">
+										<div className="px-5 py-10 font-semibold">
 											No matching jobs found.
 										</div>
 									)}

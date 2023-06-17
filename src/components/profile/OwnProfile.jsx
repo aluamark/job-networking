@@ -303,6 +303,7 @@ const OwnProfile = () => {
 				</div>
 				<ProfilePictureModal
 					userId={user.data._id}
+					userEmail={user.data.email}
 					picturePath={
 						user.data.picturePath ? user.data.picturePath : "/default.png"
 					}

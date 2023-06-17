@@ -266,7 +266,7 @@ const EditProfileModal = ({
 							</div>
 						</div>
 
-						<div className="flex flex-col">
+						{/* <div className="flex flex-col">
 							<h3 className="text-lg font-semibold">Education</h3>
 							<div className="pt-3">
 								<button
@@ -276,9 +276,9 @@ const EditProfileModal = ({
 									+ Add new position
 								</button>
 							</div>
-						</div>
+						</div> */}
 
-						<div className="flex flex-col">
+						{/* <div className="flex flex-col">
 							<h3 className="text-lg font-semibold">Contact info</h3>
 							<span>Add or edit your profile, email, phone, and more</span>
 							<div className="pt-3">
@@ -289,7 +289,7 @@ const EditProfileModal = ({
 									Edit contact info
 								</button>
 							</div>
-						</div>
+						</div> */}
 					</div>
 					<div className="flex-none items-center px-5 py-3">
 						{submitLoading ? (

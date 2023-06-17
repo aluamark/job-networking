@@ -34,11 +34,11 @@ const ContactInfoModal = ({ user, ownProfile, isOpen, setIsOpen }) => {
 				<div className="border-t border-base-300 pl-7 pb-7 pr-3">
 					<div className="flex justify-between items-center py-3">
 						<h3 className="text-lg font-semibold">Contact Info</h3>
-						{ownProfile && (
+						{/* {ownProfile && (
 							<button className="rounded-full hover:bg-base-300">
 								<FiEdit2 className="w-6 h-6 m-2" />
 							</button>
-						)}
+						)} */}
 					</div>
 					<div className="flex flex-col gap-4">
 						<div>

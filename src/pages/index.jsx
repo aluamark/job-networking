@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import SearchFilter from "@/components/navbar/SearchFilter";
 import Loading from "@/components/widgets/Loading";
 import Footer from "@/components/footer/Footer";
 
@@ -15,11 +16,16 @@ export default function Home() {
 	if (status === "unauthenticated") {
 		return (
 			<div className="bg-base-100">
-				<div className="min-h-screen flex flex-col justify-center items-center gap-10 px-5 py-28 md:w-[600px] mx-auto">
-					<div className="flex flex-col gap-10">
+				<div className="min-h-screen h-screen flex flex-col justify-center items-center px-5 py-20 md:w-[600px] mx-auto">
+					<div className="flex flex-col gap-5 md:gap-10">
 						<h1 className="text-4xl md:text-5xl font-bold">
 							Employ<span className="text-blue-600">X</span>
 						</h1>
+						<div className="flex flex-col gap-3">
+							<h2 className="text-xl font-semibold">Explore jobs</h2>
+							<SearchFilter />
+						</div>
+
 						<p className="text-xl">
 							Unlock endless career opportunities with our innovative job
 							posting website. Whether you&apos;re looking for your dream job or
@@ -30,18 +36,13 @@ export default function Home() {
 							Find your dream job or the perfect candidate with our innovative
 							job posting website. Join now!
 						</p>
-						<div className="flex justify-between items-center">
-							<Link href="/jobs" className="btn btn-outline">
-								Explore jobs
+						<div className="flex justify-end gap-3 items-center w-full bg-gradient-to-l from-blue-600 rounded-r-lg">
+							<Link href="/signup" className="link link-hover text-white">
+								Sign up
 							</Link>
-							<div className="flex justify-end gap-3 items-center w-full bg-gradient-to-l from-blue-600 rounded-r-lg">
-								<Link href="/signup" className="link link-hover text-white">
-									Sign up
-								</Link>
-								<button onClick={() => signIn()} className="btn">
-									Login
-								</button>
-							</div>
+							<button onClick={() => signIn()} className="btn">
+								Login
+							</button>
 						</div>
 					</div>
 					<Footer />

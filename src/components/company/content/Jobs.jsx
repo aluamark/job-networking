@@ -88,7 +88,7 @@ const Jobs = ({ companyId, companyName, companyPicture, jobs }) => {
 						href={{
 							pathname: `/jobs/company/${companyId}`,
 							query: {
-								companyName,
+								companyName: encodeURIComponent(companyName),
 								currentJobId: job._id,
 							},
 						}}

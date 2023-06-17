@@ -84,12 +84,12 @@ const SignUp = () => {
 	}
 
 	return (
-		<div className="hero min-h-screen bg-base-100 py-20">
+		<div className="hero min-h-screen bg-base-100 py-[4rem]">
 			<Head>
 				<title>Sign Up | EmployX</title>
 			</Head>
-			<div className="hero-content flex flex-col gap-10 md:w-[600px]">
-				<h1 className="text-3xl text-blue-600">
+			<div className="hero-content flex flex-col gap-5 md:w-[600px]">
+				<h1 className="text-2xl md:text-3xl text-blue-600">
 					Find your dream job or the perfect candidate with our innovative job
 					posting website
 				</h1>

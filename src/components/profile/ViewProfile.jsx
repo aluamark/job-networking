@@ -5,13 +5,17 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import { getUser, getRandomUsers } from "@/lib/helper";
+import { useDispatch } from "react-redux";
+import { setOpenModal } from "@/redux/reducer";
 import { BsArrowRightShort, BsArrowUpShort } from "react-icons/bs";
 import { useSession } from "next-auth/react";
+import ProfilePictureModal from "./modals/ProfilePictureModal";
 import ContactInfoModal from "./modals/ContactInfoModal";
 import People from "../widgets/People";
 import Loading from "../widgets/Loading";
 
 const ViewProfile = () => {
+	const dispatch = useDispatch();
 	const router = useRouter();
 	const { email } = router.query;
 	const { data } = useSession();
@@ -37,6 +41,7 @@ const ViewProfile = () => {
 	};
 
 	const [contactInfoModal, setContactInfoModal] = useState(false);
+	const [profilePictureModal, setProfilePictureModal] = useState(false);
 	const [showAllSkills, setShowAllSkills] = useState(false);
 
 	if (user.isLoading || randomUsers.isLoading) {
@@ -45,17 +50,23 @@ const ViewProfile = () => {
 
 	if (user.isError || randomUsers.isError) {
 		return (
-			<div className="min-h-screen flex flex-col justify-center items-center gap-3">
-				<h2 className="text-3xl font-bold flex gap-1">
-					<span className="text-error">Error:</span>
-					{user.error.response.data.error}
-				</h2>
-				<p>Please check your URL or return to Jobs.</p>
-				<Link href="/jobs">
-					<button className="box-border border border-blue-500 text-blue-500 px-4 py-1 transition duration-300 hover:bg-blue-100 hover:border-2 rounded-full h-10 mt-2">
-						Go to Jobs
-					</button>
-				</Link>
+			<div className="min-h-screen bg-base-100">
+				<div className="max-w-screen-sm mx-auto flex flex-col gap-3 items-center py-[4rem]">
+					<Image src="/404.gif" alt="404" width={500} height={500} />
+					<h2 className="text-3xl font-bold flex gap-1.5">
+						<span className="text-error">404:</span>
+						{user.error.response.data.error}
+					</h2>
+					<p className="text-center">
+						Please check your URL or return to EmployX home.
+					</p>
+					<Link
+						href="/"
+						className="flex items-center box-border border border-blue-500 text-blue-500 px-4 py-1 transition duration-150 hover:bg-blue-100 hover:border-2 rounded-full h-10 mt-2 font-semibold"
+					>
+						Go to EmployX home
+					</Link>
+				</div>
 			</div>
 		);
 	}
@@ -74,17 +85,25 @@ const ViewProfile = () => {
 					<div className="w-full flex flex-col gap-1.5">
 						<div className="relative">
 							<div className="absolute left-5 top-5 md:top-24 rounded-full p-1 bg-base-100">
-								<Image
-									src={
-										user.data.picturePath
-											? user.data.picturePath
-											: "/default.png"
-									}
-									alt="profile-picture"
-									className="rounded-full w-40 h-40 object-cover"
-									width={160}
-									height={160}
-								/>
+								<button
+									className="rounded-full"
+									onClick={() => {
+										dispatch(setOpenModal(true));
+										setProfilePictureModal(true);
+									}}
+								>
+									<Image
+										src={
+											user.data.picturePath
+												? user.data.picturePath
+												: "/default.png"
+										}
+										alt="profile-picture"
+										className="rounded-full w-40 h-40 object-cover"
+										width={160}
+										height={160}
+									/>
+								</button>
 							</div>
 							<figure>
 								<Image
@@ -251,6 +270,16 @@ const ViewProfile = () => {
 						/>
 					</div>
 				</div>
+
+				<ProfilePictureModal
+					userId={user.data._id}
+					userEmail={user.data.email}
+					picturePath={
+						user.data.picturePath ? user.data.picturePath : "/default.png"
+					}
+					isOpen={profilePictureModal}
+					setIsOpen={setProfilePictureModal}
+				/>
 
 				<ContactInfoModal
 					user={user.data}

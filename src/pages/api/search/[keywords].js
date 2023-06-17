@@ -34,7 +34,7 @@ export default async function handler(req, res) {
 
 		// Search for jobs by skills
 		const jobsBySkills = await Job.find({
-			skills: { $regex: `${keywords}`, $options: "i" },
+			skills: { $regex: `^${keywords}`, $options: "i" },
 		}).populate("company postedBy");
 
 		// Combine the results

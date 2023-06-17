@@ -10,10 +10,13 @@ const BottomNav = ({ user }) => {
 
 	if (status === "unauthenticated")
 		return (
-			<div className="btm-nav md:hidden text-sm">
-				<Link href="/jobs" className="active">
-					<BsBriefcaseFill />
+			<div className="btm-nav md:hidden divide-x divide-base-300 text-sm font-semibold border-t border-base-300">
+				<Link href="/signup" className="">
+					Join now
 				</Link>
+				<button onClick={() => signIn()} className="">
+					Sign in
+				</button>
 			</div>
 		);
 
