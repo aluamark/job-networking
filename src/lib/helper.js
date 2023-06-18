@@ -1,8 +1,8 @@
 import axios from "axios";
 import DOMPurify from "dompurify";
 
-const BASE_URL = "https://employx.vercel.app";
-// const BASE_URL = "http://localhost:3000";
+// const BASE_URL = "https://employx.vercel.app";
+const BASE_URL = "http://localhost:3000";
 
 // SEARCH
 export const search = async (keywords) => {
