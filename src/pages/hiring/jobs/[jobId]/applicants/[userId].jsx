@@ -104,7 +104,7 @@ const ManageApplicants = () => {
 											onClick={() => handleApplicationClick(application)}
 											className={`flex gap-3 px-5 py-3 cursor-pointer ${
 												selectedApplication?._id === application._id &&
-												"bg-sky-50"
+												"bg-base-200"
 											}`}
 										>
 											<div className="flex-none">
