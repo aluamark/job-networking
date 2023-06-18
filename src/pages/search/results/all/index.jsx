@@ -175,7 +175,7 @@ const AllResults = () => {
 										<span className="font-semibold px-5">
 											Jobs from {group.company.name}
 										</span>
-										<div className="flex flex-col divide-y pt-2.5 px-5">
+										<div className="flex flex-col divide-y divide-base-300 pt-2.5 px-5">
 											{group.jobs
 												.reverse()
 												.slice(0, 3)
@@ -231,7 +231,7 @@ const AllResults = () => {
 													},
 												}}
 											>
-												<div className="border-t py-3 text-center">
+												<div className="border-t border-base-300 py-3 text-center">
 													<span className="text-sm text-zinc-500 font-semibold">
 														Show all {group.jobs.length} jobs from{" "}
 														{group.company.name}
@@ -336,7 +336,7 @@ const AllResults = () => {
 											jobs[jobs.length - 1]._id
 										}`}
 									>
-										<div className="border-t py-3 text-center">
+										<div className="border-t border-base-300 py-3 text-center">
 											<span className="text-sm text-zinc-500 font-semibold">
 												Show all {jobs.length} jobs
 											</span>

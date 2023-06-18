@@ -88,7 +88,7 @@ const PagePictureModal = ({ company, isOpen, setIsOpen }) => {
 			className="min-h-screen h-screen flex justify-center items-center"
 		>
 			<div className="flex flex-col bg-base-100 rounded-lg w-[550px]">
-				<div className="flex justify-between items-center py-3 pl-7 pr-3">
+				<div className="flex justify-between items-center py-3 pl-7 pr-3 border-b border-base-300">
 					<h3 className="text-lg font-semibold">Company logo</h3>
 					<button
 						onClick={closeModal}
@@ -98,7 +98,7 @@ const PagePictureModal = ({ company, isOpen, setIsOpen }) => {
 					</button>
 				</div>
 
-				<div className="flex p-7">
+				<div className="flex p-10">
 					<Image
 						src={
 							previewUrl

@@ -518,7 +518,7 @@ const Search = () => {
 													onClick={() => handleJobClick(job)}
 													key={job._id}
 													className={`flex gap-5 py-3 px-2.5 cursor-pointer group/job ${
-														job._id === selectedJob._id && "bg-sky-50"
+														job._id === selectedJob._id && "bg-base-200"
 													}`}
 												>
 													<div className="flex-none">

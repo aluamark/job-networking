@@ -180,21 +180,23 @@ const PostJobForm = () => {
 											}`}
 											data-tip={formErrors.company}
 										>
-											{user?.data?.adminPages
-												?.filter((page) => page._id === formData?.company)
-												.map((page) => (
-													<Image
-														src={
-															page?.picturePath
-																? page?.picturePath
-																: "/company.png"
-														}
-														width={32}
-														height={32}
-														alt="company-logo"
-														key={page._id}
-													/>
-												))}
+											<div className="w-[32px] h-[32px]">
+												{user?.data?.adminPages
+													?.filter((page) => page._id === formData?.company)
+													.map((page) => (
+														<Image
+															src={
+																page?.picturePath
+																	? page?.picturePath
+																	: "/company.png"
+															}
+															width={32}
+															height={32}
+															alt="company-logo"
+															key={page._id}
+														/>
+													))}
+											</div>
 
 											<div className="w-full">
 												<select

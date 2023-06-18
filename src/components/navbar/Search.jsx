@@ -80,7 +80,7 @@ const Search = ({ searchHistory }) => {
 				<input
 					type="text"
 					name="keywords"
-					className="bg-slate-100 rounded pl-8 pr-2.5 py-2.5 w-full md:w-1/2 focus:w-full duration-300"
+					className="bg-base-200 hover:bg-base-300 focus:outline-none rounded pl-8 pr-2.5 py-2.5 w-full md:w-1/2 focus:w-full duration-300"
 					placeholder="Search by title, skill, or company"
 					value={keywords}
 					onChange={handleInputChange}
@@ -114,7 +114,7 @@ const Search = ({ searchHistory }) => {
 												search.data.companies.slice(0, 3).map((company) => (
 													<Link
 														onClick={() => setIsFocused(false)}
-														href={`/search/results/all?keywords=${company.uniqueAddress}`}
+														href={`/company/${company.uniqueAddress}`}
 														key={company._id}
 														className="flex items-center hover:bg-base-300 px-5 py-1.5"
 													>
