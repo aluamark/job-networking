@@ -16,7 +16,7 @@ export default function Home() {
 	if (status === "unauthenticated") {
 		return (
 			<div className="min-h-screen max-w-screen-sm mx-auto w-full flex flex-col md:justify-center md:items-center px-5 py-5">
-				<div className="flex flex-col gap-5 md:gap-10">
+				<div className="flex flex-col gap-5 md:gap-10 pt-10">
 					<h1 className="text-4xl md:text-5xl font-bold">
 						Employ<span className="text-blue-600">X</span>
 					</h1>
