@@ -56,10 +56,10 @@ const AllResults = () => {
 									<li>Jobs by companies</li>
 								)}
 								{search.data.people.length !== 0 && <li>People</li>}
-								{search.data.jobsByTitle.length !== 0 && <li>Jobs by title</li>}
-								{search.data.jobsBySkills.length !== 0 && (
-									<li>Jobs by skills</li>
-								)}
+								{search.data.jobsByTitle.length !== 0 ||
+								search.data.jobsBySkills.length !== 0 ? (
+									<li>Jobs by title &amp; skills</li>
+								) : null}
 							</ul>
 						)}
 					</div>

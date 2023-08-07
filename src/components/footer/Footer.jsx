@@ -1,5 +1,4 @@
 import React from "react";
-import { RxExternalLink } from "react-icons/rx";
 
 const Footer = () => {
 	return (
@@ -11,30 +10,24 @@ const Footer = () => {
 				infringe on any copyright or trademark of LinkedIn.
 			</p>
 			<div className="flex flex-col gap-1">
-				<div className="flex gap-1">
-					<span>Github repo:</span>
+				<span>Github repo:</span>
 
-					<a
-						href="https://github.com/aluamark/job-networking"
-						target="blank"
-						className="link link-hover text-blue-600 flex gap-1"
-					>
-						https://github.com/aluamark/job-networking
-						<RxExternalLink />
-					</a>
-				</div>
-				<div className="flex gap-1">
-					<span>Portfolio site:</span>
+				<a
+					href="https://github.com/aluamark/job-networking"
+					target="blank"
+					className="link link-hover text-blue-600"
+				>
+					https://github.com/aluamark/job-networking
+				</a>
+				<span>Portfolio site:</span>
 
-					<a
-						href="https://aluamark.vercel.app"
-						target="blank"
-						className="link link-hover text-blue-600 flex gap-1"
-					>
-						https://aluamark.vercel.app
-						<RxExternalLink />
-					</a>
-				</div>
+				<a
+					href="https://aluamark.vercel.app"
+					target="blank"
+					className="link link-hover text-blue-600"
+				>
+					https://aluamark.vercel.app
+				</a>
 			</div>
 		</footer>
 	);

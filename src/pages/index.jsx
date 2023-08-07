@@ -15,8 +15,8 @@ export default function Home() {
 
 	if (status === "unauthenticated") {
 		return (
-			<div className="bg-base-100">
-				<div className="min-h-screen h-screen flex flex-col justify-center items-center px-5 py-20 md:w-[600px] mx-auto">
+			<div className="min-h-screen h-screen">
+				<div className="h-full max-w-screen-sm mx-auto w-full flex flex-col md:justify-center md:items-center px-5 py-5">
 					<div className="flex flex-col gap-5 md:gap-10">
 						<h1 className="text-4xl md:text-5xl font-bold">
 							Employ<span className="text-blue-600">X</span>
@@ -26,7 +26,7 @@ export default function Home() {
 							<SearchFilter />
 						</div>
 
-						<p className="text-xl">
+						<p>
 							Unlock endless career opportunities with our innovative job
 							posting website. Whether you&apos;re looking for your dream job or
 							trying to find the perfect candidate, our platform has everything

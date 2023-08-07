@@ -10,7 +10,7 @@ const Sidebar = ({ user }) => {
 		return (
 			<nav className="drawer-side">
 				<label htmlFor="my-drawer-3" className="drawer-overlay"></label>
-				<ul className="menu p-4 w-80 bg-base-100">
+				<ul className="menu py-3 w-60 bg-base-100">
 					<li>
 						<Link href="/signup">
 							<button>Join now</button>
@@ -28,7 +28,7 @@ const Sidebar = ({ user }) => {
 		return (
 			<nav className="drawer-side">
 				<label htmlFor="my-drawer-3" className="drawer-overlay"></label>
-				<ul className="menu p-4 w-80 bg-base-100">
+				<ul className="menu py-3 w-60 bg-base-100">
 					<li>
 						<Link href={`/ex/${user.data.email}`} className="flex gap-3">
 							<Image
@@ -40,7 +40,9 @@ const Sidebar = ({ user }) => {
 								width={40}
 								height={40}
 							/>
-							{user.data.firstName} {user.data.lastName}
+							<span className="text-sm">
+								{user.data.firstName} {user.data.lastName}
+							</span>
 						</Link>
 					</li>
 					<li>
